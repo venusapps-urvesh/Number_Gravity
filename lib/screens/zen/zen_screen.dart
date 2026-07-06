@@ -91,7 +91,7 @@ class ZenScreen extends ConsumerWidget {
                     icon: Icons.play_arrow_rounded,
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
-                    onPressed: () => context.go('${AppRoutes.play}/1'),
+                    onPressed: () => context.push('${AppRoutes.play}/1'),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                 ],

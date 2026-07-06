@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
+import '../../app/router/navigation.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../../widgets/common/ng_app_bar.dart';
@@ -25,7 +26,7 @@ class ComingSoonScreen extends StatelessWidget {
         title: title,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
+          onPressed: () => ngGoBack(context),
         ),
       ),
       body: Center(

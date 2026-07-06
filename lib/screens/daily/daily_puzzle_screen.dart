@@ -81,7 +81,7 @@ class DailyPuzzleScreen extends ConsumerWidget {
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
                     onPressed: () =>
-                        context.go('${AppRoutes.play}/${puzzle.id}'),
+                        context.push('${AppRoutes.play}/${puzzle.id}'),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(

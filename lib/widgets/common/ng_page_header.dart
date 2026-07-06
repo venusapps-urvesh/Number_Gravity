@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import 'ng_coin_badge.dart';
 import 'ng_icon_button.dart';
@@ -34,7 +34,7 @@ class NGPageHeader extends StatelessWidget implements PreferredSizeWidget {
             NGIconButton(
               icon: Icons.arrow_back_ios_new_rounded,
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-              onPressed: () => context.pop(),
+              onPressed: () => ngGoBack(context),
               variant: NGIconButtonVariant.surface,
             )
           else

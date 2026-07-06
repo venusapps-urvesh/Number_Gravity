@@ -74,7 +74,7 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
             title: l10n.tutorial,
             actions: [
               TextButton(
-                onPressed: () => context.go('${AppRoutes.play}/1'),
+                onPressed: () => context.push('${AppRoutes.play}/1'),
                 child: Text(l10n.skip),
               ),
             ],
@@ -126,7 +126,7 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
                     variant: NGButtonVariant.accent,
                     onPressed: () {
                       if (isLast) {
-                        context.go('${AppRoutes.play}/1');
+                        context.push('${AppRoutes.play}/1');
                       } else {
                         setState(() => _index++);
                       }

@@ -34,7 +34,7 @@ class NGBottomNavBar extends StatelessWidget {
             return Expanded(
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () => context.go(item.route),
+                onTap: () => context.push(item.route),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Column(

@@ -60,7 +60,7 @@ class LevelSelectScreen extends ConsumerWidget {
 
                     return NGCard(
                       padding: const EdgeInsets.all(8),
-                      onTap: () => context.go('${AppRoutes.play}/${level.id}'),
+                      onTap: () => context.push('${AppRoutes.play}/${level.id}'),
                       borderColor: completed
                           ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
                           : null,

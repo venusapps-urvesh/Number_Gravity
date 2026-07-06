@@ -53,22 +53,23 @@ class NumberGravityGame extends FlameGame {
     _selectionOverlay = GameSelectionOverlay(boardComponent: _boardComponent);
     _forceLines = ForceLineComponent(boardComponent: _boardComponent);
 
-    final world = World();
-    final boardRoot = PositionComponent()
+    const boardPadding = 16.0;
+    final boardRoot = PositionComponent(position: Vector2.all(boardPadding))
       ..add(_boardComponent)
       ..add(_forceLines)
       ..add(_selectionOverlay);
 
+    // FlameGame already owns a World wired to the camera; add board there.
     await world.add(boardRoot);
-    await add(world);
 
-    camera.viewport = FixedResolutionViewport(
-      resolution: Vector2(
-        _boardComponent.boardWidth + 32,
-        _boardComponent.boardHeight + 32,
-      ),
+    final resolution = Vector2(
+      _boardComponent.boardWidth + boardPadding * 2,
+      _boardComponent.boardHeight + boardPadding * 2,
     );
-    camera.viewfinder.anchor = Anchor.center;
+    camera.viewport = FixedResolutionViewport(resolution: resolution);
+    camera.viewfinder
+      ..anchor = Anchor.center
+      ..position = resolution / 2;
   }
 
   void _onTileTapped(TileModel tile) {

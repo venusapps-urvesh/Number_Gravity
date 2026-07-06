@@ -116,7 +116,7 @@ class _WorldList extends StatelessWidget {
       totalStars: totalStars,
       isUnlocked: isUnlocked,
       isCurrent: world.id == currentWorldId,
-      onTap: () => context.go('${AppRoutes.levels}/${world.id}'),
+      onTap: () => context.push('${AppRoutes.levels}/${world.id}'),
     );
   }
 
