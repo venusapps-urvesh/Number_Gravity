@@ -405,6 +405,378 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copied'**
   String get copied;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @statLevels.
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get statLevels;
+
+  /// No description provided for @statStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Stars'**
+  String get statStars;
+
+  /// No description provided for @statEarnedCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Earned'**
+  String get statEarnedCoins;
+
+  /// No description provided for @worldProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'World progress'**
+  String get worldProgress;
+
+  /// No description provided for @dayStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-day streak'**
+  String dayStreak(int count);
+
+  /// No description provided for @totalMovesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total moves'**
+  String get totalMovesLabel;
+
+  /// No description provided for @hintsUsedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hints used'**
+  String get hintsUsedLabel;
+
+  /// No description provided for @coinsEarnedTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Coins earned'**
+  String get coinsEarnedTab;
+
+  /// No description provided for @skillLadderTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Skill ladder'**
+  String get skillLadderTab;
+
+  /// No description provided for @scopeGlobal.
+  ///
+  /// In en, this message translates to:
+  /// **'Global'**
+  String get scopeGlobal;
+
+  /// No description provided for @scopeWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get scopeWeekly;
+
+  /// No description provided for @scopeFriends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get scopeFriends;
+
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you;
+
+  /// No description provided for @leaderboardFairness.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranks gameplay-earned coins only — purchased and ad coins excluded. Rank can\'t be bought.'**
+  String get leaderboardFairness;
+
+  /// No description provided for @leaderboardEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No rankings yet. Play levels to earn your place.'**
+  String get leaderboardEmpty;
+
+  /// No description provided for @starterPack.
+  ///
+  /// In en, this message translates to:
+  /// **'Starter Pack'**
+  String get starterPack;
+
+  /// No description provided for @starterPackDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Coins + a theme · one time'**
+  String get starterPackDesc;
+
+  /// No description provided for @packPouch.
+  ///
+  /// In en, this message translates to:
+  /// **'Pouch'**
+  String get packPouch;
+
+  /// No description provided for @packBag.
+  ///
+  /// In en, this message translates to:
+  /// **'Bag'**
+  String get packBag;
+
+  /// No description provided for @packChest.
+  ///
+  /// In en, this message translates to:
+  /// **'Chest'**
+  String get packChest;
+
+  /// No description provided for @packVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Vault'**
+  String get packVault;
+
+  /// No description provided for @bonusPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'+{percent}%'**
+  String bonusPercent(int percent);
+
+  /// No description provided for @coinCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} coins'**
+  String coinCount(int count);
+
+  /// No description provided for @bestValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Best value'**
+  String get bestValue;
+
+  /// No description provided for @watchAnAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch an ad'**
+  String get watchAnAd;
+
+  /// No description provided for @adRewardAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'+{amount}'**
+  String adRewardAmount(int amount);
+
+  /// No description provided for @adsOptIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads are opt-in only — never forced.'**
+  String get adsOptIn;
+
+  /// No description provided for @claim.
+  ///
+  /// In en, this message translates to:
+  /// **'Claim'**
+  String get claim;
+
+  /// No description provided for @claimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed'**
+  String get claimed;
+
+  /// No description provided for @achievementsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{unlocked}/{total}'**
+  String achievementsCount(int unlocked, int total);
+
+  /// No description provided for @achFirstWorldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'World Conqueror'**
+  String get achFirstWorldTitle;
+
+  /// No description provided for @achFirstWorldDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish World 1'**
+  String get achFirstWorldDesc;
+
+  /// No description provided for @achPerfectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Perfectionist'**
+  String get achPerfectTitle;
+
+  /// No description provided for @achPerfectDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Earn 3 stars on 10 levels'**
+  String get achPerfectDesc;
+
+  /// No description provided for @achStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Week Warrior'**
+  String get achStreakTitle;
+
+  /// No description provided for @achStreakDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Reach a 7-day streak'**
+  String get achStreakDesc;
+
+  /// No description provided for @achNoHintTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No-Hint Hero'**
+  String get achNoHintTitle;
+
+  /// No description provided for @achNoHintDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear 25 levels with no hints'**
+  String get achNoHintDesc;
+
+  /// No description provided for @achSpeedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed Solver'**
+  String get achSpeedTitle;
+
+  /// No description provided for @achSpeedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Solve 30 levels optimally'**
+  String get achSpeedDesc;
+
+  /// No description provided for @achDailyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Devotee'**
+  String get achDailyTitle;
+
+  /// No description provided for @achDailyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete 30 daily puzzles'**
+  String get achDailyDesc;
+
+  /// No description provided for @dailySeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed · {date} · same board worldwide'**
+  String dailySeed(String date);
+
+  /// No description provided for @solveTodaysPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Solve today\'s puzzle'**
+  String get solveTodaysPuzzle;
+
+  /// No description provided for @skillLadderNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewest moves ranks you on the unbuyable skill ladder'**
+  String get skillLadderNote;
+
+  /// No description provided for @streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak'**
+  String get streak;
+
+  /// No description provided for @tutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get tutorial;
+
+  /// No description provided for @tutorialTitle1.
+  ///
+  /// In en, this message translates to:
+  /// **'Blue tiles pull.'**
+  String get tutorialTitle1;
+
+  /// No description provided for @tutorialBody1.
+  ///
+  /// In en, this message translates to:
+  /// **'Positive numbers attract nearby tiles. Slide +3 toward the star.'**
+  String get tutorialBody1;
+
+  /// No description provided for @tutorialTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'Red tiles push.'**
+  String get tutorialTitle2;
+
+  /// No description provided for @tutorialBody2.
+  ///
+  /// In en, this message translates to:
+  /// **'Negative numbers repel. Use them to steer tiles away.'**
+  String get tutorialBody2;
+
+  /// No description provided for @tutorialTitle3.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan every move.'**
+  String get tutorialTitle3;
+
+  /// No description provided for @tutorialBody3.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghost previews show where gravity settles before you commit.'**
+  String get tutorialBody3;
+
+  /// No description provided for @tutorialStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String tutorialStep(int current, int total);
+
+  /// No description provided for @startPlaying.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Level 1'**
+  String get startPlaying;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @zenMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Zen Mode'**
+  String get zenMode;
+
+  /// No description provided for @zenSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No stars · no timer · no fail state'**
+  String get zenSubtitle;
+
+  /// No description provided for @zenBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Relax and experiment. Solve at your own pace.'**
+  String get zenBody;
+
+  /// No description provided for @startZen.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a Zen board'**
+  String get startZen;
 }
 
 class _AppLocalizationsDelegate

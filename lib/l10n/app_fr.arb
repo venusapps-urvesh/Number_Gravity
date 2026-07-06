@@ -81,5 +81,95 @@
   "shareApp": "Partager",
   "shareAppMessage": "Essayez Number Gravity ! Prévoir. Planifier. Résoudre.",
   "copy": "Copier",
-  "copied": "Copié"
+  "copied": "Copié",
+
+  "profile": "Profil",
+  "statLevels": "Niveaux",
+  "statStars": "Étoiles",
+  "statEarnedCoins": "Gagnées",
+  "worldProgress": "Progression des mondes",
+  "dayStreak": "Série de {count} jours",
+  "@dayStreak": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "totalMovesLabel": "Coups au total",
+  "hintsUsedLabel": "Indices utilisés",
+
+  "coinsEarnedTab": "Pièces gagnées",
+  "skillLadderTab": "Échelle de talent",
+  "scopeGlobal": "Global",
+  "scopeWeekly": "Hebdo",
+  "scopeFriends": "Amis",
+  "you": "Vous",
+  "leaderboardFairness": "Classe uniquement les pièces gagnées en jouant — pièces achetées et de pubs exclues. Le rang ne s'achète pas.",
+  "leaderboardEmpty": "Pas encore de classement. Jouez pour gagner votre place.",
+
+  "starterPack": "Pack de départ",
+  "starterPackDesc": "Pièces + un thème · une fois",
+  "packPouch": "Bourse",
+  "packBag": "Sac",
+  "packChest": "Coffre",
+  "packVault": "Chambre forte",
+  "bonusPercent": "+{percent}%",
+  "@bonusPercent": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+  "coinCount": "{count} pièces",
+  "@coinCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "bestValue": "Meilleure offre",
+  "watchAnAd": "Regarder une pub",
+  "adRewardAmount": "+{amount}",
+  "@adRewardAmount": {
+    "placeholders": { "amount": { "type": "int" } }
+  },
+  "adsOptIn": "Les pubs sont facultatives — jamais imposées.",
+
+  "claim": "Récupérer",
+  "claimed": "Récupéré",
+  "achievementsCount": "{unlocked}/{total}",
+  "@achievementsCount": {
+    "placeholders": { "unlocked": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "achFirstWorldTitle": "Conquérant de Mondes",
+  "achFirstWorldDesc": "Terminez le Monde 1",
+  "achPerfectTitle": "Perfectionniste",
+  "achPerfectDesc": "Obtenez 3 étoiles sur 10 niveaux",
+  "achStreakTitle": "Guerrier de la Semaine",
+  "achStreakDesc": "Atteignez une série de 7 jours",
+  "achNoHintTitle": "Héros Sans Indice",
+  "achNoHintDesc": "Réussissez 25 niveaux sans indice",
+  "achSpeedTitle": "Solveur Rapide",
+  "achSpeedDesc": "Résolvez 30 niveaux de façon optimale",
+  "achDailyTitle": "Fidèle du Quotidien",
+  "achDailyDesc": "Terminez 30 puzzles quotidiens",
+
+  "dailySeed": "Graine · {date} · même plateau partout",
+  "@dailySeed": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "solveTodaysPuzzle": "Résoudre le puzzle du jour",
+  "skillLadderNote": "Le moins de coups vous classe sur l'échelle de talent inachetable",
+  "streak": "Série",
+
+  "tutorial": "Tutoriel",
+  "tutorialTitle1": "Les tuiles bleues attirent.",
+  "tutorialBody1": "Les nombres positifs attirent les tuiles proches. Glissez +3 vers l'étoile.",
+  "tutorialTitle2": "Les tuiles rouges repoussent.",
+  "tutorialBody2": "Les nombres négatifs repoussent. Utilisez-les pour dévier les tuiles.",
+  "tutorialTitle3": "Planifiez chaque coup.",
+  "tutorialBody3": "Les aperçus montrent où la gravité se stabilise avant de valider.",
+  "tutorialStep": "Étape {current} sur {total}",
+  "@tutorialStep": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "startPlaying": "Commencer le Niveau 1",
+  "next": "Suivant",
+  "skip": "Passer",
+
+  "zenMode": "Mode Zen",
+  "zenSubtitle": "Sans étoiles · sans minuteur · sans échec",
+  "zenBody": "Détendez-vous et expérimentez. Résolvez à votre rythme.",
+  "startZen": "Lancer un plateau Zen"
 }

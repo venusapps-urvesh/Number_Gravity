@@ -81,5 +81,95 @@
   "shareApp": "Compartir",
   "shareAppMessage": "¡Prueba Number Gravity! Predice. Planifica. Resuelve.",
   "copy": "Copiar",
-  "copied": "Copiado"
+  "copied": "Copiado",
+
+  "profile": "Perfil",
+  "statLevels": "Niveles",
+  "statStars": "Estrellas",
+  "statEarnedCoins": "Ganadas",
+  "worldProgress": "Progreso de mundos",
+  "dayStreak": "Racha de {count} días",
+  "@dayStreak": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "totalMovesLabel": "Movimientos totales",
+  "hintsUsedLabel": "Pistas usadas",
+
+  "coinsEarnedTab": "Monedas ganadas",
+  "skillLadderTab": "Escala de habilidad",
+  "scopeGlobal": "Global",
+  "scopeWeekly": "Semanal",
+  "scopeFriends": "Amigos",
+  "you": "Tú",
+  "leaderboardFairness": "Clasifica solo por monedas ganadas jugando — se excluyen las compradas y las de anuncios. El rango no se puede comprar.",
+  "leaderboardEmpty": "Aún no hay clasificación. Juega niveles para ganar tu lugar.",
+
+  "starterPack": "Pack inicial",
+  "starterPackDesc": "Monedas + un tema · una vez",
+  "packPouch": "Bolsa",
+  "packBag": "Mochila",
+  "packChest": "Cofre",
+  "packVault": "Bóveda",
+  "bonusPercent": "+{percent}%",
+  "@bonusPercent": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+  "coinCount": "{count} monedas",
+  "@coinCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "bestValue": "Mejor valor",
+  "watchAnAd": "Ver un anuncio",
+  "adRewardAmount": "+{amount}",
+  "@adRewardAmount": {
+    "placeholders": { "amount": { "type": "int" } }
+  },
+  "adsOptIn": "Los anuncios son opcionales — nunca forzados.",
+
+  "claim": "Reclamar",
+  "claimed": "Reclamado",
+  "achievementsCount": "{unlocked}/{total}",
+  "@achievementsCount": {
+    "placeholders": { "unlocked": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "achFirstWorldTitle": "Conquistador de Mundos",
+  "achFirstWorldDesc": "Termina el Mundo 1",
+  "achPerfectTitle": "Perfeccionista",
+  "achPerfectDesc": "Gana 3 estrellas en 10 niveles",
+  "achStreakTitle": "Guerrero Semanal",
+  "achStreakDesc": "Alcanza una racha de 7 días",
+  "achNoHintTitle": "Héroe Sin Pistas",
+  "achNoHintDesc": "Supera 25 niveles sin pistas",
+  "achSpeedTitle": "Solucionador Veloz",
+  "achSpeedDesc": "Resuelve 30 niveles de forma óptima",
+  "achDailyTitle": "Devoto Diario",
+  "achDailyDesc": "Completa 30 puzzles diarios",
+
+  "dailySeed": "Semilla · {date} · mismo tablero en todo el mundo",
+  "@dailySeed": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "solveTodaysPuzzle": "Resuelve el puzzle de hoy",
+  "skillLadderNote": "Los menos movimientos te clasifican en la escala de habilidad no comprable",
+  "streak": "Racha",
+
+  "tutorial": "Tutorial",
+  "tutorialTitle1": "Las fichas azules atraen.",
+  "tutorialBody1": "Los números positivos atraen las fichas cercanas. Desliza +3 hacia la estrella.",
+  "tutorialTitle2": "Las fichas rojas empujan.",
+  "tutorialBody2": "Los números negativos repelen. Úsalos para desviar fichas.",
+  "tutorialTitle3": "Planifica cada movimiento.",
+  "tutorialBody3": "Las vistas previas muestran dónde se asienta la gravedad antes de mover.",
+  "tutorialStep": "Paso {current} de {total}",
+  "@tutorialStep": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "startPlaying": "Empezar Nivel 1",
+  "next": "Siguiente",
+  "skip": "Omitir",
+
+  "zenMode": "Modo Zen",
+  "zenSubtitle": "Sin estrellas · sin cronómetro · sin fallar",
+  "zenBody": "Relájate y experimenta. Resuelve a tu ritmo.",
+  "startZen": "Empezar un tablero Zen"
 }

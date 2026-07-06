@@ -81,5 +81,95 @@
   "shareApp": "Share",
   "shareAppMessage": "Try Number Gravity! Predict. Plan. Solve.",
   "copy": "Copy",
-  "copied": "Copied"
+  "copied": "Copied",
+
+  "profile": "Profile",
+  "statLevels": "Levels",
+  "statStars": "Stars",
+  "statEarnedCoins": "Earned",
+  "worldProgress": "World progress",
+  "dayStreak": "{count}-day streak",
+  "@dayStreak": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "totalMovesLabel": "Total moves",
+  "hintsUsedLabel": "Hints used",
+
+  "coinsEarnedTab": "Coins earned",
+  "skillLadderTab": "Skill ladder",
+  "scopeGlobal": "Global",
+  "scopeWeekly": "Weekly",
+  "scopeFriends": "Friends",
+  "you": "You",
+  "leaderboardFairness": "Ranks gameplay-earned coins only — purchased and ad coins excluded. Rank can't be bought.",
+  "leaderboardEmpty": "No rankings yet. Play levels to earn your place.",
+
+  "starterPack": "Starter Pack",
+  "starterPackDesc": "Coins + a theme · one time",
+  "packPouch": "Pouch",
+  "packBag": "Bag",
+  "packChest": "Chest",
+  "packVault": "Vault",
+  "bonusPercent": "+{percent}%",
+  "@bonusPercent": {
+    "placeholders": { "percent": { "type": "int" } }
+  },
+  "coinCount": "{count} coins",
+  "@coinCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "bestValue": "Best value",
+  "watchAnAd": "Watch an ad",
+  "adRewardAmount": "+{amount}",
+  "@adRewardAmount": {
+    "placeholders": { "amount": { "type": "int" } }
+  },
+  "adsOptIn": "Ads are opt-in only — never forced.",
+
+  "claim": "Claim",
+  "claimed": "Claimed",
+  "achievementsCount": "{unlocked}/{total}",
+  "@achievementsCount": {
+    "placeholders": { "unlocked": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "achFirstWorldTitle": "World Conqueror",
+  "achFirstWorldDesc": "Finish World 1",
+  "achPerfectTitle": "Perfectionist",
+  "achPerfectDesc": "Earn 3 stars on 10 levels",
+  "achStreakTitle": "Week Warrior",
+  "achStreakDesc": "Reach a 7-day streak",
+  "achNoHintTitle": "No-Hint Hero",
+  "achNoHintDesc": "Clear 25 levels with no hints",
+  "achSpeedTitle": "Speed Solver",
+  "achSpeedDesc": "Solve 30 levels optimally",
+  "achDailyTitle": "Daily Devotee",
+  "achDailyDesc": "Complete 30 daily puzzles",
+
+  "dailySeed": "Seed · {date} · same board worldwide",
+  "@dailySeed": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+  "solveTodaysPuzzle": "Solve today's puzzle",
+  "skillLadderNote": "Fewest moves ranks you on the unbuyable skill ladder",
+  "streak": "Streak",
+
+  "tutorial": "Tutorial",
+  "tutorialTitle1": "Blue tiles pull.",
+  "tutorialBody1": "Positive numbers attract nearby tiles. Slide +3 toward the star.",
+  "tutorialTitle2": "Red tiles push.",
+  "tutorialBody2": "Negative numbers repel. Use them to steer tiles away.",
+  "tutorialTitle3": "Plan every move.",
+  "tutorialBody3": "Ghost previews show where gravity settles before you commit.",
+  "tutorialStep": "Step {current} of {total}",
+  "@tutorialStep": {
+    "placeholders": { "current": { "type": "int" }, "total": { "type": "int" } }
+  },
+  "startPlaying": "Start Level 1",
+  "next": "Next",
+  "skip": "Skip",
+
+  "zenMode": "Zen Mode",
+  "zenSubtitle": "No stars · no timer · no fail state",
+  "zenBody": "Relax and experiment. Solve at your own pace.",
+  "startZen": "Start a Zen board"
 }

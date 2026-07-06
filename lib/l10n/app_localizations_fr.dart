@@ -169,4 +169,211 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get copied => 'Copié';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get statLevels => 'Niveaux';
+
+  @override
+  String get statStars => 'Étoiles';
+
+  @override
+  String get statEarnedCoins => 'Gagnées';
+
+  @override
+  String get worldProgress => 'Progression des mondes';
+
+  @override
+  String dayStreak(int count) {
+    return 'Série de $count jours';
+  }
+
+  @override
+  String get totalMovesLabel => 'Coups au total';
+
+  @override
+  String get hintsUsedLabel => 'Indices utilisés';
+
+  @override
+  String get coinsEarnedTab => 'Pièces gagnées';
+
+  @override
+  String get skillLadderTab => 'Échelle de talent';
+
+  @override
+  String get scopeGlobal => 'Global';
+
+  @override
+  String get scopeWeekly => 'Hebdo';
+
+  @override
+  String get scopeFriends => 'Amis';
+
+  @override
+  String get you => 'Vous';
+
+  @override
+  String get leaderboardFairness =>
+      'Classe uniquement les pièces gagnées en jouant — pièces achetées et de pubs exclues. Le rang ne s\'achète pas.';
+
+  @override
+  String get leaderboardEmpty =>
+      'Pas encore de classement. Jouez pour gagner votre place.';
+
+  @override
+  String get starterPack => 'Pack de départ';
+
+  @override
+  String get starterPackDesc => 'Pièces + un thème · une fois';
+
+  @override
+  String get packPouch => 'Bourse';
+
+  @override
+  String get packBag => 'Sac';
+
+  @override
+  String get packChest => 'Coffre';
+
+  @override
+  String get packVault => 'Chambre forte';
+
+  @override
+  String bonusPercent(int percent) {
+    return '+$percent%';
+  }
+
+  @override
+  String coinCount(int count) {
+    return '$count pièces';
+  }
+
+  @override
+  String get bestValue => 'Meilleure offre';
+
+  @override
+  String get watchAnAd => 'Regarder une pub';
+
+  @override
+  String adRewardAmount(int amount) {
+    return '+$amount';
+  }
+
+  @override
+  String get adsOptIn => 'Les pubs sont facultatives — jamais imposées.';
+
+  @override
+  String get claim => 'Récupérer';
+
+  @override
+  String get claimed => 'Récupéré';
+
+  @override
+  String achievementsCount(int unlocked, int total) {
+    return '$unlocked/$total';
+  }
+
+  @override
+  String get achFirstWorldTitle => 'Conquérant de Mondes';
+
+  @override
+  String get achFirstWorldDesc => 'Terminez le Monde 1';
+
+  @override
+  String get achPerfectTitle => 'Perfectionniste';
+
+  @override
+  String get achPerfectDesc => 'Obtenez 3 étoiles sur 10 niveaux';
+
+  @override
+  String get achStreakTitle => 'Guerrier de la Semaine';
+
+  @override
+  String get achStreakDesc => 'Atteignez une série de 7 jours';
+
+  @override
+  String get achNoHintTitle => 'Héros Sans Indice';
+
+  @override
+  String get achNoHintDesc => 'Réussissez 25 niveaux sans indice';
+
+  @override
+  String get achSpeedTitle => 'Solveur Rapide';
+
+  @override
+  String get achSpeedDesc => 'Résolvez 30 niveaux de façon optimale';
+
+  @override
+  String get achDailyTitle => 'Fidèle du Quotidien';
+
+  @override
+  String get achDailyDesc => 'Terminez 30 puzzles quotidiens';
+
+  @override
+  String dailySeed(String date) {
+    return 'Graine · $date · même plateau partout';
+  }
+
+  @override
+  String get solveTodaysPuzzle => 'Résoudre le puzzle du jour';
+
+  @override
+  String get skillLadderNote =>
+      'Le moins de coups vous classe sur l\'échelle de talent inachetable';
+
+  @override
+  String get streak => 'Série';
+
+  @override
+  String get tutorial => 'Tutoriel';
+
+  @override
+  String get tutorialTitle1 => 'Les tuiles bleues attirent.';
+
+  @override
+  String get tutorialBody1 =>
+      'Les nombres positifs attirent les tuiles proches. Glissez +3 vers l\'étoile.';
+
+  @override
+  String get tutorialTitle2 => 'Les tuiles rouges repoussent.';
+
+  @override
+  String get tutorialBody2 =>
+      'Les nombres négatifs repoussent. Utilisez-les pour dévier les tuiles.';
+
+  @override
+  String get tutorialTitle3 => 'Planifiez chaque coup.';
+
+  @override
+  String get tutorialBody3 =>
+      'Les aperçus montrent où la gravité se stabilise avant de valider.';
+
+  @override
+  String tutorialStep(int current, int total) {
+    return 'Étape $current sur $total';
+  }
+
+  @override
+  String get startPlaying => 'Commencer le Niveau 1';
+
+  @override
+  String get next => 'Suivant';
+
+  @override
+  String get skip => 'Passer';
+
+  @override
+  String get zenMode => 'Mode Zen';
+
+  @override
+  String get zenSubtitle => 'Sans étoiles · sans minuteur · sans échec';
+
+  @override
+  String get zenBody =>
+      'Détendez-vous et expérimentez. Résolvez à votre rythme.';
+
+  @override
+  String get startZen => 'Lancer un plateau Zen';
 }
