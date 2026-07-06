@@ -15,16 +15,15 @@ import 'components/board_component.dart';
 import 'components/force_line_component.dart';
 import 'components/game_selection_overlay.dart';
 
-typedef MoveCommitCallback = void Function(
-  SimulationResult result,
-  BoardModel board,
-);
+typedef MoveCommitCallback =
+    void Function(SimulationResult result, BoardModel board);
 
-typedef LevelWonCallback = void Function(
-  BoardModel board,
-  int movesUsed,
-  List<MoveRecord> moveRecords,
-);
+typedef LevelWonCallback =
+    void Function(
+      BoardModel board,
+      int movesUsed,
+      List<MoveRecord> moveRecords,
+    );
 
 class NumberGravityGame extends FlameGame {
   NumberGravityGame({
@@ -106,8 +105,7 @@ class NumberGravityGame extends FlameGame {
       return;
     }
     _selectedTileId = tile.id;
-    final moves = bridge.legalMoves(_board, tile.id);
-    _selectionOverlay.showForTile(tile.id, moves.map((m) => m.direction).toList());
+    _selectionOverlay.selectTile(tile.id);
     _forceLines.updateVectors(bridge.computeForces(_board, tile.id));
   }
 

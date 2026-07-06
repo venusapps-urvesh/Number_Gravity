@@ -12,32 +12,19 @@ class GameHud extends StatelessWidget {
     required this.movesUsed,
     required this.optimalMoves,
     required this.onPause,
-    required this.onUndo,
-    required this.onHint,
     super.key,
-    this.hintCount = 0,
     this.coinAmount = 0,
-    this.canUndo = false,
-    this.canHint = true,
   });
 
   final int levelId;
   final int movesUsed;
   final int? optimalMoves;
   final VoidCallback onPause;
-  final VoidCallback onUndo;
-  final VoidCallback onHint;
-  final int hintCount;
   final int coinAmount;
-  final bool canUndo;
-  final bool canHint;
 
   factory GameHud.fromSession({
     required GameSessionState session,
     required VoidCallback onPause,
-    required VoidCallback onUndo,
-    required VoidCallback onHint,
-    int hintCount = 0,
     int coinAmount = 0,
   }) {
     return GameHud(
@@ -45,12 +32,7 @@ class GameHud extends StatelessWidget {
       movesUsed: session.movesUsed,
       optimalMoves: session.level.minimumMoves,
       onPause: onPause,
-      onUndo: onUndo,
-      onHint: onHint,
-      hintCount: hintCount,
       coinAmount: coinAmount,
-      canUndo: session.moveHistory.length > 1,
-      canHint: session.level.solutionMoves.isNotEmpty,
     );
   }
 
@@ -74,7 +56,9 @@ class GameHud extends StatelessWidget {
         border: Border.all(color: border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: brightness == Brightness.dark ? 0.2 : 0.06),
+            color: Colors.black.withValues(
+              alpha: brightness == Brightness.dark ? 0.2 : 0.06,
+            ),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -99,7 +83,9 @@ class GameHud extends StatelessWidget {
                     ),
                     Text(
                       l10n.appName,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: muted),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: muted),
                     ),
                   ],
                 ),
@@ -107,32 +93,16 @@ class GameHud extends StatelessWidget {
               NGCoinBadge(amount: coinAmount, compact: true),
             ],
           ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              if (optimal != null)
-                Expanded(
-                  child: Text(
-                    l10n.movesOptimal(movesUsed, optimal),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: muted,
-                        ),
-                  ),
-                ),
-              NGIconButton(
-                icon: Icons.undo_rounded,
-                tooltip: l10n.undo,
-                onPressed: canUndo ? onUndo : null,
-              ),
-              NGIconButton(
-                icon: Icons.lightbulb_outline_rounded,
-                tooltip: l10n.hint,
-                onPressed: canHint ? onHint : null,
-                badge: hintCount > 0 ? hintCount : null,
-              ),
-            ],
-          ),
+          if (optimal != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              l10n.movesOptimal(movesUsed, optimal),
+              textAlign: TextAlign.center,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: muted),
+            ),
+          ],
         ],
       ),
     );

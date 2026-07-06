@@ -16,8 +16,12 @@ class GameSelectionOverlay extends PositionComponent {
     _legalDirections
       ..clear()
       ..addAll(directions);
-    boardComponent.setSelectedTile(tileId);
+    selectTile(tileId);
+  }
+
+  void selectTile(String? tileId) {
     _selectedTileId = tileId;
+    boardComponent.setSelectedTile(tileId);
   }
 
   String? _selectedTileId;
@@ -58,30 +62,33 @@ class GameSelectionOverlay extends PositionComponent {
     }
   }
 
-  (Vector2, Vector2, Vector2) _arrowPoints(Vector2 center, Direction direction) {
+  (Vector2, Vector2, Vector2) _arrowPoints(
+    Vector2 center,
+    Direction direction,
+  ) {
     const offset = tileSizePx * 0.55;
     const size = 10.0;
     return switch (direction) {
       Direction.up => (
-          Vector2(center.x, center.y - offset),
-          Vector2(center.x - size, center.y - offset + size),
-          Vector2(center.x + size, center.y - offset + size),
-        ),
+        Vector2(center.x, center.y - offset),
+        Vector2(center.x - size, center.y - offset + size),
+        Vector2(center.x + size, center.y - offset + size),
+      ),
       Direction.down => (
-          Vector2(center.x, center.y + offset),
-          Vector2(center.x - size, center.y + offset - size),
-          Vector2(center.x + size, center.y + offset - size),
-        ),
+        Vector2(center.x, center.y + offset),
+        Vector2(center.x - size, center.y + offset - size),
+        Vector2(center.x + size, center.y + offset - size),
+      ),
       Direction.left => (
-          Vector2(center.x - offset, center.y),
-          Vector2(center.x - offset + size, center.y - size),
-          Vector2(center.x - offset + size, center.y + size),
-        ),
+        Vector2(center.x - offset, center.y),
+        Vector2(center.x - offset + size, center.y - size),
+        Vector2(center.x - offset + size, center.y + size),
+      ),
       Direction.right => (
-          Vector2(center.x + offset, center.y),
-          Vector2(center.x + offset - size, center.y - size),
-          Vector2(center.x + offset - size, center.y + size),
-        ),
+        Vector2(center.x + offset, center.y),
+        Vector2(center.x + offset - size, center.y - size),
+        Vector2(center.x + offset - size, center.y + size),
+      ),
     };
   }
 }

@@ -10,11 +10,12 @@ import '../core/utils/responsive.dart';
 import '../l10n/app_localizations.dart';
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
+import '../models/move.dart';
 import '../models/replay/move_record.dart';
 import '../providers/game_session_provider.dart';
 import '../providers/providers.dart';
 import '../simulation/board_applier.dart';
-import '../widgets/common/ng_direction_pad.dart';
+import '../widgets/game/game_action_bar.dart';
 import '../widgets/game/game_pause_sheet.dart';
 import '../widgets/game/force_indicator.dart';
 import '../widgets/game/game_hud.dart';
@@ -36,7 +37,8 @@ class NumberGravityGameWidget extends ConsumerStatefulWidget {
       _NumberGravityGameWidgetState();
 }
 
-class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidget> {
+class _NumberGravityGameWidgetState
+    extends ConsumerState<NumberGravityGameWidget> {
   NumberGravityGame? _game;
   int _movesUsed = 0;
   int _hintsRemaining = 2;
@@ -79,10 +81,13 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
       movesUsed: _movesUsed,
       optimalMoves: widget.level.minimumMoves,
       coinAmount: progress?.coins ?? 0,
-      hintCount: _hintsRemaining,
+      onPause: _showPauseMenu,
+    );
+
+    final actionBar = GameActionBar(
       canUndo: _game!.canUndo,
       canHint: _hintsRemaining > 0 && widget.level.solutionMoves.isNotEmpty,
-      onPause: _showPauseMenu,
+      hintCount: _hintsRemaining,
       onUndo: () {
         _game?.undo();
         setState(() => _movesUsed = _game?.movesUsed ?? 0);
@@ -91,42 +96,19 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
       onHint: () => _useHint(l10n),
     );
 
-    final directionPad = NGDirectionPad(
-      label: l10n.swipeToMove,
-      onDirection: (direction) async {
-        await _game?.commitDirection(direction);
-        if (mounted) {
-          setState(() => _movesUsed = _game?.movesUsed ?? _movesUsed);
-        }
-      },
-    );
+    final boardView = GestureDetector(onPanEnd: _handleSwipe, child: board);
 
     final forceSlot = ForceIndicator(vectors: const []);
 
     if (isTablet) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Column(
           children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                children: [
-                  hud,
-                  forceSlot,
-                  Expanded(child: Center(child: board)),
-                ],
-              ),
-            ),
-            const SizedBox(width: 24),
-            SizedBox(
-              width: 280,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [directionPad],
-              ),
-            ),
+            hud,
+            forceSlot,
+            Expanded(child: Center(child: boardView)),
+            actionBar,
           ],
         ),
       );
@@ -136,10 +118,29 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
       children: [
         hud,
         forceSlot,
-        Expanded(child: board),
-        directionPad,
+        Expanded(child: boardView),
+        actionBar,
       ],
     );
+  }
+
+  void _handleSwipe(DragEndDetails details) {
+    final velocity = details.velocity.pixelsPerSecond;
+    if (velocity.distance < 120) {
+      return;
+    }
+
+    final absDx = velocity.dx.abs();
+    final absDy = velocity.dy.abs();
+    final direction = absDx >= absDy
+        ? (velocity.dx > 0 ? Direction.right : Direction.left)
+        : (velocity.dy > 0 ? Direction.down : Direction.up);
+
+    _game?.commitDirection(direction).then((_) {
+      if (mounted) {
+        setState(() => _movesUsed = _game?.movesUsed ?? _movesUsed);
+      }
+    });
   }
 
   void _showPauseMenu() {
@@ -165,9 +166,9 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
 
     final used = _game?.showHint() ?? false;
     if (!used) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.hint)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.hint)));
       return;
     }
 
@@ -195,7 +196,9 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
       _ => coinsPerStar1,
     };
 
-    await ref.read(progressRepositoryProvider).setLevelStars(
+    await ref
+        .read(progressRepositoryProvider)
+        .setLevelStars(
           levelId: widget.level.id,
           stars: stars,
           movesUsed: movesUsed,
@@ -208,7 +211,9 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
     await ref.read(progressRepositoryProvider).saveProgress(progress);
     ref.invalidate(playerProgressProvider);
 
-    final solutionCode = ref.read(replayServiceProvider).encodeMoves(moveRecords);
+    final solutionCode = ref
+        .read(replayServiceProvider)
+        .encodeMoves(moveRecords);
     if (!mounted) {
       return;
     }
