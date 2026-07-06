@@ -4,10 +4,15 @@
   "loading": "Loading...",
   "homeTitle": "Number Gravity",
   "homeSubtitle": "Predict. Plan. Solve.",
+  "playCampaign": "Play Campaign",
   "playLevel": "Play Level 1",
   "settings": "Settings",
   "dailyPuzzle": "Daily Puzzle",
+  "leaderboard": "Leaderboard",
   "worlds": "Worlds",
+  "selectWorld": "Select World",
+  "shop": "Shop",
+  "achievements": "Achievements",
   "comingSoon": "Coming in a future phase",
   "gameplayPlaceholder": "Game board renders in Phase 3",
   "themeMode": "Theme",
@@ -15,5 +20,66 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "colorBlindMode": "Color-blind mode",
-  "reduceMotion": "Reduce motion"
+  "reduceMotion": "Reduce motion",
+  "accessibility": "Accessibility",
+  "appearance": "Appearance",
+  "undo": "Undo",
+  "redo": "Redo",
+  "hint": "Hint",
+  "restart": "Restart",
+  "swipeToMove": "Swipe to move",
+  "levelTitle": "Level {id}",
+  "@levelTitle": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "movesOptimal": "{used}/{optimal} Optimal",
+  "@movesOptimal": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "optimal": {
+        "type": "int"
+      }
+    }
+  },
+  "levelComplete": "Level Complete",
+  "moves": "Moves",
+  "optimalLabel": "Optimal: {count}",
+  "@optimalLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coinsEarned": "Coins Earned",
+  "shareSolution": "Share your solution",
+  "nextLevel": "Next Level",
+  "replay": "Replay",
+  "home": "Home",
+  "continueLabel": "Continue",
+  "doubleCoins": "Double Your Coins!",
+  "watchAdCoins": "Watch an ad to earn +{amount}",
+  "@watchAdCoins": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "levels": "Levels",
+  "language": "Language",
+  "selectLanguage": "Select language",
+  "languageEnglish": "English",
+  "languageSpanish": "Español",
+  "languageFrench": "Français",
+  "shareApp": "Share",
+  "shareAppMessage": "Try Number Gravity! Predict. Plan. Solve.",
+  "copy": "Copy",
+  "copied": "Copied"
 }

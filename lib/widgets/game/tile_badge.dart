@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/theme/app_colors.dart';
 import '../../core/constants/board_constants.dart';
 import '../../models/tile_type.dart';
+import '../common/goal_star_icon.dart';
 
 class TileBadge extends StatelessWidget {
   const TileBadge({
@@ -53,23 +54,23 @@ class TileBadge extends StatelessWidget {
               right: 6,
               child: _SignShape(value: value),
             ),
-          Text(
-            _label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: size * 0.34,
-              fontWeight: FontWeight.w700,
+          if (type == TileType.goal)
+            GoalStarIcon(size: size * 0.42)
+          else
+            Text(
+              _label,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: size * 0.34,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
         ],
       ),
     );
   }
 
   String get _label {
-    if (type == TileType.goal) {
-      return '★';
-    }
     if (type == TileType.wall) {
       return '';
     }

@@ -6,6 +6,7 @@ import '../../app/theme/app_colors.dart';
 import '../../core/constants/board_constants.dart';
 import '../../models/tile_model.dart';
 import '../../models/tile_type.dart';
+import '../../widgets/common/goal_star_icon.dart';
 
 class TileComponent extends PositionComponent with TapCallbacks {
   TileComponent({
@@ -43,6 +44,26 @@ class TileComponent extends PositionComponent with TapCallbacks {
       _drawSign(canvas, rect);
     }
 
+    if (tile.type == TileType.goal) {
+      paintGoalStar(canvas, rect.deflate(rect.shortestSide * 0.28));
+      return;
+    }
+
+    if (tile.type == TileType.portal) {
+      _drawPortal(canvas, rect);
+      return;
+    }
+
+    if (tile.type == TileType.switchTile) {
+      _drawPowerIcon(canvas, rect);
+      return;
+    }
+
+    if (tile.type == TileType.door) {
+      _drawDoor(canvas, rect, tile.isDoorOpen);
+      return;
+    }
+
     final text = _label;
     if (text.isNotEmpty) {
       final painter = TextPainter(
@@ -68,29 +89,17 @@ class TileComponent extends PositionComponent with TapCallbacks {
   }
 
   String get _label {
-    if (tile.type == TileType.goal) {
-      return '★';
-    }
     if (tile.type == TileType.wall) {
       return '';
     }
-    if (tile.type == TileType.portal) {
-      return '◎';
-    }
     if (tile.type == TileType.multiplier) {
-      return '×${tile.modifierFactor}';
+      return 'x${tile.modifierFactor}';
     }
     if (tile.type == TileType.divider) {
-      return '÷${tile.modifierFactor}';
+      return '/${tile.modifierFactor}';
     }
     if (tile.type == TileType.inverter) {
-      return '±';
-    }
-    if (tile.type == TileType.switchTile) {
-      return '⏻';
-    }
-    if (tile.type == TileType.door) {
-      return tile.isDoorOpen ? '▢' : '▣';
+      return '+/-';
     }
     if (tile.value == 0) {
       return '0';
@@ -132,6 +141,43 @@ class TileComponent extends PositionComponent with TapCallbacks {
     } else {
       canvas.drawLine(Offset(cx - 5, cy), Offset(cx + 5, cy), paint);
     }
+  }
+
+  void _drawPortal(Canvas canvas, Rect rect) {
+    final center = rect.center;
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    canvas.drawCircle(center, rect.shortestSide * 0.18, paint);
+    canvas.drawCircle(center, rect.shortestSide * 0.1, paint);
+  }
+
+  void _drawPowerIcon(Canvas canvas, Rect rect) {
+    final center = rect.center;
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..strokeCap = StrokeCap.round;
+    canvas.drawCircle(center, rect.shortestSide * 0.14, paint);
+    canvas.drawLine(
+      center,
+      Offset(center.dx, rect.top + rect.height * 0.22),
+      paint,
+    );
+  }
+
+  void _drawDoor(Canvas canvas, Rect rect, bool open) {
+    final inset = rect.deflate(rect.shortestSide * 0.28);
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = open ? PaintingStyle.stroke : PaintingStyle.fill
+      ..strokeWidth = 2.5;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(inset, const Radius.circular(4)),
+      paint,
+    );
   }
 
   @override

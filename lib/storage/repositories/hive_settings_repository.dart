@@ -60,6 +60,19 @@ class HiveSettingsRepository implements SettingsRepository {
     settings.reduceMotion = enabled;
     await saveSettings(settings);
   }
+
+  @override
+  Future<String?> getLocaleCode() async {
+    final settings = await getSettings();
+    return settings.localeCode;
+  }
+
+  @override
+  Future<void> setLocaleCode(String? code) async {
+    final settings = await getSettings();
+    settings.localeCode = code;
+    await saveSettings(settings);
+  }
 }
 
 class SettingsRepositoryFactory {

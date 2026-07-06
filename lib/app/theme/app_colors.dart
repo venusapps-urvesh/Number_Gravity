@@ -28,6 +28,18 @@ class AppColors {
   static const Color lightPrimary = positive;
   static const Color darkPrimary = Color(0xFF60A5FA);
 
+  static const Color dailyAccent = Color(0xFF7C3AED);
+  static const Color leaderboardAccent = Color(0xFF16A34A);
+  static const Color coinGold = Color(0xFFEAB308);
+
+  static Color onSurfaceMuted(Brightness brightness) {
+    return brightness == Brightness.dark ? neutral400 : neutral500;
+  }
+
+  static Color surfaceBorder(Brightness brightness) {
+    return brightness == Brightness.dark ? neutral700 : neutral200;
+  }
+
   static Color tileColorForValue(int value) {
     if (value > 0) {
       return positive;

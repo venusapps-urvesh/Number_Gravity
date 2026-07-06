@@ -4,10 +4,15 @@
   "loading": "Chargement...",
   "homeTitle": "Number Gravity",
   "homeSubtitle": "Prévoir. Planifier. Résoudre.",
+  "playCampaign": "Campagne",
   "playLevel": "Jouer niveau 1",
   "settings": "Paramètres",
   "dailyPuzzle": "Puzzle du jour",
+  "leaderboard": "Classement",
   "worlds": "Mondes",
+  "selectWorld": "Choisir un monde",
+  "shop": "Boutique",
+  "achievements": "Succès",
   "comingSoon": "Bientôt disponible",
   "gameplayPlaceholder": "Le plateau sera rendu en phase 3",
   "themeMode": "Thème",
@@ -15,5 +20,66 @@
   "themeLight": "Clair",
   "themeDark": "Sombre",
   "colorBlindMode": "Mode daltonien",
-  "reduceMotion": "Réduire les animations"
+  "reduceMotion": "Réduire les animations",
+  "accessibility": "Accessibilité",
+  "appearance": "Apparence",
+  "undo": "Annuler",
+  "redo": "Rétablir",
+  "hint": "Indice",
+  "restart": "Recommencer",
+  "swipeToMove": "Glissez pour déplacer",
+  "levelTitle": "Niveau {id}",
+  "@levelTitle": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "movesOptimal": "{used}/{optimal} optimal",
+  "@movesOptimal": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "optimal": {
+        "type": "int"
+      }
+    }
+  },
+  "levelComplete": "Niveau terminé",
+  "moves": "Coups",
+  "optimalLabel": "Optimal : {count}",
+  "@optimalLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coinsEarned": "Pièces gagnées",
+  "shareSolution": "Partagez votre solution",
+  "nextLevel": "Niveau suivant",
+  "replay": "Rejouer",
+  "home": "Accueil",
+  "continueLabel": "Continuer",
+  "doubleCoins": "Doublez vos pièces !",
+  "watchAdCoins": "Regardez une pub pour gagner +{amount}",
+  "@watchAdCoins": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "levels": "Niveaux",
+  "language": "Langue",
+  "selectLanguage": "Choisir la langue",
+  "languageEnglish": "English",
+  "languageSpanish": "Español",
+  "languageFrench": "Français",
+  "shareApp": "Partager",
+  "shareAppMessage": "Essayez Number Gravity ! Prévoir. Planifier. Résoudre.",
+  "copy": "Copier",
+  "copied": "Copié"
 }

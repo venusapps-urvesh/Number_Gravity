@@ -8,11 +8,15 @@ class NGCard extends StatelessWidget {
     super.key,
     this.padding = const EdgeInsets.all(AppSpacing.lg),
     this.onTap,
+    this.borderColor,
+    this.borderWidth = 0,
   });
 
   final Widget child;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
+  final Color? borderColor;
+  final double borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,12 @@ class NGCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: gradient,
         borderRadius: BorderRadius.circular(16),
+        border: borderWidth > 0
+            ? Border.all(
+                color: borderColor ?? AppColors.surfaceBorder(brightness),
+                width: borderWidth,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: brightness == Brightness.dark ? 0.25 : 0.08),

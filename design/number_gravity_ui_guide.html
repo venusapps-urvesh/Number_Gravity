@@ -1,0 +1,1114 @@
+<title>Number Gravity — Screen Map & UI Guide</title>
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --bg: #E8EEF9;
+    --bg-2: #DFE7F5;
+    --surface: #FFFFFF;
+    --surface-2: #F3F7FD;
+    --ink: #0F1E38;
+    --muted: #56668A;
+    --faint: #8494B4;
+    --line: #D7E0F1;
+    --line-strong: #C4D1E9;
+
+    --blue: #2563EB;
+    --blue-ink: #1D4ED8;
+    --blue-soft: #DCE7FE;
+    --red: #DC2626;
+    --red-soft: #FBE0E0;
+    --gold: #FBBF24;
+    --gold-ink: #B4790A;
+    --green: #16A34A;
+    --purple: #6D63E6;
+
+    --shadow: 0 1px 2px rgba(16,30,56,.04), 0 8px 24px rgba(16,30,56,.06);
+    --shadow-lg: 0 2px 6px rgba(16,30,56,.06), 0 20px 48px rgba(16,30,56,.12);
+
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --maxw: 1180px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #090E1C;
+      --bg-2: #0B1223;
+      --surface: #121A2E;
+      --surface-2: #0F1727;
+      --ink: #EAF0FB;
+      --muted: #97A6C2;
+      --faint: #6C7C9C;
+      --line: #23304C;
+      --line-strong: #2E3D5C;
+      --blue-soft: #16264A;
+      --red-soft: #3A1C1F;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+      --shadow-lg: 0 2px 8px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #E8EEF9; --bg-2: #DFE7F5; --surface: #FFFFFF; --surface-2: #F3F7FD;
+    --ink: #0F1E38; --muted: #56668A; --faint: #8494B4; --line: #D7E0F1; --line-strong: #C4D1E9;
+    --blue-soft: #DCE7FE; --red-soft: #FBE0E0;
+    --shadow: 0 1px 2px rgba(16,30,56,.04), 0 8px 24px rgba(16,30,56,.06);
+    --shadow-lg: 0 2px 6px rgba(16,30,56,.06), 0 20px 48px rgba(16,30,56,.12);
+  }
+  :root[data-theme="dark"] {
+    --bg: #090E1C; --bg-2: #0B1223; --surface: #121A2E; --surface-2: #0F1727;
+    --ink: #EAF0FB; --muted: #97A6C2; --faint: #6C7C9C; --line: #23304C; --line-strong: #2E3D5C;
+    --blue-soft: #16264A; --red-soft: #3A1C1F;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+    --shadow-lg: 0 2px 8px rgba(0,0,0,.35), 0 24px 60px rgba(0,0,0,.5);
+  }
+
+  /* ============ BASE ============ */
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 600px at 88% -8%, rgba(37,99,235,.10), transparent 60%),
+      radial-gradient(900px 500px at 4% 4%, rgba(251,191,36,.08), transparent 55%),
+      var(--bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+  h1,h2,h3 { text-wrap: balance; margin: 0; letter-spacing: -0.02em; line-height: 1.08; }
+  p { margin: 0; }
+  a { color: var(--blue); }
+  .mono { font-family: var(--mono); }
+
+  /* ============ HERO ============ */
+  header.hero { padding: 64px 0 40px; position: relative; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--muted); font-weight: 600;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 22px;
+  }
+  .eyebrow::after { content:""; flex:1; height:1px; background: var(--line-strong); }
+  .hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 900; letter-spacing: -0.045em; }
+  .hero h1 .g {
+    background: linear-gradient(180deg, var(--blue) 0%, var(--blue-ink) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero .lede {
+    max-width: 62ch; font-size: clamp(16px, 2.1vw, 19px); color: var(--muted);
+    margin-top: 20px;
+  }
+  .hero .lede strong { color: var(--ink); font-weight: 650; }
+
+  .statbar {
+    display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: stretch;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 18px; box-shadow: var(--shadow); display: flex; flex-direction: column;
+    min-width: 120px;
+  }
+  .stat .n { font-size: 26px; font-weight: 850; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 12.5px; color: var(--muted); font-weight: 600; letter-spacing: .01em; }
+  .stat.legend-tiles { flex-direction: row; align-items: center; gap: 12px; }
+
+  /* mini tiles for legend */
+  .mtile {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    font-weight: 850; font-size: 17px; color: #fff; position: relative;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.28), var(--shadow);
+    flex: none;
+  }
+  .mtile.pos { background: linear-gradient(180deg,#3B82F6,#2563EB); }
+  .mtile.neg { background: linear-gradient(180deg,#EF4444,#DC2626); }
+  .mtile.goal { background: linear-gradient(180deg,#FCD34D,#FBBF24); color: var(--gold-ink); }
+  .legend-tiles .cap { font-size: 12px; color: var(--muted); font-weight: 600; line-height: 1.3; }
+
+  /* ============ SECTION SHELL ============ */
+  section { padding: 40px 0; }
+  .sec-head { margin-bottom: 26px; max-width: 70ch; }
+  .sec-head .kicker {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--blue); font-weight: 700; margin-bottom: 10px;
+  }
+  .sec-head h2 { font-size: clamp(24px, 3.6vw, 33px); font-weight: 850; }
+  .sec-head p { color: var(--muted); margin-top: 12px; font-size: 16px; }
+
+  /* ============ SCREEN MAP ============ */
+  .map { display: grid; gap: 18px; }
+  .maprow {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .maprow > .ttl {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+    font-weight: 700; color: var(--muted); margin-bottom: 14px; display:flex; gap:10px; align-items:center;
+  }
+  .maprow > .ttl .dot { width:9px; height:9px; border-radius:3px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px;
+    padding: 9px 13px; color: var(--ink); font-weight: 650; font-size: 14px;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+  }
+  .chip:hover { transform: translateY(-2px); border-color: var(--blue); box-shadow: var(--shadow); }
+  .chip .rt { font-family: var(--mono); font-size: 11.5px; color: var(--faint); font-weight: 600; }
+  .chip .num {
+    width: 22px; height: 22px; border-radius: 7px; background: var(--blue); color:#fff;
+    display: grid; place-items: center; font-size: 12px; font-weight: 800; flex:none;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip.ov .num { background: var(--purple); }
+  .chip.meta .num { background: var(--green); }
+  .arrow { color: var(--faint); font-weight: 800; font-size: 15px; }
+
+  /* ============ GALLERY ============ */
+  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+  @media (max-width: 900px){ .gallery { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+    box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card .cbody { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .card .ci {
+    display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: start;
+  }
+  .card .ci .no {
+    grid-row: span 2; width: 34px; height: 34px; border-radius: 10px; flex: none;
+    display: grid; place-items: center; font-weight: 850; font-size: 15px; color: #fff;
+    font-variant-numeric: tabular-nums; background: var(--blue);
+  }
+  .card.grp-ov .no { background: var(--purple); }
+  .card.grp-meta .no { background: var(--green); }
+  .card h3 { font-size: 19px; font-weight: 820; }
+  .card .route {
+    font-family: var(--mono); font-size: 12px; color: var(--muted); font-weight: 600;
+    background: var(--surface-2); border: 1px solid var(--line); padding: 2px 8px;
+    border-radius: 7px; display: inline-block; width: max-content;
+  }
+  .card .purpose { color: var(--muted); font-size: 14.5px; grid-column: 2; }
+  .bestui { display: flex; flex-direction: column; gap: 8px; }
+  .bestui .lbl {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--blue); font-weight: 700;
+  }
+  .bestui ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .bestui li { font-size: 13.5px; color: var(--ink); padding-left: 20px; position: relative; line-height: 1.5; }
+  .bestui li::before {
+    content: ""; position: absolute; left: 2px; top: 8px; width: 8px; height: 8px;
+    border-radius: 3px; background: var(--gold);
+  }
+  .bestui li b { font-weight: 700; }
+  .doctag {
+    font-family: var(--mono); font-size: 10.5px; color: var(--faint); font-weight: 600;
+    background: var(--surface-2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px;
+    white-space: nowrap;
+  }
+
+  /* ============ PHONE MOCKUP ============ */
+  .stage {
+    background:
+      linear-gradient(180deg, #EAF1FC, #DEE8F8);
+    padding: 26px; display: grid; place-items: center; border-bottom: 1px solid var(--line);
+    position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: "F=ma   |v|/d   Σ   ↓g   +   −"; position: absolute; inset: 0;
+    font-family: var(--mono); font-size: 44px; color: rgba(37,99,235,.05); font-weight: 700;
+    display: grid; place-items: center; letter-spacing: .1em; transform: rotate(-8deg) scale(1.4);
+    pointer-events: none; white-space: nowrap;
+  }
+  /* phone: scoped fixed "game light theme" so mockups read as device screenshots in either page theme */
+  .phone {
+    --s-bg: #E9F0FB; --s-surface:#FFFFFF; --s-2:#F1F6FD; --s-ink:#13223F; --s-mut:#6B7A96;
+    --s-line:#E3EAF5; --s-blue:#2563EB; --s-red:#DC2626; --s-gold:#FBBF24;
+    width: 288px; aspect-ratio: 9 / 19; background: var(--s-bg); border-radius: 34px;
+    padding: 12px; position: relative; box-shadow: var(--shadow-lg), inset 0 0 0 8px #10182B;
+    outline: 1px solid rgba(0,0,0,.35); overflow: hidden; z-index: 1; color: var(--s-ink);
+    font-size: 12px;
+  }
+  .phone .notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 92px; height: 20px; background: #10182B; border-radius: 0 0 12px 12px; z-index: 5;
+  }
+  .screen { position: absolute; inset: 12px; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; }
+  .sbar { height: 26px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 10px; font-weight: 700; color: var(--s-ink); flex:none; }
+  .sbar .r { display:flex; gap:4px; align-items:center; }
+  .body { flex: 1; padding: 6px 12px 12px; display: flex; flex-direction: column; min-height: 0; }
+
+  /* generic phone atoms */
+  .coinpill {
+    display:inline-flex; align-items:center; gap:6px; background:#fff; border-radius: 20px;
+    padding: 4px 10px 4px 5px; box-shadow: 0 2px 5px rgba(16,30,56,.12); font-weight: 800; font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .coin { width:18px; height:18px; border-radius:50%; background: radial-gradient(circle at 35% 30%, #FDE68A, #F59E0B); display:grid; place-items:center; font-size:10px; color:#8a5a00; box-shadow: inset 0 -2px 0 rgba(0,0,0,.15); flex:none; }
+  .coin::after{ content:"★"; }
+  .pbtn {
+    border-radius: 14px; padding: 11px 14px; font-weight: 800; font-size: 14px; color:#fff;
+    display:flex; align-items:center; gap:10px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.18);
+    justify-content:flex-start;
+  }
+  .pbtn.blue{ background: linear-gradient(180deg,#3B82F6,#2563EB); }
+  .pbtn.purple{ background: linear-gradient(180deg,#7C74F0,#6D63E6); }
+  .pbtn.green{ background: linear-gradient(180deg,#22C55E,#16A34A); }
+  .pbtn.gold{ background: linear-gradient(180deg,#FCD34D,#F59E0B); color:#7a4d00; box-shadow: inset 0 -3px 0 rgba(0,0,0,.12);}
+  .pbtn .ic{ width:22px; height:22px; display:grid; place-items:center; }
+
+  /* board tiles */
+  .board { display: grid; gap: 5px; }
+  .t {
+    aspect-ratio: 1; border-radius: 9px; display:grid; place-items:center; font-weight: 850;
+    font-size: 15px; color:#fff; position: relative;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.25);
+  }
+  .t.pos{ background: linear-gradient(180deg,#3B82F6,#2563EB); }
+  .t.neg{ background: linear-gradient(180deg,#EF4444,#DC2626); }
+  .t.goal{ background: linear-gradient(180deg,#FCD34D,#FBBF24); color:#8a5a00; box-shadow: inset 0 -3px 0 rgba(0,0,0,.1), inset 0 2px 0 rgba(255,255,255,.4); }
+  .t.wall{ background: linear-gradient(180deg,#9AA6B8,#7B8798); box-shadow: inset 0 -3px 0 rgba(0,0,0,.2); }
+  .t.empty{ background: rgba(19,34,63,.05); box-shadow:none; border:1px solid rgba(19,34,63,.06); }
+  .t.ghost{ background: rgba(37,99,235,.14); color: var(--s-blue); border: 1.5px dashed rgba(37,99,235,.55); box-shadow:none; }
+  .t.sel{ outline: 3px solid rgba(37,99,235,.65); outline-offset: 1px; }
+  .t small{ font-size:10px; }
+  .t .sym{ position:absolute; top:2px; right:4px; font-size:9px; opacity:.85; }
+
+  .arrowrow { display:flex; gap:8px; justify-content:center; }
+  .arrowbtn{ flex:1; background:#fff; border-radius: 11px; height: 38px; display:grid; place-items:center; color: var(--s-blue); font-size:18px; font-weight:900; box-shadow: 0 2px 5px rgba(16,30,56,.1); }
+
+  .listrow{ background:#fff; border-radius: 12px; padding: 9px 11px; display:flex; align-items:center; gap:10px; box-shadow: 0 1px 3px rgba(16,30,56,.07); }
+  .bar{ height:6px; border-radius:4px; background:#E4EAF4; overflow:hidden; }
+  .bar>span{ display:block; height:100%; background: linear-gradient(90deg,#3B82F6,#2563EB); }
+  .stars{ color:#FBBF24; font-size:11px; letter-spacing:1px; }
+  .tag{ font-size:9px; font-weight:800; padding:2px 6px; border-radius:6px; text-transform:uppercase; letter-spacing:.05em; }
+  .tag.cur{ background:#DCE7FE; color:#1D4ED8; }
+  .tag.lock{ background:#E6EBF3; color:#8494B4; }
+  .titlebar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .titlebar h4{ margin:0; font-size:15px; font-weight:850; letter-spacing:-.01em; }
+  .back{ width:24px; height:24px; border-radius:8px; background:#fff; display:grid; place-items:center; font-weight:900; color:var(--s-blue); box-shadow: 0 1px 3px rgba(16,30,56,.1); font-size:13px; }
+
+  .segtabs{ display:flex; background:#E4EAF4; border-radius:10px; padding:3px; gap:3px; }
+  .segtabs>div{ flex:1; text-align:center; font-size:10.5px; font-weight:800; padding:6px 4px; border-radius:8px; color:var(--s-mut); }
+  .segtabs>div.on{ background:#fff; color:var(--s-ink); box-shadow:0 1px 3px rgba(16,30,56,.12); }
+  .scopes{ display:flex; gap:6px; }
+  .scope{ font-size:9.5px; font-weight:700; padding:4px 9px; border-radius:20px; background:#fff; color:var(--s-mut); box-shadow:0 1px 2px rgba(16,30,56,.08); }
+  .scope.on{ background:var(--s-blue); color:#fff; }
+
+  .toggle{ width:34px; height:20px; border-radius:20px; background:#CBD6E8; position:relative; flex:none; }
+  .toggle.on{ background:#2563EB; }
+  .toggle::after{ content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition:left .15s; }
+  .toggle.on::after{ left:16px; }
+
+  .overlay-dim{ position:absolute; inset:0; background: rgba(10,20,40,.55); backdrop-filter: blur(1.5px); display:grid; place-items:center; z-index:6; padding:22px; }
+  .modal{ background:#fff; border-radius:20px; padding:18px; width:100%; box-shadow: 0 20px 40px rgba(0,0,0,.3); display:flex; flex-direction:column; gap:10px; }
+  .modal h4{ margin:0; text-align:center; font-size:17px; font-weight:850; }
+
+  .idle-pulse{ animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ box-shadow: inset 0 -3px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.25), 0 0 0 0 rgba(37,99,235,.5);} 50%{ box-shadow: inset 0 -3px 0 rgba(0,0,0,.16), inset 0 2px 0 rgba(255,255,255,.25), 0 0 0 6px rgba(37,99,235,0);} }
+
+  .fadein{ animation: fade .5s ease both; }
+  @keyframes fade{ from{ opacity:0; transform: translateY(10px);} to{ opacity:1; transform:none;} }
+
+  /* ============ PRINCIPLES ============ */
+  .principles{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+  @media (max-width:820px){ .principles{ grid-template-columns:1fr; } }
+  .pr{ background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 18px 20px; box-shadow:var(--shadow); }
+  .pr .h{ font-weight:800; font-size:15px; margin-bottom:6px; display:flex; align-items:center; gap:9px; }
+  .pr .h .d{ width:10px; height:10px; border-radius:3px; background:var(--blue); flex:none; }
+  .pr p{ font-size:13.5px; color:var(--muted); }
+
+  footer{ padding: 40px 0 70px; color: var(--muted); font-size: 13px; border-top:1px solid var(--line); margin-top: 30px; }
+  footer .mono{ color: var(--faint); }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="eyebrow">Number Gravity · Production Doc v4 · UI direction</div>
+    <h1>Screen map &amp; the <span class="g">best UI</span> for every screen.</h1>
+    <p class="lede">A build-ready blueprint for the Flutter + Flame puzzle where every number is a source of gravity.
+      <strong>16 screens</strong>, each mocked in the game's real design tokens, each paired with the <strong>UX decisions</strong> that make it good — drawn straight from the spec. No app code changes; this is the design reference that comes <em>before</em> the build.</p>
+
+    <div class="statbar">
+      <div class="stat"><span class="n">16</span><span class="l">Screens &amp; overlays</span></div>
+      <div class="stat"><span class="n">8</span><span class="l">Worlds · 200 levels</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">Signal colors</span></div>
+      <div class="stat legend-tiles">
+        <div class="mtile pos">+3</div>
+        <div class="mtile neg">−2</div>
+        <div class="mtile goal">★</div>
+        <div class="cap">Attract&nbsp;·&nbsp;Repel&nbsp;·&nbsp;Goal<br><span class="mono" style="font-size:10px;color:var(--faint)">#2563EB #DC2626 #FBBF24</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ SCREEN MAP ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">01 · The map</div>
+      <h2>Sixteen screens, three jobs</h2>
+      <p>Everything the player touches falls into three groups: the <b>core loop</b> that gets them into a puzzle, the <b>in-game overlays</b> that support a single solve, and the <b>meta screens</b> that bring them back tomorrow. Routes below match <span class="mono">app_router.dart</span>.</p>
+    </div>
+
+    <div class="map">
+      <div class="maprow">
+        <div class="ttl"><span class="dot" style="background:var(--blue)"></span>Core loop — get into a puzzle</div>
+        <div class="chips">
+          <a class="chip" href="#s-splash"><span class="num">1</span>Splash <span class="rt">/</span></a><span class="arrow">→</span>
+          <a class="chip" href="#s-home"><span class="num">2</span>Home <span class="rt">/home</span></a><span class="arrow">→</span>
+          <a class="chip" href="#s-worlds"><span class="num">3</span>Worlds <span class="rt">/worlds</span></a><span class="arrow">→</span>
+          <a class="chip" href="#s-levels"><span class="num">4</span>Levels <span class="rt">/levels/:id</span></a><span class="arrow">→</span>
+          <a class="chip" href="#s-play"><span class="num">5</span>Gameplay <span class="rt">/play/:id</span></a>
+        </div>
+      </div>
+      <div class="maprow">
+        <div class="ttl"><span class="dot" style="background:var(--purple)"></span>In-game overlays — support one solve</div>
+        <div class="chips">
+          <a class="chip ov" href="#s-win"><span class="num">6</span>Level Complete</a>
+          <a class="chip ov" href="#s-pause"><span class="num">7</span>Pause</a>
+          <a class="chip ov" href="#s-hint"><span class="num">8</span>Hint &amp; Stuck</a>
+        </div>
+      </div>
+      <div class="maprow">
+        <div class="ttl"><span class="dot" style="background:var(--green)"></span>Meta — reasons to return</div>
+        <div class="chips">
+          <a class="chip meta" href="#s-daily"><span class="num">9</span>Daily <span class="rt">/daily</span></a>
+          <a class="chip meta" href="#s-tutorial"><span class="num">10</span>Tutorial <span class="rt">/tutorial</span></a>
+          <a class="chip meta" href="#s-zen"><span class="num">11</span>Zen <span class="rt">/zen</span></a>
+          <a class="chip meta" href="#s-settings"><span class="num">12</span>Settings <span class="rt">/settings</span></a>
+          <a class="chip meta" href="#s-shop"><span class="num">13</span>Shop <span class="rt">/shop</span></a>
+          <a class="chip meta" href="#s-profile"><span class="num">14</span>Profile <span class="rt">/profile</span></a>
+          <a class="chip meta" href="#s-ach"><span class="num">15</span>Achievements</a>
+          <a class="chip meta" href="#s-lb"><span class="num">16</span>Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY: CORE ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">02 · Core loop</div>
+      <h2>From cold open to first pull</h2>
+      <p>The first five screens exist to get a new player into puzzle one within ~20 seconds. Chrome stays out of the way; the board is the hero.</p>
+    </div>
+
+    <div class="gallery">
+
+      <!-- 1 SPLASH -->
+      <article class="card" id="s-splash">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="justify-content:center; align-items:center; gap:18px;">
+              <div style="display:flex; gap:8px;">
+                <div class="mtile pos" style="width:40px;height:40px;font-size:15px">+5</div>
+                <div class="mtile neg idle-pulse" style="width:40px;height:40px;font-size:15px">−2</div>
+                <div class="mtile goal" style="width:40px;height:40px;font-size:15px">★</div>
+              </div>
+              <div style="text-align:center; line-height:1.05">
+                <div style="font-size:26px; font-weight:900; letter-spacing:-.03em;">Number</div>
+                <div style="font-size:26px; font-weight:900; letter-spacing:-.03em; color:var(--s-blue);">Gravity</div>
+              </div>
+              <div style="width:120px" class="bar"><span style="width:70%"></span></div>
+              <div style="font-size:10px; color:var(--s-mut)">Loading puzzles…</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">1</div>
+            <h3>Splash / Loading</h3>
+            <span class="route">/</span>
+            <p class="purpose">Holds the boot moment while Hive storage and level assets initialize, then auto-redirects to Home.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li>Brand-first, <b>logo + the three signal tiles</b> — teaches the color language before a single word is read.</li>
+              <li>A real progress bar, not a spinner, so long asset loads never feel frozen.</li>
+              <li><b>Auto-forward</b> the instant storage is ready — no tap gate between the player and play.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2 HOME -->
+      <article class="card" id="s-home">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:12px;">
+              <div style="display:flex; justify-content:flex-end;"><span class="coinpill"><span class="coin"></span>1,240</span></div>
+              <div style="text-align:center; line-height:1.02; margin:2px 0 4px;">
+                <div style="font-size:24px; font-weight:900; letter-spacing:-.03em;">Number</div>
+                <div style="font-size:24px; font-weight:900; letter-spacing:-.03em; color:var(--s-blue);">Gravity</div>
+              </div>
+              <div style="display:flex; gap:8px; justify-content:center; margin-bottom:2px;">
+                <div class="mtile pos idle-pulse" style="width:38px;height:38px;font-size:14px">+3</div>
+                <div class="mtile neg" style="width:38px;height:38px;font-size:14px">−2</div>
+                <div class="mtile goal" style="width:38px;height:38px;font-size:14px">★</div>
+              </div>
+              <div class="pbtn blue"><span class="ic">▶</span>Play Campaign</div>
+              <div class="pbtn purple"><span class="ic">📅</span>Daily Puzzle</div>
+              <div class="pbtn green"><span class="ic">🏆</span>Leaderboard</div>
+              <div style="flex:1"></div>
+              <div style="display:flex; justify-content:space-around; color:var(--s-blue); font-size:10px; font-weight:700; border-top:1px solid var(--s-line); padding-top:8px;">
+                <span>🛒 Shop</span><span>🏅 Achievements</span><span>⚙ Settings</span>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">2</div>
+            <h3>Home / Main Menu</h3>
+            <span class="route">/home</span>
+            <p class="purpose">The hub. One primary action (Play), the daily hook, competition, and quiet access to everything else.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>One dominant CTA.</b> Play Campaign owns the visual weight; Daily and Leaderboard step down in color and size.</li>
+              <li>Live <b>coin balance</b> top-right — always visible, since coins drive the whole economy.</li>
+              <li>Utility screens (Shop / Achievements / Settings) demoted to a footer row, never competing with Play.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3 WORLDS -->
+      <article class="card" id="s-worlds">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Select World</h4><span class="coinpill" style="font-size:10px"><span class="coin"></span>1,240</span></div>
+              <div class="listrow"><div class="mtile pos" style="width:34px;height:34px;font-size:12px;border-radius:9px">1</div><div style="flex:1"><div style="font-weight:800;font-size:12px">First Pull</div><div class="bar" style="margin:4px 0 2px"><span style="width:72%"></span></div><div style="font-size:9px;color:var(--s-mut)">18 / 25 levels</div></div><div style="text-align:center"><div class="stars">★★★</div><div style="font-size:9px;color:var(--s-mut)">42/75</div></div></div>
+              <div class="listrow"><div class="mtile neg" style="width:34px;height:34px;font-size:12px;border-radius:9px">2</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Push Back</div><div class="bar" style="margin:4px 0 2px"><span style="width:44%"></span></div><div style="font-size:9px;color:var(--s-mut)">11 / 25 levels</div></div><div style="text-align:center"><div class="stars">★★☆</div><div style="font-size:9px;color:var(--s-mut)">28/75</div></div></div>
+              <div class="listrow" style="outline:2px solid var(--s-blue); position:relative"><span class="tag cur" style="position:absolute;top:-7px;right:8px">Current</span><div class="mtile wall" style="width:34px;height:34px;font-size:12px;border-radius:9px;background:linear-gradient(180deg,#94A3B8,#64748B)">3</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Obstacles</div><div class="bar" style="margin:4px 0 2px"><span style="width:16%"></span></div><div style="font-size:9px;color:var(--s-mut)">4 / 25 levels</div></div><div style="text-align:center"><div class="stars">★☆☆</div></div></div>
+              <div class="listrow" style="opacity:.6"><div class="mtile wall" style="width:34px;height:34px;font-size:12px;border-radius:9px">4</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Collisions</div><div class="bar" style="margin:4px 0 2px"><span style="width:0"></span></div></div><div style="font-size:14px">🔒</div></div>
+              <div class="listrow" style="opacity:.6"><div class="mtile wall" style="width:34px;height:34px;font-size:12px;border-radius:9px">5</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Portals</div><div class="bar" style="margin:4px 0 2px"><span style="width:0"></span></div></div><div style="font-size:14px">🔒</div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">3</div>
+            <h3>World Select</h3>
+            <span class="route">/worlds</span>
+            <p class="purpose">Eight themed worlds, each introducing one mechanic. Shows mastery, gates progression.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li>Each world's <b>icon encodes its mechanic</b> (attraction, walls, portals…) so the theme reads before the label.</li>
+              <li><b>Two progress signals:</b> a levels bar and a star tally — completion vs. mastery are different goals.</li>
+              <li>Locked worlds stay visible but dimmed with a padlock — <b>show the road ahead</b> to pull players forward.</li>
+              <li>A <span class="doctag">World §7</span> "Current" badge resumes exactly where they left off.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4 LEVELS -->
+      <article class="card" id="s-levels">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:10px;">
+              <div class="titlebar"><span class="back">‹</span><div style="text-align:center"><h4 style="font-size:13px">World 1 · First Pull</h4><div style="font-size:9px;color:var(--s-mut)">Attraction only · 4×4</div></div><span class="coinpill" style="font-size:10px"><span class="coin"></span>1,240</span></div>
+              <div class="board" style="grid-template-columns:repeat(5,1fr); gap:8px; margin-top:4px;">
+                <div class="t goal" style="border-radius:11px">1<div style="position:absolute;bottom:-3px;font-size:8px;color:var(--s-gold)"></div></div>
+                <div class="t goal" style="border-radius:11px">2</div>
+                <div class="t goal" style="border-radius:11px">3</div>
+                <div class="t pos" style="border-radius:11px">4</div>
+                <div class="t pos idle-pulse" style="border-radius:11px">5</div>
+                <div class="t empty" style="border-radius:11px;color:var(--s-mut)">6</div>
+                <div class="t empty" style="border-radius:11px;color:var(--s-mut)">🔒</div>
+                <div class="t empty" style="border-radius:11px;color:var(--s-mut)">🔒</div>
+                <div class="t empty" style="border-radius:11px;color:var(--s-mut)">🔒</div>
+                <div class="t empty" style="border-radius:11px;color:var(--s-mut)">🔒</div>
+              </div>
+              <div style="display:flex; justify-content:center; gap:5px; margin-top:2px;">
+                <div class="stars" style="font-size:14px">★★★</div>
+              </div>
+              <div style="font-size:10px; color:var(--s-mut); text-align:center;">Levels 1–5 · ★★★ earned · tap 6 to play</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">4</div>
+            <h3>Level Select</h3>
+            <span class="route">/levels/:worldId</span>
+            <p class="purpose">The 25 levels of a world as a node map, showing per-level stars and what's unlocked next.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li>Nodes <b>reuse the tile visual language</b> — a level button <em>is</em> a numbered tile, reinforcing the metaphor.</li>
+              <li><b>Star state per node</b> (★★★ / ★☆☆ / empty) invites replay for mastery without nagging.</li>
+              <li>The next playable level <b>pulses</b>; locked ones are quietly padlocked — one obvious next tap.</li>
+              <li>World theme &amp; board size in the header set expectations before entry.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5 GAMEPLAY -->
+      <article class="card" id="s-play">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <!-- HUD -->
+              <div style="display:flex; align-items:center; gap:6px; background:#fff; border-radius:12px; padding:6px 8px; box-shadow:0 1px 3px rgba(16,30,56,.08);">
+                <span class="back" style="width:20px;height:20px;font-size:11px">⚙</span>
+                <div style="line-height:1"><div style="font-weight:850; font-size:12px">Level 12</div></div>
+                <div style="margin-left:2px; padding-left:8px; border-left:1px solid var(--s-line); line-height:1"><span style="font-weight:850;color:var(--s-blue)">4</span><span style="color:var(--s-mut)">/6</span><div style="font-size:8px;color:var(--s-blue);font-weight:700">Optimal</div></div>
+                <div style="flex:1"></div>
+                <span style="font-size:13px">↶</span><span style="font-size:13px;opacity:.4">↷</span>
+                <span style="position:relative; font-size:13px">💡<span style="position:absolute;top:-4px;right:-5px;background:var(--s-blue);color:#fff;border-radius:50%;width:12px;height:12px;font-size:8px;display:grid;place-items:center;font-weight:800">2</span></span>
+                <span class="coinpill" style="font-size:10px; padding:3px 7px 3px 4px"><span class="coin" style="width:14px;height:14px;font-size:8px"></span>320</span>
+              </div>
+              <!-- BOARD with force telegraph + ghost -->
+              <div style="position:relative;">
+                <div class="board" style="grid-template-columns:repeat(5,1fr);">
+                  <div class="t pos">+5</div><div class="t wall"></div><div class="t neg">−1</div><div class="t ghost">+2</div><div class="t pos">+3</div>
+                  <div class="t neg">−4</div><div class="t pos">+2</div><div class="t pos sel">+3</div><div class="t wall"></div><div class="t neg">−1</div>
+                  <div class="t wall"></div><div class="t pos">+5</div><div class="t goal">★</div><div class="t pos">+2</div><div class="t ghost">+3</div>
+                  <div class="t pos">+2</div><div class="t neg">−1</div><div class="t wall"></div><div class="t ghost">+3</div><div class="t neg">−4</div>
+                  <div class="t pos">+3</div><div class="t wall"></div><div class="t empty"></div><div class="t neg">−1</div><div class="t pos">+5</div>
+                </div>
+                <!-- force lines overlay -->
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+                  <defs>
+                    <marker id="ab" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#2563EB"/></marker>
+                    <marker id="ar" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#DC2626"/></marker>
+                  </defs>
+                  <line x1="50" y1="30" x2="10" y2="10" stroke="#2563EB" stroke-width="1.6" marker-end="url(#ab)" opacity=".8"/>
+                  <line x1="50" y1="30" x2="30" y2="30" stroke="#2563EB" stroke-width="2.4" marker-end="url(#ab)" opacity=".85"/>
+                  <line x1="50" y1="30" x2="50" y2="10" stroke="#DC2626" stroke-width="1.4" marker-end="url(#ar)" opacity=".8"/>
+                  <line x1="50" y1="30" x2="90" y2="30" stroke="#DC2626" stroke-width="1.2" marker-end="url(#ar)" opacity=".7"/>
+                </svg>
+              </div>
+              <div style="font-size:9.5px; color:var(--s-mut); text-align:center;">Ghost tiles show where gravity settles · lines show pull &amp; push</div>
+              <div style="flex:1"></div>
+              <div class="arrowrow"><div class="arrowbtn">←</div><div class="arrowbtn">↑</div><div class="arrowbtn">↓</div><div class="arrowbtn">→</div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">5</div>
+            <h3>Gameplay</h3>
+            <span class="route">/play/:levelId</span>
+            <p class="purpose">The whole game. Select a tile, read the physics, commit a one-cell move, watch gravity resolve.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI — the spec's highest-impact screen</div>
+            <ul>
+              <li><b>Ghost preview</b> <span class="doctag">§10.1</span>: translucent tiles show exactly where everything lands <em>before</em> committing — turns trial-and-error into planning.</li>
+              <li><b>Force telegraph</b>: line thickness ∝ force, blue = pull / red = push, so physics is never hidden.</li>
+              <li><b>Moves vs. optimal</b> always visible (4/6) — the star target is honest and ambient, no timer.</li>
+              <li>Undo / redo / hint and coin balance in one compact HUD; <b>unlimited undo</b> <span class="doctag">§10.2</span>.</li>
+              <li>Big arrow bar for one-handed portrait play — <b>44px tap targets</b> <span class="doctag">§10.5</span>.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY: OVERLAYS ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">03 · In-game overlays</div>
+      <h2>Support one solve without leaving the board</h2>
+      <p>These float over gameplay. They resolve a moment — a win, a pause, a plea for help — and return the player to the puzzle.</p>
+    </div>
+
+    <div class="gallery">
+
+      <!-- 6 LEVEL COMPLETE -->
+      <article class="card grp-ov" id="s-win">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:10px; justify-content:center;">
+              <div style="text-align:center; font-size:20px; font-weight:900; letter-spacing:-.02em;">Level Complete</div>
+              <div style="display:flex; justify-content:center; gap:6px; font-size:32px; color:#FBBF24; filter:drop-shadow(0 2px 3px rgba(245,158,11,.4));">★★<span style="color:#D5DCE8">★</span></div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1; background:#fff; border-radius:12px; padding:10px; text-align:center; box-shadow:0 1px 3px rgba(16,30,56,.08)"><div style="font-size:9px;color:var(--s-mut);font-weight:700">MOVES</div><div style="font-size:22px;font-weight:900;color:var(--s-blue)">8</div><div style="font-size:9px;color:var(--s-mut)">Optimal: 6</div></div>
+                <div style="flex:1; background:#fff; border-radius:12px; padding:10px; text-align:center; box-shadow:0 1px 3px rgba(16,30,56,.08)"><div style="font-size:9px;color:var(--s-mut);font-weight:700">COINS</div><div style="font-size:22px;font-weight:900;color:#F59E0B">+25</div><div style="font-size:9px;color:var(--s-mut)">earned</div></div>
+              </div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-size:10px;color:var(--s-mut);font-weight:700">SHARE ↗</span><span class="mono" style="font-weight:800;font-size:12px;letter-spacing:1px">R2-U1-D3</span><span style="font-size:12px">⧉</span></div>
+              <div class="pbtn blue" style="justify-content:center">Next Level ›</div>
+              <div style="display:flex; gap:8px;">
+                <div class="pbtn" style="flex:1;background:#fff;color:var(--s-blue);justify-content:center;box-shadow:0 1px 3px rgba(16,30,56,.1)">↻ Replay</div>
+                <div class="pbtn" style="flex:1;background:#fff;color:var(--s-blue);justify-content:center;box-shadow:0 1px 3px rgba(16,30,56,.1)">⌂ Home</div>
+              </div>
+              <div class="pbtn gold" style="justify-content:space-between; font-size:12px">▶ Double your coins <span class="coinpill" style="background:rgba(255,255,255,.6)">+25</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">6</div>
+            <h3>Level Complete</h3>
+            <span class="route">overlay on /play</span>
+            <p class="purpose">The reward beat: celebrate, show the score story, and offer the next pull of the loop.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Stars animate first</b> — the emotional payoff before any numbers or buttons.</li>
+              <li><b>Moves vs. optimal</b> teaches the path to 3★ and seeds a replay intent, not a fail feeling.</li>
+              <li>A copyable <b>share code</b> <span class="doctag">§10.4</span> (R2-U1-D3) drives organic growth from the highest-dopamine moment.</li>
+              <li><b>Next Level</b> is the dominant button; the <em>opt-in</em> double-up ad <span class="doctag">§13.2</span> never blocks it.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 7 PAUSE -->
+      <article class="card grp-ov" id="s-pause">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px; filter:blur(.4px); opacity:.5;">
+              <div style="height:26px; background:#fff; border-radius:12px;"></div>
+              <div class="board" style="grid-template-columns:repeat(5,1fr);">
+                <div class="t pos">+5</div><div class="t wall"></div><div class="t neg">−1</div><div class="t pos">+2</div><div class="t pos">+3</div>
+                <div class="t neg">−4</div><div class="t pos">+2</div><div class="t pos">+3</div><div class="t wall"></div><div class="t neg">−1</div>
+                <div class="t wall"></div><div class="t pos">+5</div><div class="t goal">★</div><div class="t pos">+2</div><div class="t pos">+3</div>
+              </div>
+            </div>
+            <div class="overlay-dim">
+              <div class="modal fadein">
+                <h4>Paused</h4>
+                <div class="pbtn blue" style="justify-content:center">▶ Resume</div>
+                <div class="pbtn" style="background:var(--s-2);color:var(--s-ink);justify-content:center">↻ Restart level</div>
+                <div class="pbtn" style="background:var(--s-2);color:var(--s-ink);justify-content:center">💡 Hint</div>
+                <div class="pbtn" style="background:var(--s-2);color:var(--s-ink);justify-content:center">⚙ Settings</div>
+                <div class="pbtn" style="background:var(--s-2);color:var(--s-red);justify-content:center">✕ Quit to menu</div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">7</div>
+            <h3>Pause</h3>
+            <span class="route">overlay on /play</span>
+            <p class="purpose">A safe interruption — step away, restart, adjust, or leave without losing the board.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Board stays visible</b> behind a dim blur — the player never loses context or their place.</li>
+              <li><b>Resume is the obvious primary</b>; Quit is color-coded (red) and placed last to prevent misfires.</li>
+              <li>Restart is <b>free and penalty-less</b> <span class="doctag">§10.2</span> — a thinking game must reward experimentation.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 8 HINT / STUCK -->
+      <article class="card grp-ov" id="s-hint">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px; filter:blur(.4px); opacity:.5;">
+              <div style="height:26px; background:#fff; border-radius:12px;"></div>
+              <div class="board" style="grid-template-columns:repeat(5,1fr);">
+                <div class="t pos">+5</div><div class="t wall"></div><div class="t neg">−1</div><div class="t pos">+2</div><div class="t pos">+3</div>
+                <div class="t neg">−4</div><div class="t pos">+2</div><div class="t pos">+3</div><div class="t wall"></div><div class="t neg">−1</div>
+              </div>
+            </div>
+            <div class="overlay-dim">
+              <div class="modal fadein">
+                <h4>Need a hint?</h4>
+                <div style="font-size:10.5px; color:var(--s-mut); text-align:center; margin-top:-4px">First undo is free · reveal only what you need</div>
+                <div class="listrow" style="justify-content:space-between"><div><div style="font-weight:800;font-size:12px">1 · Which tile</div><div style="font-size:9px;color:var(--s-mut)">A gentle nudge</div></div><span class="pbtn blue" style="padding:6px 11px;font-size:11px"><span class="coin" style="width:13px;height:13px;font-size:7px"></span>20</span></div>
+                <div class="listrow" style="justify-content:space-between"><div><div style="font-weight:800;font-size:12px">2 · Direction</div><div style="font-size:9px;color:var(--s-mut)">Stronger help</div></div><span class="pbtn blue" style="padding:6px 11px;font-size:11px"><span class="coin" style="width:13px;height:13px;font-size:7px"></span>40</span></div>
+                <div class="listrow" style="justify-content:space-between"><div><div style="font-weight:800;font-size:12px">3 · Full next move</div><div style="font-size:9px;color:var(--s-mut)">Reveal the optimal move</div></div><span class="pbtn blue" style="padding:6px 11px;font-size:11px"><span class="coin" style="width:13px;height:13px;font-size:7px"></span>80</span></div>
+                <div style="background:var(--red-soft); color:#B91C1C; border-radius:10px; padding:8px; font-size:10px; text-align:center; font-weight:700;">Stuck? No legal winning move remains — <u>Undo</u> or <u>Restart</u>.</div>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">8</div>
+            <h3>Hint &amp; Stuck detection</h3>
+            <span class="route">overlay on /play</span>
+            <p class="purpose">Graduated help when a player is stuck — and a gentle rescue when the board is truly unsolvable.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Three-tier hints priced 20 / 40 / 80</b> <span class="doctag">§13.3</span> — buy the smallest nudge, preserve the puzzle's dignity.</li>
+              <li>Each tier states <b>exactly what it reveals</b> (tile → direction → full move) so coins are spent knowingly.</li>
+              <li><b>Stuck detection</b> <span class="doctag">§10.2</span> proactively offers Undo/Restart instead of letting the player flail.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY: META ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">04 · Meta screens</div>
+      <h2>Reasons to come back tomorrow</h2>
+      <p>The daily hook, the economy, the competition, and the settings that make the game playable for everyone. These carry retention and fairness.</p>
+    </div>
+
+    <div class="gallery">
+
+      <!-- 9 DAILY -->
+      <article class="card grp-meta" id="s-daily">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Daily Puzzle</h4><span style="font-size:11px;font-weight:800;color:#F59E0B">🔥 7</span></div>
+              <div style="text-align:center; font-size:10px; color:var(--s-mut)" class="mono">SEED · 2026-07-06 · same board worldwide</div>
+              <!-- streak strip -->
+              <div style="display:flex; gap:4px; justify-content:space-between;">
+                <span class="mtile goal" style="width:26px;height:26px;font-size:9px;border-radius:8px">✓</span>
+                <span class="mtile goal" style="width:26px;height:26px;font-size:9px;border-radius:8px">✓</span>
+                <span class="mtile goal" style="width:26px;height:26px;font-size:9px;border-radius:8px">✓</span>
+                <span class="mtile pos idle-pulse" style="width:26px;height:26px;font-size:9px;border-radius:8px">+50</span>
+                <span style="width:26px;height:26px;border-radius:8px;background:rgba(19,34,63,.06);display:grid;place-items:center;font-size:9px;color:var(--s-mut)">75</span>
+                <span style="width:26px;height:26px;border-radius:8px;background:rgba(19,34,63,.06);display:grid;place-items:center;font-size:9px;color:var(--s-mut)">100</span>
+              </div>
+              <div class="board" style="grid-template-columns:repeat(6,1fr);">
+                <div class="t pos">+4</div><div class="t empty"></div><div class="t neg">−2</div><div class="t empty"></div><div class="t pos">+3</div><div class="t empty"></div>
+                <div class="t empty"></div><div class="t goal">★</div><div class="t empty"></div><div class="t pos">+5</div><div class="t empty"></div><div class="t neg">−1</div>
+                <div class="t neg">−3</div><div class="t empty"></div><div class="t pos">+2</div><div class="t empty"></div><div class="t empty"></div><div class="t pos">+4</div>
+              </div>
+              <div class="pbtn purple" style="justify-content:center">Solve today's puzzle</div>
+              <div style="font-size:9.5px; color:var(--s-mut); text-align:center;">Fewest moves ranks you on the <b>unbuyable skill ladder</b></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">9</div>
+            <h3>Daily Puzzle</h3>
+            <span class="route">/daily</span>
+            <p class="purpose">One date-seeded board, identical for every player worldwide, feeding streaks and the skill ladder.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li>The <b>date seed is shown</b> <span class="doctag">§8.2</span> — players trust everyone gets the same board, so the ladder feels fair.</li>
+              <li><b>Streak strip with escalating rewards</b> <span class="doctag">§13.6</span> makes the return habit visible and worth protecting.</li>
+              <li>States the skill-ladder stakes up front: <b>fewest moves</b>, unbuyable — the competitive hook.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10 TUTORIAL -->
+      <article class="card grp-meta" id="s-tutorial">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:12px; justify-content:center;">
+              <div style="text-align:center; font-size:13px; font-weight:800;">Blue tiles <span style="color:var(--s-blue)">pull</span>.</div>
+              <div class="board" style="grid-template-columns:repeat(3,1fr); width:70%; margin:0 auto;">
+                <div class="t empty"></div><div class="t empty"></div><div class="t empty"></div>
+                <div class="t pos idle-pulse" style="outline:3px solid rgba(37,99,235,.5);outline-offset:2px">+3</div><div class="t empty"></div><div class="t goal">★</div>
+                <div class="t empty"></div><div class="t empty"></div><div class="t empty"></div>
+              </div>
+              <div style="text-align:center;">
+                <div style="display:inline-flex; align-items:center; gap:8px; background:#fff; border-radius:14px; padding:10px 14px; box-shadow:0 3px 8px rgba(16,30,56,.12); font-weight:700; font-size:12px;">
+                  👆 Swipe <b style="color:var(--s-blue)">+3</b> toward the star
+                </div>
+              </div>
+              <div style="display:flex; justify-content:center; gap:5px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:var(--s-blue)"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#CBD6E8"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#CBD6E8"></span>
+              </div>
+              <div style="text-align:center;font-size:9.5px;color:var(--s-mut)">Step 1 of 3 · no rules wall</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">10</div>
+            <h3>Tutorial / Onboarding</h3>
+            <span class="route">/tutorial</span>
+            <p class="purpose">Teach the core mechanic by doing — one rule at a time, almost no text.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>One rule per step, text-light</b> <span class="doctag">§10.3</span> — never a front-loaded rules screen.</li>
+              <li>Interactive coach mark points at the exact tile and move; the player <b>learns by acting</b>.</li>
+              <li>Target: <b>clear level 1 in ~20s</b> and grasp attraction without instructions.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 11 ZEN -->
+      <article class="card grp-meta" id="s-zen">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:12px;">
+              <div class="titlebar"><span class="back">‹</span><span style="display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:13px;color:#6D63E6">🌙 Zen Mode</span><span style="width:24px"></span></div>
+              <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:12px;">
+                <div class="board" style="grid-template-columns:repeat(4,1fr);">
+                  <div class="t pos">+2</div><div class="t empty"></div><div class="t empty"></div><div class="t neg">−3</div>
+                  <div class="t empty"></div><div class="t pos idle-pulse">+4</div><div class="t empty"></div><div class="t empty"></div>
+                  <div class="t empty"></div><div class="t empty"></div><div class="t pos">+1</div><div class="t empty"></div>
+                  <div class="t neg">−1</div><div class="t empty"></div><div class="t empty"></div><div class="t pos">+3</div>
+                </div>
+                <div style="text-align:center; font-size:11px; color:var(--s-mut);">No stars · no timer · no fail state</div>
+              </div>
+              <div class="arrowrow"><div class="arrowbtn">←</div><div class="arrowbtn">↑</div><div class="arrowbtn">↓</div><div class="arrowbtn">→</div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">11</div>
+            <h3>Zen / Practice</h3>
+            <span class="route">/zen</span>
+            <p class="purpose">Relaxed, pressure-free play for experimentation and unwinding.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Strip the HUD</b> <span class="doctag">§10.6</span> — no move counter, no stars, no fail — so the mode <em>feels</em> different at a glance.</li>
+              <li>A distinct calm accent (moon / purple) signals a change of mood without a new visual language.</li>
+              <li>Same board &amp; controls — <b>zero new learning</b> to drop in and relax.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 12 SETTINGS -->
+      <article class="card grp-meta" id="s-settings">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:8px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Settings</h4><span style="width:24px"></span></div>
+              <div style="font-size:9px;font-weight:800;color:var(--s-mut);letter-spacing:.08em;text-transform:uppercase">Display</div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">🌗 Dark theme</span><span class="toggle on"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">◑ Color-blind mode</span><span class="toggle on"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">〰 Reduce motion</span><span class="toggle"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">🔤 Text size</span><span class="mono" style="font-size:10px;color:var(--s-mut)">A  A  <b style="color:var(--s-ink)">A</b></span></div>
+              <div style="font-size:9px;font-weight:800;color:var(--s-mut);letter-spacing:.08em;text-transform:uppercase;margin-top:2px">Audio &amp; feedback</div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">🎵 Music</span><span class="toggle on"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">🔈 Sound FX</span><span class="toggle on"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">📳 Haptics</span><span class="toggle"></span></div>
+              <div class="listrow" style="justify-content:space-between"><span style="font-weight:700;font-size:12px">🌐 Language</span><span style="font-size:11px;color:var(--s-mut)">English ›</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">12</div>
+            <h3>Settings</h3>
+            <span class="route">/settings</span>
+            <p class="purpose">Theme, accessibility, audio, and language — everything that makes the game playable for anyone.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Accessibility is first-class</b> <span class="doctag">§10.5</span>: color-blind mode, reduce-motion, text size, haptics — not buried.</li>
+              <li>Grouped sections with instant toggles; every choice is <b>remembered</b> across sessions.</li>
+              <li>In-app <b>language switch</b> <span class="doctag">§21</span> supports the 12-locale global launch, RTL included.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 13 SHOP -->
+      <article class="card grp-meta" id="s-shop">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Shop</h4><span class="coinpill" style="font-size:10px"><span class="coin"></span>1,240</span></div>
+              <div class="pbtn gold" style="justify-content:space-between; font-size:11px"><span>✨ Starter Pack · coins + theme</span><span style="background:rgba(255,255,255,.55);border-radius:8px;padding:2px 7px">$2.99</span></div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div style="background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.08)"><div style="font-size:20px">👛</div><div style="font-weight:800;font-size:11px">Pouch</div><div style="font-size:9px;color:var(--s-mut)">500 coins</div><div class="pbtn blue" style="justify-content:center;padding:6px;margin-top:6px;font-size:11px">$0.99</div></div>
+                <div style="background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.08)"><div style="font-size:20px">🎒</div><div style="font-weight:800;font-size:11px">Bag <span style="color:var(--s-blue);font-size:8px">+10%</span></div><div style="font-size:9px;color:var(--s-mut)">1,650 coins</div><div class="pbtn blue" style="justify-content:center;padding:6px;margin-top:6px;font-size:11px">$2.99</div></div>
+                <div style="background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.08);outline:2px solid var(--s-gold)"><div style="font-size:20px">🧰</div><div style="font-weight:800;font-size:11px">Chest <span style="color:#F59E0B;font-size:8px">+20%</span></div><div style="font-size:9px;color:var(--s-mut)">6,000 coins</div><div class="pbtn blue" style="justify-content:center;padding:6px;margin-top:6px;font-size:11px">$9.99</div></div>
+                <div style="background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.08)"><div style="font-size:20px">🏦</div><div style="font-weight:800;font-size:11px">Vault <span style="color:#F59E0B;font-size:8px">+30%</span></div><div style="font-size:9px;color:var(--s-mut)">16,000 coins</div><div class="pbtn blue" style="justify-content:center;padding:6px;margin-top:6px;font-size:11px">$19.99</div></div>
+              </div>
+              <div class="pbtn" style="background:#EAF1FC;color:var(--s-ink);justify-content:space-between;font-size:11px;box-shadow:none;border:1px dashed #B9CBEC"><span>🎬 Watch an ad</span><span style="color:#F59E0B;font-weight:800">+25 ★</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">13</div>
+            <h3>Shop</h3>
+            <span class="route">/shop</span>
+            <p class="purpose">Coin packs, a starter bundle, cosmetics, and opt-in rewarded ads — never a wall in front of play.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Tiered packs with a highlighted "best value"</b> <span class="doctag">§13.4</span> — bonus % grows with size, one pack visually anchored.</li>
+              <li>Rewarded ads are <b>opt-in cards</b>, never interstitials — there's deliberately <b>no "Remove Ads"</b> to sell.</li>
+              <li>Honest framing, <b>no dark patterns</b> <span class="doctag">§22</span> — no fake countdowns; coins are convenience, never required.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 14 PROFILE -->
+      <article class="card grp-meta" id="s-profile">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:10px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Profile</h4><span style="width:24px"></span></div>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#3B82F6,#6D63E6);display:grid;place-items:center;font-size:24px">🧑‍🚀</div>
+                <div><div style="font-weight:850;font-size:15px">Player One</div><div style="font-size:10px;color:var(--s-mut)">Joined June 2026 · 🔥 7-day streak</div></div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:7px;">
+                <div style="background:#fff;border-radius:11px;padding:9px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.07)"><div style="font-size:18px;font-weight:900;color:var(--s-blue)">78</div><div style="font-size:8.5px;color:var(--s-mut)">Levels</div></div>
+                <div style="background:#fff;border-radius:11px;padding:9px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.07)"><div style="font-size:18px;font-weight:900;color:#F59E0B">186★</div><div style="font-size:8.5px;color:var(--s-mut)">Stars</div></div>
+                <div style="background:#fff;border-radius:11px;padding:9px;text-align:center;box-shadow:0 1px 3px rgba(16,30,56,.07)"><div style="font-size:18px;font-weight:900;color:var(--s-ink)">1.3k</div><div style="font-size:8.5px;color:var(--s-mut)">Earned ★</div></div>
+              </div>
+              <div style="font-size:9px;font-weight:800;color:var(--s-mut);letter-spacing:.08em;text-transform:uppercase">World progress</div>
+              <div class="listrow"><span style="width:22px;font-weight:800;font-size:11px">W1</span><div class="bar" style="flex:1"><span style="width:100%"></span></div><span style="font-size:9px;color:var(--s-mut)">25/25</span></div>
+              <div class="listrow"><span style="width:22px;font-weight:800;font-size:11px">W2</span><div class="bar" style="flex:1"><span style="width:80%"></span></div><span style="font-size:9px;color:var(--s-mut)">20/25</span></div>
+              <div class="listrow"><span style="width:22px;font-weight:800;font-size:11px">W3</span><div class="bar" style="flex:1"><span style="width:52%"></span></div><span style="font-size:9px;color:var(--s-mut)">13/25</span></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">14</div>
+            <h3>Profile</h3>
+            <span class="route">/profile</span>
+            <p class="purpose">A player's story at a glance: progress, mastery, streak, and per-world completion.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Summary tiles before detail</b> — levels, stars, and gameplay-earned coins read in one scan.</li>
+              <li>Separates <b>earned coins from balance</b> <span class="doctag">§13.1</span>, mirroring the leaderboard's fairness model.</li>
+              <li>Per-world bars turn 200 levels into <b>graspable, non-grindy goals</b> <span class="doctag">§10.4</span>.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 15 ACHIEVEMENTS -->
+      <article class="card grp-meta" id="s-ach">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Achievements</h4><span style="font-size:10px;color:var(--s-mut)">14/60</span></div>
+              <div class="listrow" style="gap:10px"><div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FCD34D,#F59E0B);display:grid;place-items:center;font-size:19px">🏆</div><div style="flex:1"><div style="font-weight:800;font-size:12px">World Conqueror</div><div style="font-size:9px;color:var(--s-mut)">Finish World 1 · +100 ★</div></div><span class="pbtn gold" style="padding:6px 12px;font-size:10px">Claim</span></div>
+              <div class="listrow" style="gap:10px"><div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#3B82F6,#2563EB);display:grid;place-items:center;font-size:19px">🎯</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Perfectionist</div><div style="font-size:9px;color:var(--s-mut)">3★ ten levels · done</div></div><span style="font-size:16px;color:#16A34A">✓</span></div>
+              <div class="listrow" style="gap:10px"><div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#7C74F0,#6D63E6);display:grid;place-items:center;font-size:19px">🔥</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Week Warrior</div><div style="font-size:9px;color:var(--s-mut)">7-day streak · done</div></div><span style="font-size:16px;color:#16A34A">✓</span></div>
+              <div class="listrow" style="gap:10px;opacity:.55"><div style="width:38px;height:38px;border-radius:11px;background:#CBD6E8;display:grid;place-items:center;font-size:19px">🔒</div><div style="flex:1"><div style="font-weight:800;font-size:12px">No-Hint Hero</div><div style="font-size:9px;color:var(--s-mut)">Clear 25 with no hints · 12/25</div><div class="bar" style="margin-top:3px"><span style="width:48%"></span></div></div></div>
+              <div class="listrow" style="gap:10px;opacity:.55"><div style="width:38px;height:38px;border-radius:11px;background:#CBD6E8;display:grid;place-items:center;font-size:19px">🔒</div><div style="flex:1"><div style="font-weight:800;font-size:12px">Speed Solver</div><div style="font-size:9px;color:var(--s-mut)">30 optimal solves · 19/30</div><div class="bar" style="margin-top:3px"><span style="width:63%"></span></div></div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">15</div>
+            <h3>Achievements</h3>
+            <span class="route">/achievements</span>
+            <p class="purpose">Longer-horizon milestone goals, with coin rewards to claim.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI</div>
+            <ul>
+              <li><b>Claimables float to the top</b> — an unclaimed reward is the most actionable state, colored to draw the eye.</li>
+              <li>Locked goals <b>show a progress bar</b> (12/25), not just a padlock — visible momentum motivates.</li>
+              <li>Coin payouts <span class="doctag">§13.2</span> reinforce that <b>skill, not spend</b>, drives progression.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- 16 LEADERBOARD -->
+      <article class="card grp-meta" id="s-lb">
+        <div class="stage">
+          <div class="phone"><div class="notch"></div><div class="screen">
+            <div class="sbar"><span>9:41</span><span class="r">📶 ★ 🔋</span></div>
+            <div class="body" style="gap:9px;">
+              <div class="titlebar"><span class="back">‹</span><h4>Leaderboard</h4><span style="width:24px"></span></div>
+              <div class="segtabs"><div class="on">Coins earned</div><div>Skill ladder</div></div>
+              <div class="scopes"><span class="scope on">Global</span><span class="scope">Weekly</span><span class="scope">Friends</span></div>
+              <div class="listrow" style="gap:9px"><span style="width:18px;font-weight:900;color:#F59E0B;text-align:center">1</span><span style="font-size:16px">🥇</span><span style="flex:1;font-weight:800;font-size:12px">gravwizard</span><span class="mono" style="font-weight:800;font-size:11px">48,210</span></div>
+              <div class="listrow" style="gap:9px"><span style="width:18px;font-weight:900;color:#94A3B8;text-align:center">2</span><span style="font-size:16px">🥈</span><span style="flex:1;font-weight:800;font-size:12px">tileflow</span><span class="mono" style="font-weight:800;font-size:11px">44,905</span></div>
+              <div class="listrow" style="gap:9px"><span style="width:18px;font-weight:900;color:#B4790A;text-align:center">3</span><span style="font-size:16px">🥉</span><span style="flex:1;font-weight:800;font-size:12px">nullforce</span><span class="mono" style="font-weight:800;font-size:11px">41,332</span></div>
+              <div class="listrow" style="gap:9px;outline:2px solid var(--s-blue)"><span style="width:18px;font-weight:900;text-align:center">27</span><span style="width:16px"></span><span style="flex:1;font-weight:800;font-size:12px;color:var(--s-blue)">You</span><span class="mono" style="font-weight:800;font-size:11px">12,480</span></div>
+              <div style="background:#EAF1FC;border-radius:10px;padding:8px;font-size:9.5px;color:#1D4ED8;font-weight:600;text-align:center;">⚖ Ranks <b>gameplay-earned</b> coins only — purchased &amp; ad coins excluded. Rank can't be bought.</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="cbody">
+          <div class="ci">
+            <div class="no">16</div>
+            <h3>Leaderboard</h3>
+            <span class="route">/leaderboard</span>
+            <p class="purpose">Two ladders — earned coins and daily skill — across Global, Weekly, and Friends.</p>
+          </div>
+          <div class="bestui">
+            <div class="lbl">Best UI — fairness made visible</div>
+            <ul>
+              <li><b>Two tabs</b> <span class="doctag">§13.5</span>: a coins ladder (gameplay-earned only) and an <b>unbuyable skill ladder</b> — competition can't be paid for.</li>
+              <li>An explicit note that <b>purchased &amp; ad coins are excluded</b> — the fairness rule is shown, not hidden.</li>
+              <li><b>"You" row pinned &amp; highlighted</b> so a player always finds their standing regardless of rank.</li>
+              <li>Global / Weekly / Friends scopes keep it <b>competitive and social</b> at every level.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section>
+    <div class="sec-head">
+      <div class="kicker">05 · Cross-cutting</div>
+      <h2>Principles that hold across all 16</h2>
+      <p>These aren't per-screen — they're the connective tissue that makes the set feel like one game and one system.</p>
+    </div>
+    <div class="principles">
+      <div class="pr"><div class="h"><span class="d" style="background:var(--blue)"></span>One token set, two themes</div><p>Light and dark both derive from the same <span class="mono">#2563EB / #DC2626 / #FBBF24</span> palette (Doc §11). Tiles keep their signal colors in either theme so the physics never becomes ambiguous.</p></div>
+      <div class="pr"><div class="h"><span class="d" style="background:var(--red)"></span>Accessible by default</div><p>Color-blind mode adds <b>shape/symbol</b> to sign (+ vs −), not color alone. Reduce-motion, text size, haptics, and 44px minimum tap targets are settings, not afterthoughts (§10.5).</p></div>
+      <div class="pr"><div class="h"><span class="d" style="background:var(--gold)"></span>Text-light &amp; global-ready</div><p>The board is numbers, tiles, and arrows — nearly language-free. All chrome strings live in ARB files with full RTL mirroring for the 12-locale launch (§21).</p></div>
+      <div class="pr"><div class="h"><span class="d" style="background:var(--purple)"></span>Readable physics everywhere</div><p>Force telegraph and ghost preview aren't just gameplay features — they're the promise that difficulty comes from planning, never hidden information (§10.1).</p></div>
+      <div class="pr"><div class="h"><span class="d" style="background:var(--green)"></span>Fair economy, no dark patterns</div><p>Coins are convenience, never a gate. No fake countdowns, no guilt dialogs, no "Remove Ads." Rank is earned through play (§13, §22).</p></div>
+      <div class="pr"><div class="h"><span class="d" style="background:var(--blue-ink)"></span>Forgiveness over friction</div><p>Unlimited undo, free restarts, no timer in campaign, and proactive stuck-detection. A thinking puzzle must reward experimentation (§10.2).</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0; display:flex; flex-wrap:wrap; gap:12px 28px; justify-content:space-between; align-items:baseline;">
+      <div><b style="color:var(--ink)">Number Gravity</b> — UI design reference · 16 screens · design tokens per Production Doc v4 §11.</div>
+      <div class="mono">Mockups are flat-CSS · no app code changed · faithful to blue / red / gold signal palette.</div>
+    </div>
+  </footer>
+
+</div>

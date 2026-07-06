@@ -14,6 +14,7 @@ class NumberGravityApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeProvider);
+    final locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
       title: 'Number Gravity',
@@ -23,6 +24,10 @@ class NumberGravityApp extends ConsumerWidget {
       themeMode: themeMode.maybeWhen(
         data: (mode) => mode,
         orElse: () => ThemeMode.system,
+      ),
+      locale: locale.maybeWhen(
+        data: (value) => value,
+        orElse: () => null,
       ),
       routerConfig: router,
       localizationsDelegates: const [

@@ -124,6 +124,12 @@ abstract class AppLocalizations {
   /// **'Predict. Plan. Solve.'**
   String get homeSubtitle;
 
+  /// No description provided for @playCampaign.
+  ///
+  /// In en, this message translates to:
+  /// **'Play Campaign'**
+  String get playCampaign;
+
   /// No description provided for @playLevel.
   ///
   /// In en, this message translates to:
@@ -142,11 +148,35 @@ abstract class AppLocalizations {
   /// **'Daily Puzzle'**
   String get dailyPuzzle;
 
+  /// No description provided for @leaderboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get leaderboard;
+
   /// No description provided for @worlds.
   ///
   /// In en, this message translates to:
   /// **'Worlds'**
   String get worlds;
+
+  /// No description provided for @selectWorld.
+  ///
+  /// In en, this message translates to:
+  /// **'Select World'**
+  String get selectWorld;
+
+  /// No description provided for @shop.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get shop;
+
+  /// No description provided for @achievements.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievements'**
+  String get achievements;
 
   /// No description provided for @comingSoon.
   ///
@@ -195,6 +225,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reduce motion'**
   String get reduceMotion;
+
+  /// No description provided for @accessibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get accessibility;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @redo.
+  ///
+  /// In en, this message translates to:
+  /// **'Redo'**
+  String get redo;
+
+  /// No description provided for @hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hint'**
+  String get hint;
+
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
+
+  /// No description provided for @swipeToMove.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe to move'**
+  String get swipeToMove;
+
+  /// No description provided for @levelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {id}'**
+  String levelTitle(int id);
+
+  /// No description provided for @movesOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'{used}/{optimal} Optimal'**
+  String movesOptimal(int used, int optimal);
+
+  /// No description provided for @levelComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Level Complete'**
+  String get levelComplete;
+
+  /// No description provided for @moves.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves'**
+  String get moves;
+
+  /// No description provided for @optimalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Optimal: {count}'**
+  String optimalLabel(int count);
+
+  /// No description provided for @coinsEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'Coins Earned'**
+  String get coinsEarned;
+
+  /// No description provided for @shareSolution.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your solution'**
+  String get shareSolution;
+
+  /// No description provided for @nextLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Level'**
+  String get nextLevel;
+
+  /// No description provided for @replay.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay'**
+  String get replay;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @continueLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueLabel;
+
+  /// No description provided for @doubleCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Double Your Coins!'**
+  String get doubleCoins;
+
+  /// No description provided for @watchAdCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch an ad to earn +{amount}'**
+  String watchAdCoins(int amount);
+
+  /// No description provided for @levels.
+  ///
+  /// In en, this message translates to:
+  /// **'Levels'**
+  String get levels;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select language'**
+  String get selectLanguage;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Español'**
+  String get languageSpanish;
+
+  /// No description provided for @languageFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'Français'**
+  String get languageFrench;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareApp;
+
+  /// No description provided for @shareAppMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Number Gravity! Predict. Plan. Solve.'**
+  String get shareAppMessage;
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
 }
 
 class _AppLocalizationsDelegate

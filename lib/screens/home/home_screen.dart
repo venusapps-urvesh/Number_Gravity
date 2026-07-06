@@ -4,10 +4,16 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/router/routes.dart';
 import '../../app/theme/app_colors.dart';
+import '../../core/utils/responsive.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/providers.dart';
+import '../../widgets/common/language_picker_sheet.dart';
+import '../../widgets/common/ng_bottom_nav.dart';
+import '../../widgets/common/ng_brand_title.dart';
 import '../../widgets/common/ng_button.dart';
-import '../../widgets/common/ng_card.dart';
+import '../../widgets/common/ng_coin_badge.dart';
+import '../../widgets/common/ng_icon_button.dart';
+import '../../widgets/common/ng_responsive_layout.dart';
 import '../../widgets/common/ng_scaffold.dart';
 import '../../widgets/game/tile_badge.dart';
 import '../../models/tile_type.dart';
@@ -18,121 +24,125 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final themeMode = ref.watch(themeModeProvider).value ?? ThemeMode.system;
     final colorBlind = ref.watch(colorBlindModeProvider).value ?? false;
+    final progress = ref.watch(playerProgressProvider).value;
+    final isTablet = ResponsiveBreakpoints.isTablet(context);
+    final tileSize = isTablet ? 80.0 : 64.0;
 
     return NGScaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.homeTitle,
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              l10n.homeSubtitle,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.neutral500,
-                  ),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TileBadge(
-                  value: 3,
-                  type: TileType.number,
-                  colorBlindMode: colorBlind,
-                ),
-                const SizedBox(width: AppSpacing.md),
-                TileBadge(
-                  value: -2,
-                  type: TileType.number,
-                  colorBlindMode: colorBlind,
-                ),
-                const SizedBox(width: AppSpacing.md),
-                TileBadge(
-                  value: 0,
-                  type: TileType.goal,
-                  colorBlindMode: colorBlind,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            NGCard(
+      body: Column(
+        children: [
+          Expanded(
+            child: NGResponsiveLayout(
+              maxWidth: isTablet ? 560 : ResponsiveBreakpoints.contentMaxWidthPhone,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    l10n.themeMode,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  SegmentedButton<ThemeMode>(
-                    segments: [
-                      ButtonSegment(
-                        value: ThemeMode.system,
-                        label: Text(l10n.themeSystem),
+                  Row(
+                    children: [
+                      NGIconButton(
+                        icon: Icons.language_rounded,
+                        tooltip: l10n.language,
+                        variant: NGIconButtonVariant.surface,
+                        onPressed: () => showLanguagePicker(context, ref),
                       ),
-                      ButtonSegment(
-                        value: ThemeMode.light,
-                        label: Text(l10n.themeLight),
-                      ),
-                      ButtonSegment(
-                        value: ThemeMode.dark,
-                        label: Text(l10n.themeDark),
+                      const Spacer(),
+                      NGCoinBadge(amount: progress?.coins ?? 0),
+                      const SizedBox(width: AppSpacing.sm),
+                      NGIconButton(
+                        icon: Icons.share_rounded,
+                        tooltip: l10n.shareApp,
+                        variant: NGIconButtonVariant.surface,
+                        onPressed: () => AppShare.shareApp(context),
                       ),
                     ],
-                    selected: {themeMode},
-                    onSelectionChanged: (selection) {
-                      ref
-                          .read(themeModeProvider.notifier)
-                          .setThemeMode(selection.first);
-                    },
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.colorBlindMode),
-                    value: colorBlind,
-                    onChanged: (value) {
-                      ref
-                          .read(colorBlindModeProvider.notifier)
-                          .setEnabled(value);
-                    },
+                  const NGBrandTitle(),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    l10n.homeSubtitle,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: AppColors.onSurfaceMuted(Theme.of(context).brightness),
+                        ),
                   ),
+                  SizedBox(height: isTablet ? AppSpacing.xl : AppSpacing.lg),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TileBadge(
+                        value: 3,
+                        type: TileType.number,
+                        colorBlindMode: colorBlind,
+                        size: tileSize,
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                      TileBadge(
+                        value: -2,
+                        type: TileType.number,
+                        colorBlindMode: colorBlind,
+                        size: tileSize,
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                      TileBadge(
+                        value: 0,
+                        type: TileType.goal,
+                        colorBlindMode: colorBlind,
+                        size: tileSize,
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  NGButton(
+                    label: l10n.playCampaign,
+                    icon: Icons.play_arrow_rounded,
+                    variant: NGButtonVariant.accent,
+                    accent: NGButtonAccent.play,
+                    onPressed: () => context.go(AppRoutes.worlds),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  NGButton(
+                    label: l10n.dailyPuzzle,
+                    icon: Icons.calendar_today_rounded,
+                    variant: NGButtonVariant.accent,
+                    accent: NGButtonAccent.daily,
+                    onPressed: () => context.go(AppRoutes.daily),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  NGButton(
+                    label: l10n.leaderboard,
+                    icon: Icons.leaderboard_rounded,
+                    variant: NGButtonVariant.accent,
+                    accent: NGButtonAccent.leaderboard,
+                    onPressed: () => context.go(AppRoutes.leaderboard),
+                  ),
+                  SizedBox(height: isTablet ? AppSpacing.xl : AppSpacing.lg),
                 ],
               ),
             ),
-            const Spacer(),
-            NGButton(
-              label: l10n.playLevel,
-              icon: Icons.play_arrow_rounded,
-              onPressed: () => context.go('${AppRoutes.play}/1'),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            NGButton(
-              label: l10n.worlds,
-              variant: NGButtonVariant.secondary,
-              onPressed: () => context.go(AppRoutes.worlds),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            NGButton(
-              label: l10n.dailyPuzzle,
-              variant: NGButtonVariant.ghost,
-              onPressed: () => context.go(AppRoutes.daily),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            NGButton(
-              label: l10n.settings,
-              variant: NGButtonVariant.ghost,
-              onPressed: () => context.go(AppRoutes.settings),
-            ),
-          ],
-        ),
+          ),
+          NGBottomNavBar(
+            currentIndex: -1,
+            items: [
+              NGBottomNavItem(
+                icon: Icons.shopping_cart_outlined,
+                label: l10n.shop,
+                route: AppRoutes.shop,
+              ),
+              NGBottomNavItem(
+                icon: Icons.emoji_events_outlined,
+                label: l10n.achievements,
+                route: AppRoutes.achievements,
+              ),
+              NGBottomNavItem(
+                icon: Icons.settings_outlined,
+                label: l10n.settings,
+                route: AppRoutes.settings,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

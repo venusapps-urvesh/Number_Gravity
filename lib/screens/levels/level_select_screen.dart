@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/router/routes.dart';
-import '../../app/theme/app_colors.dart';
+import '../../core/utils/responsive.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/providers.dart';
 import '../../widgets/common/ng_card.dart';
+import '../../widgets/common/ng_page_header.dart';
+import '../../widgets/common/ng_responsive_layout.dart';
 import '../../widgets/common/ng_scaffold.dart';
+import '../../widgets/common/ng_star_rating.dart';
 
 class LevelSelectScreen extends ConsumerWidget {
   const LevelSelectScreen({required this.worldId, super.key});
@@ -16,29 +19,76 @@ class LevelSelectScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final levelsFuture = ref.watch(_worldLevelsProvider(worldId));
+    final progress = ref.watch(playerProgressProvider).value;
 
     return NGScaffold(
-      body: levelsFuture.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('$e')),
-        data: (levels) => GridView.builder(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5,
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
+      body: Column(
+        children: [
+          NGPageHeader(
+            title: '${l10n.levels} — World $worldId',
+            coinAmount: progress?.coins,
           ),
-          itemCount: levels.length,
-          itemBuilder: (context, index) {
-            final level = levels[index];
-            return NGCard(
-              padding: const EdgeInsets.all(8),
-              onTap: () => context.go('${AppRoutes.play}/${level.id}'),
-              child: Center(child: Text('${level.id}')),
-            );
-          },
-        ),
+          Expanded(
+            child: levelsFuture.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(child: Text('$e')),
+              data: (levels) => NGResponsiveLayout(
+                maxWidth: ResponsiveBreakpoints.isTablet(context)
+                    ? ResponsiveBreakpoints.contentMaxWidthTablet + 200
+                    : ResponsiveBreakpoints.contentMaxWidthPhone,
+                child: GridView.builder(
+                  padding: EdgeInsets.zero,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: ResponsiveBreakpoints.gridCrossAxisCount(
+                      context,
+                      phone: 5,
+                      tablet: 8,
+                    ),
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 1,
+                  ),
+                  itemCount: levels.length,
+                  itemBuilder: (context, index) {
+                    final level = levels[index];
+                    final stars =
+                        progress?.levelProgress[level.id]?.stars ?? 0;
+                    final completed =
+                        progress?.levelProgress[level.id]?.isCompleted ?? false;
+
+                    return NGCard(
+                      padding: const EdgeInsets.all(8),
+                      onTap: () => context.go('${AppRoutes.play}/${level.id}'),
+                      borderColor: completed
+                          ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
+                          : null,
+                      borderWidth: completed ? 1 : 0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${level.id}',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          if (stars > 0) ...[
+                            const SizedBox(height: 4),
+                            NGStarRating(
+                              stars: stars,
+                              size: 12,
+                              spacing: 0,
+                            ),
+                          ],
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -4,10 +4,15 @@
   "loading": "Cargando...",
   "homeTitle": "Number Gravity",
   "homeSubtitle": "Predice. Planifica. Resuelve.",
+  "playCampaign": "Jugar campaña",
   "playLevel": "Jugar nivel 1",
   "settings": "Ajustes",
   "dailyPuzzle": "Puzzle diario",
+  "leaderboard": "Clasificación",
   "worlds": "Mundos",
+  "selectWorld": "Seleccionar mundo",
+  "shop": "Tienda",
+  "achievements": "Logros",
   "comingSoon": "Próximamente",
   "gameplayPlaceholder": "El tablero se renderiza en la fase 3",
   "themeMode": "Tema",
@@ -15,5 +20,66 @@
   "themeLight": "Claro",
   "themeDark": "Oscuro",
   "colorBlindMode": "Modo daltónico",
-  "reduceMotion": "Reducir movimiento"
+  "reduceMotion": "Reducir movimiento",
+  "accessibility": "Accesibilidad",
+  "appearance": "Apariencia",
+  "undo": "Deshacer",
+  "redo": "Rehacer",
+  "hint": "Pista",
+  "restart": "Reiniciar",
+  "swipeToMove": "Desliza para mover",
+  "levelTitle": "Nivel {id}",
+  "@levelTitle": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "movesOptimal": "{used}/{optimal} óptimo",
+  "@movesOptimal": {
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "optimal": {
+        "type": "int"
+      }
+    }
+  },
+  "levelComplete": "Nivel completado",
+  "moves": "Movimientos",
+  "optimalLabel": "Óptimo: {count}",
+  "@optimalLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coinsEarned": "Monedas ganadas",
+  "shareSolution": "Comparte tu solución",
+  "nextLevel": "Siguiente nivel",
+  "replay": "Repetir",
+  "home": "Inicio",
+  "continueLabel": "Continuar",
+  "doubleCoins": "¡Duplica tus monedas!",
+  "watchAdCoins": "Mira un anuncio para ganar +{amount}",
+  "@watchAdCoins": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "levels": "Niveles",
+  "language": "Idioma",
+  "selectLanguage": "Seleccionar idioma",
+  "languageEnglish": "English",
+  "languageSpanish": "Español",
+  "languageFrench": "Français",
+  "shareApp": "Compartir",
+  "shareAppMessage": "¡Prueba Number Gravity! Predice. Planifica. Resuelve.",
+  "copy": "Copiar",
+  "copied": "Copiado"
 }

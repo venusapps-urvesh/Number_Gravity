@@ -15,4 +15,5 @@ class AppRoutes {
   static const achievements = '/achievements';
   static const tutorial = '/tutorial';
   static const zen = '/zen';
+  static const victory = '/victory';
 }

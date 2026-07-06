@@ -43,5 +43,13 @@ void main() {
       expect(await repository.getColorBlindMode(), isTrue);
       expect(await repository.getReduceMotion(), isTrue);
     });
+
+    test('persists locale code', () async {
+      await repository.setLocaleCode('es');
+      expect(await repository.getLocaleCode(), 'es');
+
+      await repository.setLocaleCode('fr');
+      expect(await repository.getLocaleCode(), 'fr');
+    });
   });
 }

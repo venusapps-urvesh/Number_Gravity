@@ -14,6 +14,7 @@ import '../../screens/settings/settings_screen.dart';
 import '../../screens/shop/shop_screen.dart';
 import '../../screens/splash/splash_screen.dart';
 import '../../screens/tutorial/tutorial_screen.dart';
+import '../../screens/victory/victory_screen.dart';
 import '../../screens/worlds/world_select_screen.dart';
 import '../../screens/zen/zen_screen.dart';
 import '../../services/leaderboard/leaderboard_service.dart';
@@ -99,6 +100,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.zen,
         builder: (context, state) => const ZenScreen(),
+      ),
+      GoRoute(
+        path: '${AppRoutes.victory}/:levelId',
+        builder: (context, state) {
+          final query = state.uri.queryParameters;
+          return VictoryScreen(
+            levelId: int.parse(state.pathParameters['levelId']!),
+            stars: int.parse(query['stars'] ?? '3'),
+            moves: int.parse(query['moves'] ?? '0'),
+            optimalMoves: int.parse(query['optimal'] ?? '0'),
+            coinsEarned: int.parse(query['coins'] ?? '25'),
+            solutionCode: query['solution'] ?? '',
+            coinBalance: int.parse(query['balance'] ?? '0'),
+          );
+        },
       ),
     ],
   );

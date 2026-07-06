@@ -108,6 +108,14 @@ class ColorBlindModeNotifier extends AsyncNotifier<bool> {
 final reduceMotionProvider =
     AsyncNotifierProvider<ReduceMotionNotifier, bool>(ReduceMotionNotifier.new);
 
+final localeProvider =
+    AsyncNotifierProvider<LocaleNotifier, Locale?>(LocaleNotifier.new);
+
+final playerProgressProvider = FutureProvider((ref) async {
+  await ref.watch(storageInitProvider.future);
+  return ref.read(progressRepositoryProvider).getProgress();
+});
+
 class ReduceMotionNotifier extends AsyncNotifier<bool> {
   @override
   Future<bool> build() async {
@@ -118,5 +126,22 @@ class ReduceMotionNotifier extends AsyncNotifier<bool> {
   Future<void> setEnabled(bool enabled) async {
     await ref.read(settingsRepositoryProvider).setReduceMotion(enabled);
     state = AsyncData(enabled);
+  }
+}
+
+class LocaleNotifier extends AsyncNotifier<Locale?> {
+  @override
+  Future<Locale?> build() async {
+    await ref.watch(storageInitProvider.future);
+    final code = await ref.read(settingsRepositoryProvider).getLocaleCode();
+    if (code == null || code.isEmpty) {
+      return null;
+    }
+    return Locale(code);
+  }
+
+  Future<void> setLocale(Locale locale) async {
+    await ref.read(settingsRepositoryProvider).setLocaleCode(locale.languageCode);
+    state = AsyncData(locale);
   }
 }

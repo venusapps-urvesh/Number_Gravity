@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSubtitle => 'Predict. Plan. Solve.';
 
   @override
+  String get playCampaign => 'Play Campaign';
+
+  @override
   String get playLevel => 'Play Level 1';
 
   @override
@@ -30,7 +33,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dailyPuzzle => 'Daily Puzzle';
 
   @override
+  String get leaderboard => 'Leaderboard';
+
+  @override
   String get worlds => 'Worlds';
+
+  @override
+  String get selectWorld => 'Select World';
+
+  @override
+  String get shop => 'Shop';
+
+  @override
+  String get achievements => 'Achievements';
 
   @override
   String get comingSoon => 'Coming in a future phase';
@@ -55,4 +70,102 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reduceMotion => 'Reduce motion';
+
+  @override
+  String get accessibility => 'Accessibility';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get redo => 'Redo';
+
+  @override
+  String get hint => 'Hint';
+
+  @override
+  String get restart => 'Restart';
+
+  @override
+  String get swipeToMove => 'Swipe to move';
+
+  @override
+  String levelTitle(int id) {
+    return 'Level $id';
+  }
+
+  @override
+  String movesOptimal(int used, int optimal) {
+    return '$used/$optimal Optimal';
+  }
+
+  @override
+  String get levelComplete => 'Level Complete';
+
+  @override
+  String get moves => 'Moves';
+
+  @override
+  String optimalLabel(int count) {
+    return 'Optimal: $count';
+  }
+
+  @override
+  String get coinsEarned => 'Coins Earned';
+
+  @override
+  String get shareSolution => 'Share your solution';
+
+  @override
+  String get nextLevel => 'Next Level';
+
+  @override
+  String get replay => 'Replay';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get continueLabel => 'Continue';
+
+  @override
+  String get doubleCoins => 'Double Your Coins!';
+
+  @override
+  String watchAdCoins(int amount) {
+    return 'Watch an ad to earn +$amount';
+  }
+
+  @override
+  String get levels => 'Levels';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get selectLanguage => 'Select language';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageSpanish => 'Español';
+
+  @override
+  String get languageFrench => 'Français';
+
+  @override
+  String get shareApp => 'Share';
+
+  @override
+  String get shareAppMessage => 'Try Number Gravity! Predict. Plan. Solve.';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get copied => 'Copied';
 }

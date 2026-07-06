@@ -18,4 +18,8 @@ abstract class SettingsRepository {
   Future<bool> getReduceMotion();
 
   Future<void> setReduceMotion(bool enabled);
+
+  Future<String?> getLocaleCode();
+
+  Future<void> setLocaleCode(String? code);
 }
