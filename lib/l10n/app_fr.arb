@@ -27,6 +27,8 @@
   "redo": "Rétablir",
   "hint": "Indice",
   "restart": "Recommencer",
+  "pause": "Pause",
+  "resume": "Reprendre",
   "swipeToMove": "Glissez pour déplacer",
   "levelTitle": "Niveau {id}",
   "@levelTitle": {

@@ -11,38 +11,32 @@ class GameHud extends StatelessWidget {
     required this.levelId,
     required this.movesUsed,
     required this.optimalMoves,
+    required this.onPause,
     required this.onUndo,
-    required this.onRedo,
     required this.onHint,
-    required this.onRestart,
-    required this.onSettings,
     super.key,
     this.hintCount = 0,
     this.coinAmount = 0,
-    this.canUndo = true,
-    this.canRedo = false,
+    this.canUndo = false,
+    this.canHint = true,
   });
 
   final int levelId;
   final int movesUsed;
   final int? optimalMoves;
+  final VoidCallback onPause;
   final VoidCallback onUndo;
-  final VoidCallback onRedo;
   final VoidCallback onHint;
-  final VoidCallback onRestart;
-  final VoidCallback onSettings;
   final int hintCount;
   final int coinAmount;
   final bool canUndo;
-  final bool canRedo;
+  final bool canHint;
 
   factory GameHud.fromSession({
     required GameSessionState session,
+    required VoidCallback onPause,
     required VoidCallback onUndo,
-    required VoidCallback onRedo,
     required VoidCallback onHint,
-    required VoidCallback onRestart,
-    required VoidCallback onSettings,
     int hintCount = 0,
     int coinAmount = 0,
   }) {
@@ -50,15 +44,13 @@ class GameHud extends StatelessWidget {
       levelId: session.level.id,
       movesUsed: session.movesUsed,
       optimalMoves: session.level.minimumMoves,
+      onPause: onPause,
       onUndo: onUndo,
-      onRedo: onRedo,
       onHint: onHint,
-      onRestart: onRestart,
-      onSettings: onSettings,
       hintCount: hintCount,
       coinAmount: coinAmount,
       canUndo: session.moveHistory.length > 1,
-      canRedo: false,
+      canHint: session.level.solutionMoves.isNotEmpty,
     );
   }
 
@@ -93,9 +85,9 @@ class GameHud extends StatelessWidget {
           Row(
             children: [
               NGIconButton(
-                icon: Icons.settings_rounded,
-                tooltip: l10n.settings,
-                onPressed: onSettings,
+                icon: Icons.pause_rounded,
+                tooltip: l10n.pause,
+                onPressed: onPause,
                 variant: NGIconButtonVariant.plain,
               ),
               Expanded(
@@ -134,20 +126,10 @@ class GameHud extends StatelessWidget {
                 onPressed: canUndo ? onUndo : null,
               ),
               NGIconButton(
-                icon: Icons.redo_rounded,
-                tooltip: l10n.redo,
-                onPressed: canRedo ? onRedo : null,
-              ),
-              NGIconButton(
                 icon: Icons.lightbulb_outline_rounded,
                 tooltip: l10n.hint,
-                onPressed: onHint,
+                onPressed: canHint ? onHint : null,
                 badge: hintCount > 0 ? hintCount : null,
-              ),
-              NGIconButton(
-                icon: Icons.refresh_rounded,
-                tooltip: l10n.restart,
-                onPressed: onRestart,
               ),
             ],
           ),

@@ -90,6 +90,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restart => 'Restart';
 
   @override
+  String get pause => 'Pause';
+
+  @override
+  String get resume => 'Resume';
+
+  @override
   String get swipeToMove => 'Swipe to move';
 
   @override

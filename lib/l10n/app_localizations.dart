@@ -262,6 +262,18 @@ abstract class AppLocalizations {
   /// **'Restart'**
   String get restart;
 
+  /// No description provided for @pause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get pause;
+
+  /// No description provided for @resume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get resume;
+
   /// No description provided for @swipeToMove.
   ///
   /// In en, this message translates to:

@@ -27,6 +27,8 @@
   "redo": "Rehacer",
   "hint": "Pista",
   "restart": "Reiniciar",
+  "pause": "Pausa",
+  "resume": "Reanudar",
   "swipeToMove": "Desliza para mover",
   "levelTitle": "Nivel {id}",
   "@levelTitle": {

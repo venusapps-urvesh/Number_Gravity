@@ -90,6 +90,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get restart => 'Reiniciar';
 
   @override
+  String get pause => 'Pausa';
+
+  @override
+  String get resume => 'Reanudar';
+
+  @override
   String get swipeToMove => 'Desliza para mover';
 
   @override

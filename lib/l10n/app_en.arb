@@ -27,6 +27,8 @@
   "redo": "Redo",
   "hint": "Hint",
   "restart": "Restart",
+  "pause": "Pause",
+  "resume": "Resume",
   "swipeToMove": "Swipe to move",
   "levelTitle": "Level {id}",
   "@levelTitle": {
