@@ -382,4 +382,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get startZen => 'Lancer un plateau Zen';
+
+  @override
+  String get howToPlay => 'Comment jouer';
+
+  @override
+  String get howToPlayIntro =>
+      'Number Gravity est un puzzle où les tuiles numérotées s\'attirent et se repoussent. Planifiez vos coups, laissez la gravité se stabiliser et atteignez l\'objectif en un minimum de coups.';
+
+  @override
+  String get howToPlayGoalTitle => 'Atteindre l\'objectif';
+
+  @override
+  String get howToPlayGoalBody =>
+      'Chaque niveau a un objectif — souvent placer une tuile sur l\'étoile dorée. Lisez le but du niveau, puis planifiez votre chemin sur la grille.';
+
+  @override
+  String get howToPlayPullTitle => 'Les tuiles bleues attirent';
+
+  @override
+  String get howToPlayPullBody =>
+      'Les nombres positifs attirent les tuiles proches. Une tuile +3 tire les autres vers elle. Utilisez l\'attraction pour guider les tuiles.';
+
+  @override
+  String get howToPlayPushTitle => 'Les tuiles rouges repoussent';
+
+  @override
+  String get howToPlayPushBody =>
+      'Les nombres négatifs repoussent les tuiles proches. Une tuile −2 les éloigne. Combinez poussée et attraction pour résoudre les cas difficiles.';
+
+  @override
+  String get howToPlaySwipeTitle => 'Glissez pour déplacer';
+
+  @override
+  String get howToPlaySwipeBody =>
+      'Touchez une tuile pour la sélectionner, puis glissez vers le haut, le bas, la gauche ou la droite pour la déplacer d\'une case. Vous pouvez aussi glisser sans sélectionner.';
+
+  @override
+  String get howToPlayGravityTitle => 'La gravité se stabilise seule';
+
+  @override
+  String get howToPlayGravityBody =>
+      'Après chaque coup, la gravité agit jusqu\'à ce que le plateau soit stable. Les tuiles continuent de glisser selon les forces jusqu\'à l\'arrêt total.';
+
+  @override
+  String get howToPlayStarsTitle => 'Gagnez des étoiles';
+
+  @override
+  String get howToPlayStarsBody =>
+      'Terminez avec le minimum de coups pour 3 étoiles. Jusqu\'à deux coups de plus donnent encore 2 étoiles. Moins de coups signifie plus de pièces.';
+
+  @override
+  String get howToPlayControlsTitle => 'Annuler et indice';
+
+  @override
+  String get howToPlayControlsBody =>
+      'Une erreur ? Touchez Annuler pour revenir en arrière d\'un coup. Bloqué ? Utilisez Indice pour voir une direction suggérée. Les indices sont limités.';
+
+  @override
+  String get howToPlayStart => 'Commencer le Niveau 1';
 }

@@ -53,6 +53,7 @@ String _parentRouteFor(String location) {
       location == AppRoutes.settings ||
       location == AppRoutes.profile ||
       location == AppRoutes.tutorial ||
+      location == AppRoutes.howToPlay ||
       location == AppRoutes.zen) {
     return AppRoutes.home;
   }

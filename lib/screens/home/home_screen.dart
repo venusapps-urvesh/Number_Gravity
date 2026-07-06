@@ -114,6 +114,13 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   NGButton(
+                    label: l10n.howToPlay,
+                    icon: Icons.help_outline_rounded,
+                    variant: NGButtonVariant.secondary,
+                    onPressed: () => context.push(AppRoutes.howToPlay),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  NGButton(
                     label: l10n.leaderboard,
                     icon: Icons.leaderboard_rounded,
                     variant: NGButtonVariant.accent,

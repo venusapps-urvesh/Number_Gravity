@@ -381,4 +381,63 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get startZen => 'Empezar un tablero Zen';
+
+  @override
+  String get howToPlay => 'Cómo jugar';
+
+  @override
+  String get howToPlayIntro =>
+      'Number Gravity es un puzzle donde las fichas numeradas se atraen y repelen. Planifica tus movimientos, deja que la gravedad se asiente y alcanza la meta con el menor número de movimientos.';
+
+  @override
+  String get howToPlayGoalTitle => 'Alcanza la meta';
+
+  @override
+  String get howToPlayGoalBody =>
+      'Cada nivel tiene un objetivo — normalmente colocar una ficha en la estrella dorada. Lee la meta del nivel y planifica tu camino por el tablero.';
+
+  @override
+  String get howToPlayPullTitle => 'Las fichas azules atraen';
+
+  @override
+  String get howToPlayPullBody =>
+      'Los números positivos atraen las fichas cercanas. Una ficha +3 tira de las demás hacia ella. Usa la atracción para guiar las fichas.';
+
+  @override
+  String get howToPlayPushTitle => 'Las fichas rojas empujan';
+
+  @override
+  String get howToPlayPushBody =>
+      'Los números negativos repelen las fichas cercanas. Una ficha −2 las aleja. Combina empuje y atracción para resolver diseños difíciles.';
+
+  @override
+  String get howToPlaySwipeTitle => 'Desliza para mover';
+
+  @override
+  String get howToPlaySwipeBody =>
+      'Toca una ficha para seleccionarla, luego desliza arriba, abajo, izquierda o derecha para moverla una celda. También puedes deslizar sin seleccionar.';
+
+  @override
+  String get howToPlayGravityTitle => 'La gravedad se asienta sola';
+
+  @override
+  String get howToPlayGravityBody =>
+      'Tras cada movimiento, la gravedad actúa hasta que el tablero se estabiliza. Las fichas siguen deslizándose según las fuerzas hasta que nada se mueve.';
+
+  @override
+  String get howToPlayStarsTitle => 'Gana estrellas';
+
+  @override
+  String get howToPlayStarsBody =>
+      'Termina con el mínimo de movimientos para 3 estrellas. Hasta dos movimientos extra aún dan 2 estrellas. Menos movimientos significan más monedas.';
+
+  @override
+  String get howToPlayControlsTitle => 'Deshacer y pista';
+
+  @override
+  String get howToPlayControlsBody =>
+      '¿Te equivocaste? Toca Deshacer para retroceder un movimiento. ¿Atascado? Usa Pista para ver una dirección sugerida. Las pistas son limitadas.';
+
+  @override
+  String get howToPlayStart => 'Empezar Nivel 1';
 }

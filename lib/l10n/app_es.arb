@@ -173,5 +173,23 @@
   "zenMode": "Modo Zen",
   "zenSubtitle": "Sin estrellas · sin cronómetro · sin fallar",
   "zenBody": "Relájate y experimenta. Resuelve a tu ritmo.",
-  "startZen": "Empezar un tablero Zen"
+  "startZen": "Empezar un tablero Zen",
+
+  "howToPlay": "Cómo jugar",
+  "howToPlayIntro": "Number Gravity es un puzzle donde las fichas numeradas se atraen y repelen. Planifica tus movimientos, deja que la gravedad se asiente y alcanza la meta con el menor número de movimientos.",
+  "howToPlayGoalTitle": "Alcanza la meta",
+  "howToPlayGoalBody": "Cada nivel tiene un objetivo — normalmente colocar una ficha en la estrella dorada. Lee la meta del nivel y planifica tu camino por el tablero.",
+  "howToPlayPullTitle": "Las fichas azules atraen",
+  "howToPlayPullBody": "Los números positivos atraen las fichas cercanas. Una ficha +3 tira de las demás hacia ella. Usa la atracción para guiar las fichas.",
+  "howToPlayPushTitle": "Las fichas rojas empujan",
+  "howToPlayPushBody": "Los números negativos repelen las fichas cercanas. Una ficha −2 las aleja. Combina empuje y atracción para resolver diseños difíciles.",
+  "howToPlaySwipeTitle": "Desliza para mover",
+  "howToPlaySwipeBody": "Toca una ficha para seleccionarla, luego desliza arriba, abajo, izquierda o derecha para moverla una celda. También puedes deslizar sin seleccionar.",
+  "howToPlayGravityTitle": "La gravedad se asienta sola",
+  "howToPlayGravityBody": "Tras cada movimiento, la gravedad actúa hasta que el tablero se estabiliza. Las fichas siguen deslizándose según las fuerzas hasta que nada se mueve.",
+  "howToPlayStarsTitle": "Gana estrellas",
+  "howToPlayStarsBody": "Termina con el mínimo de movimientos para 3 estrellas. Hasta dos movimientos extra aún dan 2 estrellas. Menos movimientos significan más monedas.",
+  "howToPlayControlsTitle": "Deshacer y pista",
+  "howToPlayControlsBody": "¿Te equivocaste? Toca Deshacer para retroceder un movimiento. ¿Atascado? Usa Pista para ver una dirección sugerida. Las pistas son limitadas.",
+  "howToPlayStart": "Empezar Nivel 1"
 }

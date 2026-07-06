@@ -173,5 +173,23 @@
   "zenMode": "Zen Mode",
   "zenSubtitle": "No stars · no timer · no fail state",
   "zenBody": "Relax and experiment. Solve at your own pace.",
-  "startZen": "Start a Zen board"
+  "startZen": "Start a Zen board",
+
+  "howToPlay": "How to Play",
+  "howToPlayIntro": "Number Gravity is a puzzle where numbered tiles attract and repel each other. Plan your moves, let gravity settle, and reach the goal in as few moves as possible.",
+  "howToPlayGoalTitle": "Reach the goal",
+  "howToPlayGoalBody": "Every level has an objective — usually landing a tile on the golden star. Read the level goal, then plan a path through the grid.",
+  "howToPlayPullTitle": "Blue tiles pull",
+  "howToPlayPullBody": "Positive numbers attract nearby tiles. A +3 tile pulls others toward it. Use attraction to steer tiles where you need them.",
+  "howToPlayPushTitle": "Red tiles push",
+  "howToPlayPushBody": "Negative numbers repel nearby tiles. A −2 tile pushes others away. Combine push and pull to solve tricky layouts.",
+  "howToPlaySwipeTitle": "Swipe to move",
+  "howToPlaySwipeBody": "Tap a tile to select it, then swipe up, down, left, or right to move it one cell. You can also swipe without selecting — the main tile moves.",
+  "howToPlayGravityTitle": "Gravity settles automatically",
+  "howToPlayGravityBody": "After each move, gravity runs until the board is stable. Tiles keep sliding based on forces until nothing moves. Watch the chain reaction before your next turn.",
+  "howToPlayStarsTitle": "Earn stars",
+  "howToPlayStarsBody": "Finish in the minimum moves for 3 stars. Up to two extra moves still earns 2 stars. Fewer moves mean more coins and better rankings.",
+  "howToPlayControlsTitle": "Undo & Hint",
+  "howToPlayControlsBody": "Made a mistake? Tap Undo to rewind one move. Stuck? Use Hint to see a suggested direction. Hints are limited — use them wisely.",
+  "howToPlayStart": "Start Level 1"
 }

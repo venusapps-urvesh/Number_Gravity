@@ -380,4 +380,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startZen => 'Start a Zen board';
+
+  @override
+  String get howToPlay => 'How to Play';
+
+  @override
+  String get howToPlayIntro =>
+      'Number Gravity is a puzzle where numbered tiles attract and repel each other. Plan your moves, let gravity settle, and reach the goal in as few moves as possible.';
+
+  @override
+  String get howToPlayGoalTitle => 'Reach the goal';
+
+  @override
+  String get howToPlayGoalBody =>
+      'Every level has an objective — usually landing a tile on the golden star. Read the level goal, then plan a path through the grid.';
+
+  @override
+  String get howToPlayPullTitle => 'Blue tiles pull';
+
+  @override
+  String get howToPlayPullBody =>
+      'Positive numbers attract nearby tiles. A +3 tile pulls others toward it. Use attraction to steer tiles where you need them.';
+
+  @override
+  String get howToPlayPushTitle => 'Red tiles push';
+
+  @override
+  String get howToPlayPushBody =>
+      'Negative numbers repel nearby tiles. A −2 tile pushes others away. Combine push and pull to solve tricky layouts.';
+
+  @override
+  String get howToPlaySwipeTitle => 'Swipe to move';
+
+  @override
+  String get howToPlaySwipeBody =>
+      'Tap a tile to select it, then swipe up, down, left, or right to move it one cell. You can also swipe without selecting — the main tile moves.';
+
+  @override
+  String get howToPlayGravityTitle => 'Gravity settles automatically';
+
+  @override
+  String get howToPlayGravityBody =>
+      'After each move, gravity runs until the board is stable. Tiles keep sliding based on forces until nothing moves. Watch the chain reaction before your next turn.';
+
+  @override
+  String get howToPlayStarsTitle => 'Earn stars';
+
+  @override
+  String get howToPlayStarsBody =>
+      'Finish in the minimum moves for 3 stars. Up to two extra moves still earns 2 stars. Fewer moves mean more coins and better rankings.';
+
+  @override
+  String get howToPlayControlsTitle => 'Undo & Hint';
+
+  @override
+  String get howToPlayControlsBody =>
+      'Made a mistake? Tap Undo to rewind one move. Stuck? Use Hint to see a suggested direction. Hints are limited — use them wisely.';
+
+  @override
+  String get howToPlayStart => 'Start Level 1';
 }

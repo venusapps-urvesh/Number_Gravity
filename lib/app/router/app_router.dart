@@ -6,6 +6,7 @@ import '../../screens/achievements/achievements_screen.dart';
 import '../../screens/daily/daily_puzzle_screen.dart';
 import '../../screens/gameplay/gameplay_screen.dart';
 import '../../screens/home/home_screen.dart';
+import '../../screens/how_to_play/how_to_play_screen.dart';
 import '../../screens/leaderboard/leaderboard_screen.dart';
 import '../../screens/levels/level_select_screen.dart';
 import '../../screens/loading/loading_screen.dart';
@@ -96,6 +97,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.tutorial,
         builder: (context, state) => const TutorialScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.howToPlay,
+        builder: (context, state) => const HowToPlayScreen(),
       ),
       GoRoute(
         path: AppRoutes.zen,

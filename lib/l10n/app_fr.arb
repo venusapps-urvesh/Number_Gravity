@@ -173,5 +173,23 @@
   "zenMode": "Mode Zen",
   "zenSubtitle": "Sans étoiles · sans minuteur · sans échec",
   "zenBody": "Détendez-vous et expérimentez. Résolvez à votre rythme.",
-  "startZen": "Lancer un plateau Zen"
+  "startZen": "Lancer un plateau Zen",
+
+  "howToPlay": "Comment jouer",
+  "howToPlayIntro": "Number Gravity est un puzzle où les tuiles numérotées s'attirent et se repoussent. Planifiez vos coups, laissez la gravité se stabiliser et atteignez l'objectif en un minimum de coups.",
+  "howToPlayGoalTitle": "Atteindre l'objectif",
+  "howToPlayGoalBody": "Chaque niveau a un objectif — souvent placer une tuile sur l'étoile dorée. Lisez le but du niveau, puis planifiez votre chemin sur la grille.",
+  "howToPlayPullTitle": "Les tuiles bleues attirent",
+  "howToPlayPullBody": "Les nombres positifs attirent les tuiles proches. Une tuile +3 tire les autres vers elle. Utilisez l'attraction pour guider les tuiles.",
+  "howToPlayPushTitle": "Les tuiles rouges repoussent",
+  "howToPlayPushBody": "Les nombres négatifs repoussent les tuiles proches. Une tuile −2 les éloigne. Combinez poussée et attraction pour résoudre les cas difficiles.",
+  "howToPlaySwipeTitle": "Glissez pour déplacer",
+  "howToPlaySwipeBody": "Touchez une tuile pour la sélectionner, puis glissez vers le haut, le bas, la gauche ou la droite pour la déplacer d'une case. Vous pouvez aussi glisser sans sélectionner.",
+  "howToPlayGravityTitle": "La gravité se stabilise seule",
+  "howToPlayGravityBody": "Après chaque coup, la gravité agit jusqu'à ce que le plateau soit stable. Les tuiles continuent de glisser selon les forces jusqu'à l'arrêt total.",
+  "howToPlayStarsTitle": "Gagnez des étoiles",
+  "howToPlayStarsBody": "Terminez avec le minimum de coups pour 3 étoiles. Jusqu'à deux coups de plus donnent encore 2 étoiles. Moins de coups signifie plus de pièces.",
+  "howToPlayControlsTitle": "Annuler et indice",
+  "howToPlayControlsBody": "Une erreur ? Touchez Annuler pour revenir en arrière d'un coup. Bloqué ? Utilisez Indice pour voir une direction suggérée. Les indices sont limités.",
+  "howToPlayStart": "Commencer le Niveau 1"
 }
