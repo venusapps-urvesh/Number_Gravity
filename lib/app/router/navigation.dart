@@ -4,17 +4,43 @@ import 'package:go_router/go_router.dart';
 import '../../levels/world_config.dart';
 import 'routes.dart';
 
-/// Pops the navigation stack when possible; otherwise navigates to a parent route.
+/// Back navigation that follows the app's screen hierarchy instead of the
+/// browser-style history stack (which can return to gameplay unexpectedly).
 void ngGoBack(BuildContext context) {
+  final location = GoRouterState.of(context).matchedLocation;
+  final parent = _parentRouteFor(location);
+
+  if (parent != location) {
+    context.go(parent);
+    return;
+  }
+
   if (context.canPop()) {
     context.pop();
     return;
   }
 
-  context.go(_parentRouteFor(GoRouterState.of(context).matchedLocation));
+  context.go(AppRoutes.home);
+}
+
+/// Leaves gameplay and opens the level grid for [worldId].
+void ngExitPlayToLevels(BuildContext context, int worldId) {
+  context.go('${AppRoutes.levels}/$worldId');
 }
 
 String _parentRouteFor(String location) {
+  if (location == AppRoutes.worlds ||
+      location == AppRoutes.daily ||
+      location == AppRoutes.leaderboard ||
+      location == AppRoutes.shop ||
+      location == AppRoutes.achievements ||
+      location == AppRoutes.settings ||
+      location == AppRoutes.profile ||
+      location == AppRoutes.tutorial ||
+      location == AppRoutes.zen) {
+    return AppRoutes.home;
+  }
+
   if (location.startsWith('${AppRoutes.levels}/')) {
     return AppRoutes.worlds;
   }

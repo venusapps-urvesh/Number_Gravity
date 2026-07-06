@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../app/router/navigation.dart';
 import '../app/router/routes.dart';
 import '../core/constants/game_constants.dart';
 import '../core/utils/responsive.dart';
@@ -152,7 +153,7 @@ class _NumberGravityGameWidgetState extends ConsumerState<NumberGravityGameWidge
         setState(() => _movesUsed = 0);
       },
       onLevels: () {
-        context.push('${AppRoutes.levels}/${widget.level.world}');
+        ngExitPlayToLevels(context, widget.level.world);
       },
     ).whenComplete(() => _game?.setPaused(false));
   }
