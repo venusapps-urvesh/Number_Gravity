@@ -1,0 +1,19 @@
+{
+  "@@locale": "fr",
+  "appName": "Number Gravity",
+  "loading": "Chargement...",
+  "homeTitle": "Number Gravity",
+  "homeSubtitle": "Prévoir. Planifier. Résoudre.",
+  "playLevel": "Jouer niveau 1",
+  "settings": "Paramètres",
+  "dailyPuzzle": "Puzzle du jour",
+  "worlds": "Mondes",
+  "comingSoon": "Bientôt disponible",
+  "gameplayPlaceholder": "Le plateau sera rendu en phase 3",
+  "themeMode": "Thème",
+  "themeSystem": "Système",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "colorBlindMode": "Mode daltonien",
+  "reduceMotion": "Réduire les animations"
+}

@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appName": "Number Gravity",
+  "loading": "Loading...",
+  "homeTitle": "Number Gravity",
+  "homeSubtitle": "Predict. Plan. Solve.",
+  "playLevel": "Play Level 1",
+  "settings": "Settings",
+  "dailyPuzzle": "Daily Puzzle",
+  "worlds": "Worlds",
+  "comingSoon": "Coming in a future phase",
+  "gameplayPlaceholder": "Game board renders in Phase 3",
+  "themeMode": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "colorBlindMode": "Color-blind mode",
+  "reduceMotion": "Reduce motion"
+}

@@ -1,0 +1,19 @@
+{
+  "@@locale": "es",
+  "appName": "Number Gravity",
+  "loading": "Cargando...",
+  "homeTitle": "Number Gravity",
+  "homeSubtitle": "Predice. Planifica. Resuelve.",
+  "playLevel": "Jugar nivel 1",
+  "settings": "Ajustes",
+  "dailyPuzzle": "Puzzle diario",
+  "worlds": "Mundos",
+  "comingSoon": "Próximamente",
+  "gameplayPlaceholder": "El tablero se renderiza en la fase 3",
+  "themeMode": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "colorBlindMode": "Modo daltónico",
+  "reduceMotion": "Reducir movimiento"
+}

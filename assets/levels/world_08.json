@@ -1,0 +1,1033 @@
+{
+  "levels": [
+    {
+      "id": 176,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 3,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 177,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 4,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 178,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 5,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 179,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 6,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 180,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 7,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 181,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 3,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 182,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 4,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 183,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 5,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 184,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 6,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 185,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 7,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 186,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 3,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 187,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 4,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 188,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 5,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 189,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 6,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 190,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 7,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 191,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 3,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 192,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 4,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 193,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 5,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 194,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 6,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 195,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 7,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 196,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 3,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 197,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 3,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 4,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 198,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 4,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 5,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 199,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 5,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 6,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    },
+    {
+      "id": 200,
+      "world": 8,
+      "tier": "advanced",
+      "rows": 8,
+      "cols": 8,
+      "objective": {
+        "type": "position",
+        "tileId": "t1",
+        "goalRow": 7,
+        "goalCol": 7
+      },
+      "tiles": [
+        {
+          "id": "t1",
+          "type": "number",
+          "value": 2,
+          "row": 0,
+          "col": 0,
+          "isLocked": false
+        },
+        {
+          "id": "g1",
+          "type": "goal",
+          "value": 0,
+          "row": 7,
+          "col": 7,
+          "isLocked": true
+        },
+        {
+          "id": "w1",
+          "type": "wall",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true
+        }
+      ],
+      "minimumMoves": 7,
+      "solutionMoves": [
+        "R",
+        "D",
+        "R"
+      ]
+    }
+  ]
+}
