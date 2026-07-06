@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/router/routes.dart';
 import '../../app/theme/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 
 class NGBottomNavBar extends StatelessWidget {
   const NGBottomNavBar({
@@ -45,9 +47,11 @@ class NGBottomNavBar extends StatelessWidget {
                       Text(
                         item.label,
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: color,
-                              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                            ),
+                          color: color,
+                          fontWeight: selected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
@@ -71,4 +75,24 @@ class NGBottomNavItem {
   final IconData icon;
   final String label;
   final String route;
+}
+
+List<NGBottomNavItem> ngPrimaryBottomNavItems(AppLocalizations l10n) {
+  return [
+    NGBottomNavItem(
+      icon: Icons.shopping_cart_outlined,
+      label: l10n.shop,
+      route: AppRoutes.shop,
+    ),
+    NGBottomNavItem(
+      icon: Icons.emoji_events_outlined,
+      label: l10n.achievements,
+      route: AppRoutes.achievements,
+    ),
+    NGBottomNavItem(
+      icon: Icons.settings_outlined,
+      label: l10n.settings,
+      route: AppRoutes.settings,
+    ),
+  ];
 }

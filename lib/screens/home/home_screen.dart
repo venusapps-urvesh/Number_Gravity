@@ -34,7 +34,9 @@ class HomeScreen extends ConsumerWidget {
         children: [
           Expanded(
             child: NGResponsiveLayout(
-              maxWidth: isTablet ? 560 : ResponsiveBreakpoints.contentMaxWidthPhone,
+              maxWidth: isTablet
+                  ? 560
+                  : ResponsiveBreakpoints.contentMaxWidthPhone,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -63,8 +65,10 @@ class HomeScreen extends ConsumerWidget {
                     l10n.homeSubtitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppColors.onSurfaceMuted(Theme.of(context).brightness),
-                        ),
+                      color: AppColors.onSurfaceMuted(
+                        Theme.of(context).brightness,
+                      ),
+                    ),
                   ),
                   SizedBox(height: isTablet ? AppSpacing.xl : AppSpacing.lg),
                   Row(
@@ -123,23 +127,7 @@ class HomeScreen extends ConsumerWidget {
           ),
           NGBottomNavBar(
             currentIndex: -1,
-            items: [
-              NGBottomNavItem(
-                icon: Icons.shopping_cart_outlined,
-                label: l10n.shop,
-                route: AppRoutes.shop,
-              ),
-              NGBottomNavItem(
-                icon: Icons.emoji_events_outlined,
-                label: l10n.achievements,
-                route: AppRoutes.achievements,
-              ),
-              NGBottomNavItem(
-                icon: Icons.settings_outlined,
-                label: l10n.settings,
-                route: AppRoutes.settings,
-              ),
-            ],
+            items: ngPrimaryBottomNavItems(l10n),
           ),
         ],
       ),

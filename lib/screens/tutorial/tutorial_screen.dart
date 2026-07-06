@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/tile_type.dart';
@@ -74,7 +73,7 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
             title: l10n.tutorial,
             actions: [
               TextButton(
-                onPressed: () => context.push('${AppRoutes.play}/1'),
+                onPressed: () => ngPushToPlay(context, 1),
                 child: Text(l10n.skip),
               ),
             ],
@@ -93,29 +92,26 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
                   Text(
                     step.title,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall
-                        ?.copyWith(fontWeight: FontWeight.w800),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
                     step.body,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: muted),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: muted),
                   ),
                   const Spacer(),
                   _Dots(count: steps.length, index: _index),
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     l10n.tutorialStep(_index + 1, steps.length),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: muted),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(color: muted),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   NGButton(
@@ -126,7 +122,7 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen> {
                     variant: NGButtonVariant.accent,
                     onPressed: () {
                       if (isLast) {
-                        context.push('${AppRoutes.play}/1');
+                        ngPushToPlay(context, 1);
                       } else {
                         setState(() => _index++);
                       }
@@ -173,8 +169,11 @@ class _MiniBoard extends StatelessWidget {
               selected: true,
             ),
             const SizedBox(width: gap),
-            const Icon(Icons.arrow_forward_rounded,
-                color: AppColors.positive, size: 28),
+            const Icon(
+              Icons.arrow_forward_rounded,
+              color: AppColors.positive,
+              size: 28,
+            ),
             const SizedBox(width: gap),
             TileBadge(
               value: 0,

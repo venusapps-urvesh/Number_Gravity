@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../app/router/navigation.dart';
-
 import '../../l10n/app_localizations.dart';
-import '../../widgets/common/ng_app_bar.dart';
+import '../../widgets/common/ng_page_header.dart';
 import '../../widgets/common/ng_scaffold.dart';
 
 class ComingSoonScreen extends StatelessWidget {
-  const ComingSoonScreen({
-    required this.titleKey,
-    super.key,
-    this.subtitle,
-  });
+  const ComingSoonScreen({required this.titleKey, super.key, this.subtitle});
 
   final String titleKey;
   final String? subtitle;
@@ -22,40 +16,40 @@ class ComingSoonScreen extends StatelessWidget {
     final title = _titleForKey(l10n, titleKey);
 
     return NGScaffold(
-      appBar: NGAppBar(
-        title: title,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => ngGoBack(context),
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headlineMedium,
-                textAlign: TextAlign.center,
-              ),
-              if (subtitle != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  subtitle!,
-                  style: Theme.of(context).textTheme.bodyLarge,
+      body: Column(
+        children: [
+          NGPageHeader(title: title),
+          Expanded(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        subtitle!,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.comingSoon,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
-              ],
-              const SizedBox(height: 16),
-              Text(
-                l10n.comingSoon,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium,
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

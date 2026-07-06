@@ -25,7 +25,23 @@ void ngGoBack(BuildContext context) {
 
 /// Leaves gameplay and opens the level grid for [worldId].
 void ngExitPlayToLevels(BuildContext context, int worldId) {
-  context.go('${AppRoutes.levels}/$worldId');
+  context.go(AppRoutes.levelsPath(worldId));
+}
+
+void ngPushToWorldLevels(BuildContext context, int worldId) {
+  context.push(AppRoutes.levelsPath(worldId));
+}
+
+void ngPushToPlay(BuildContext context, int levelId) {
+  context.push(AppRoutes.playPath(levelId));
+}
+
+void ngGoToPlay(BuildContext context, int levelId) {
+  context.go(AppRoutes.playPath(levelId));
+}
+
+void ngGoHome(BuildContext context) {
+  context.go(AppRoutes.home);
 }
 
 String _parentRouteFor(String location) {
@@ -52,7 +68,7 @@ String _parentRouteFor(String location) {
     if (levelId != null) {
       final worldId = _worldIdForLevel(levelId);
       if (worldId != null) {
-        return '${AppRoutes.levels}/$worldId';
+        return AppRoutes.levelsPath(worldId);
       }
     }
     return AppRoutes.worlds;

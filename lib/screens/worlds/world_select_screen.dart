@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../levels/world_config.dart';
@@ -79,12 +78,8 @@ class _WorldList extends StatelessWidget {
         padding: EdgeInsets.zero,
         itemCount: worldConfigs.length,
         separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
-        itemBuilder: (context, index) => _buildCard(
-          context,
-          worldConfigs[index],
-          progress,
-          currentWorldId,
-        ),
+        itemBuilder: (context, index) =>
+            _buildCard(context, worldConfigs[index], progress, currentWorldId),
       ),
     );
   }
@@ -116,7 +111,7 @@ class _WorldList extends StatelessWidget {
       totalStars: totalStars,
       isUnlocked: isUnlocked,
       isCurrent: world.id == currentWorldId,
-      onTap: () => context.push('${AppRoutes.levels}/${world.id}'),
+      onTap: () => ngPushToWorldLevels(context, world.id),
     );
   }
 

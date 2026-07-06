@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../models/tile_type.dart';
@@ -38,8 +37,11 @@ class ZenScreen extends ConsumerWidget {
                       color: AppColors.dailyAccent.withValues(alpha: 0.14),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.nightlight_round,
-                        color: AppColors.dailyAccent, size: 44),
+                    child: const Icon(
+                      Icons.nightlight_round,
+                      color: AppColors.dailyAccent,
+                      size: 44,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   Row(
@@ -71,19 +73,17 @@ class ZenScreen extends ConsumerWidget {
                   Text(
                     l10n.zenSubtitle,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
                     l10n.zenBody,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(color: muted),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: muted),
                   ),
                   const Spacer(),
                   NGButton(
@@ -91,7 +91,7 @@ class ZenScreen extends ConsumerWidget {
                     icon: Icons.play_arrow_rounded,
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
-                    onPressed: () => context.push('${AppRoutes.play}/1'),
+                    onPressed: () => ngPushToPlay(context, 1),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                 ],

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../levels/daily_puzzle_generator.dart';
@@ -41,15 +40,17 @@ class DailyPuzzleScreen extends ConsumerWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.local_fire_department_rounded,
-                      color: AppColors.coinGold, size: 20),
+                  const Icon(
+                    Icons.local_fire_department_rounded,
+                    color: AppColors.coinGold,
+                    size: 20,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     '$streak',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w800),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ],
               ),
@@ -63,34 +64,29 @@ class DailyPuzzleScreen extends ConsumerWidget {
                     l10n.dailySeed(_formatDate(today)),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: muted,
-                          fontFeatures: const [],
-                        ),
+                      color: muted,
+                      fontFeatures: const [],
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   _StreakStrip(rewards: _loginRewards, streak: streak),
                   const SizedBox(height: AppSpacing.lg),
-                  _BoardPreview(
-                    board: puzzle.board,
-                    colorBlind: colorBlind,
-                  ),
+                  _BoardPreview(board: puzzle.board, colorBlind: colorBlind),
                   const SizedBox(height: AppSpacing.lg),
                   NGButton(
                     label: l10n.solveTodaysPuzzle,
                     icon: Icons.play_arrow_rounded,
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
-                    onPressed: () =>
-                        context.push('${AppRoutes.play}/${puzzle.id}'),
+                    onPressed: () => ngPushToPlay(context, puzzle.id),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
                     l10n.skillLadderNote,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: muted),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(color: muted),
                   ),
                 ],
               ),
@@ -182,24 +178,25 @@ class _BoardPreview extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           const gap = 5.0;
-          final maxWidth =
-              constraints.maxWidth.clamp(0, 340).toDouble();
-          final tileSize =
-              (maxWidth - gap * (board.cols - 1)) / board.cols;
+          final maxWidth = constraints.maxWidth.clamp(0, 340).toDouble();
+          final tileSize = (maxWidth - gap * (board.cols - 1)) / board.cols;
 
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               for (var r = 0; r < board.rows; r++)
                 Padding(
-                  padding: EdgeInsets.only(bottom: r < board.rows - 1 ? gap : 0),
+                  padding: EdgeInsets.only(
+                    bottom: r < board.rows - 1 ? gap : 0,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       for (var c = 0; c < board.cols; c++)
                         Padding(
                           padding: EdgeInsets.only(
-                              right: c < board.cols - 1 ? gap : 0),
+                            right: c < board.cols - 1 ? gap : 0,
+                          ),
                           child: _cell(board.tileAt(r, c), tileSize),
                         ),
                     ],

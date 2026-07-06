@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../core/utils/responsive.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/providers.dart';
@@ -53,16 +52,17 @@ class LevelSelectScreen extends ConsumerWidget {
                   itemCount: levels.length,
                   itemBuilder: (context, index) {
                     final level = levels[index];
-                    final stars =
-                        progress?.levelProgress[level.id]?.stars ?? 0;
+                    final stars = progress?.levelProgress[level.id]?.stars ?? 0;
                     final completed =
                         progress?.levelProgress[level.id]?.isCompleted ?? false;
 
                     return NGCard(
                       padding: const EdgeInsets.all(8),
-                      onTap: () => context.push('${AppRoutes.play}/${level.id}'),
+                      onTap: () => ngPushToPlay(context, level.id),
                       borderColor: completed
-                          ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.4)
+                          ? Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.4)
                           : null,
                       borderWidth: completed ? 1 : 0,
                       child: Column(
@@ -74,11 +74,7 @@ class LevelSelectScreen extends ConsumerWidget {
                           ),
                           if (stars > 0) ...[
                             const SizedBox(height: 4),
-                            NGStarRating(
-                              stars: stars,
-                              size: 12,
-                              spacing: 0,
-                            ),
+                            NGStarRating(stars: stars, size: 12, spacing: 0),
                           ],
                         ],
                       ),

@@ -16,4 +16,10 @@ class AppRoutes {
   static const tutorial = '/tutorial';
   static const zen = '/zen';
   static const victory = '/victory';
+
+  static String levelsPath(int worldId) => '$levels/$worldId';
+
+  static String playPath(int levelId) => '$play/$levelId';
+
+  static String victoryPath(int levelId) => '$victory/$levelId';
 }

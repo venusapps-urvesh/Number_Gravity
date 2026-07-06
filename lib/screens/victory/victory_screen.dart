@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../app/router/routes.dart';
+import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../l10n/app_localizations.dart';
@@ -49,7 +48,9 @@ class VictoryScreen extends StatelessWidget {
           ),
           Expanded(
             child: NGResponsiveLayout(
-              maxWidth: isTablet ? 520 : ResponsiveBreakpoints.contentMaxWidthPhone,
+              maxWidth: isTablet
+                  ? 520
+                  : ResponsiveBreakpoints.contentMaxWidthPhone,
               child: Column(
                 children: [
                   Text(
@@ -74,7 +75,9 @@ class VictoryScreen extends StatelessWidget {
                         Container(
                           width: 1,
                           height: 72,
-                          color: AppColors.surfaceBorder(Theme.of(context).brightness),
+                          color: AppColors.surfaceBorder(
+                            Theme.of(context).brightness,
+                          ),
                         ),
                         Expanded(
                           child: _StatColumn(
@@ -89,7 +92,10 @@ class VictoryScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.md),
                   NGCard(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     child: Row(
                       children: [
                         Icon(
@@ -107,7 +113,8 @@ class VictoryScreen extends StatelessWidget {
                               ),
                               Text(
                                 solutionCode,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
                                       color: AppColors.onSurfaceMuted(
                                         Theme.of(context).brightness,
                                       ),
@@ -128,7 +135,9 @@ class VictoryScreen extends StatelessWidget {
                         IconButton(
                           tooltip: l10n.copy,
                           onPressed: () async {
-                            await Clipboard.setData(ClipboardData(text: solutionCode));
+                            await Clipboard.setData(
+                              ClipboardData(text: solutionCode),
+                            );
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(l10n.copied)),
@@ -144,7 +153,7 @@ class VictoryScreen extends StatelessWidget {
                   NGButton(
                     label: l10n.nextLevel,
                     icon: Icons.chevron_right_rounded,
-                    onPressed: () => context.go('${AppRoutes.play}/${levelId + 1}'),
+                    onPressed: () => ngGoToPlay(context, levelId + 1),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Row(
@@ -154,7 +163,7 @@ class VictoryScreen extends StatelessWidget {
                           label: l10n.replay,
                           icon: Icons.refresh_rounded,
                           variant: NGButtonVariant.secondary,
-                          onPressed: () => context.go('${AppRoutes.play}/$levelId'),
+                          onPressed: () => ngGoToPlay(context, levelId),
                         ),
                       ),
                       const SizedBox(width: AppSpacing.sm),
@@ -163,7 +172,7 @@ class VictoryScreen extends StatelessWidget {
                           label: l10n.home,
                           icon: Icons.home_rounded,
                           variant: NGButtonVariant.secondary,
-                          onPressed: () => context.go(AppRoutes.home),
+                          onPressed: () => ngGoHome(context),
                         ),
                       ),
                     ],
@@ -210,16 +219,24 @@ class _StatColumn extends StatelessWidget {
       children: [
         Icon(icon, color: iconColor ?? Theme.of(context).colorScheme.primary),
         const SizedBox(height: 4),
-        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: muted)),
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: muted),
+        ),
         Text(
           value,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w700,
-              ),
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         if (subtitle != null)
-          Text(subtitle!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: muted)),
+          Text(
+            subtitle!,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: muted),
+          ),
       ],
     );
   }

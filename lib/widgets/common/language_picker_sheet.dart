@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/providers.dart';
 
@@ -19,7 +20,8 @@ class AppShare {
     required int levelId,
   }) {
     final l10n = AppLocalizations.of(context);
-    final message = '${l10n.shareSolution}\n'
+    final message =
+        '${l10n.shareSolution}\n'
         '${l10n.levelTitle(levelId)}: $solutionCode';
     return Share.share(message, subject: l10n.appName);
   }
@@ -27,47 +29,77 @@ class AppShare {
 
 Future<void> showLanguagePicker(BuildContext context, WidgetRef ref) {
   final l10n = AppLocalizations.of(context);
-  final currentLocale = ref.read(localeProvider).value ??
-      Localizations.localeOf(context);
+  final currentLocale =
+      ref.read(localeProvider).value ?? Localizations.localeOf(context);
 
-  return showModalBottomSheet<void>(
+  return showDialog<void>(
     context: context,
-    showDragHandle: true,
-    builder: (sheetContext) {
-      return SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  l10n.selectLanguage,
-                  style: Theme.of(sheetContext).textTheme.titleLarge,
+    barrierDismissible: true,
+    barrierColor: Colors.black.withValues(alpha: 0.55),
+    builder: (dialogContext) {
+      final brightness = Theme.of(dialogContext).brightness;
+      final surface = brightness == Brightness.dark
+          ? AppColors.darkSurface
+          : AppColors.lightSurface;
+      final border = AppColors.surfaceBorder(brightness);
+
+      return Center(
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: 300,
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+            decoration: BoxDecoration(
+              color: surface,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: border),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(
+                    alpha: brightness == Brightness.dark ? 0.35 : 0.18,
+                  ),
+                  blurRadius: 24,
+                  offset: const Offset(0, 12),
                 ),
-              ),
+              ],
             ),
-            _LanguageTile(
-              label: l10n.languageEnglish,
-              locale: const Locale('en'),
-              groupValue: currentLocale.languageCode,
-              onSelected: (locale) => _applyLocale(sheetContext, ref, locale),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  l10n.selectLanguage,
+                  style: Theme.of(
+                    dialogContext,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                _LanguageOption(
+                  label: l10n.languageEnglish,
+                  locale: const Locale('en'),
+                  groupValue: currentLocale.languageCode,
+                  onSelected: (locale) =>
+                      _applyLocale(dialogContext, ref, locale),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                _LanguageOption(
+                  label: l10n.languageSpanish,
+                  locale: const Locale('es'),
+                  groupValue: currentLocale.languageCode,
+                  onSelected: (locale) =>
+                      _applyLocale(dialogContext, ref, locale),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                _LanguageOption(
+                  label: l10n.languageFrench,
+                  locale: const Locale('fr'),
+                  groupValue: currentLocale.languageCode,
+                  onSelected: (locale) =>
+                      _applyLocale(dialogContext, ref, locale),
+                ),
+              ],
             ),
-            _LanguageTile(
-              label: l10n.languageSpanish,
-              locale: const Locale('es'),
-              groupValue: currentLocale.languageCode,
-              onSelected: (locale) => _applyLocale(sheetContext, ref, locale),
-            ),
-            _LanguageTile(
-              label: l10n.languageFrench,
-              locale: const Locale('fr'),
-              groupValue: currentLocale.languageCode,
-              onSelected: (locale) => _applyLocale(sheetContext, ref, locale),
-            ),
-            const SizedBox(height: 8),
-          ],
+          ),
         ),
       );
     },
@@ -85,8 +117,8 @@ Future<void> _applyLocale(
   }
 }
 
-class _LanguageTile extends StatelessWidget {
-  const _LanguageTile({
+class _LanguageOption extends StatelessWidget {
+  const _LanguageOption({
     required this.label,
     required this.locale,
     required this.groupValue,
@@ -101,13 +133,42 @@ class _LanguageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selected = locale.languageCode == groupValue;
+    final brightness = Theme.of(context).brightness;
+    final border = AppColors.surfaceBorder(brightness);
+    final primary = Theme.of(context).colorScheme.primary;
 
-    return ListTile(
-      title: Text(label),
-      trailing: selected
-          ? Icon(Icons.check_rounded, color: Theme.of(context).colorScheme.primary)
-          : null,
-      onTap: () => onSelected(locale),
+    return Material(
+      color: selected ? primary.withValues(alpha: 0.12) : Colors.transparent,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => onSelected(locale),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: selected ? primary : border,
+              width: selected ? 1.5 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  ),
+                ),
+              ),
+              if (selected)
+                Icon(Icons.check_circle_rounded, color: primary, size: 22),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
