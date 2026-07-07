@@ -8,6 +8,7 @@ import '../common/ng_icon_button.dart';
 
 class GameHud extends StatelessWidget {
   const GameHud({
+    required this.levelId,
     required this.movesUsed,
     required this.optimalMoves,
     required this.onPause,
@@ -16,6 +17,7 @@ class GameHud extends StatelessWidget {
     this.showCoins = true,
   });
 
+  final int levelId;
   final int movesUsed;
   final int? optimalMoves;
   final VoidCallback onPause;
@@ -54,25 +56,31 @@ class GameHud extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
+          Stack(
+            alignment: Alignment.center,
             children: [
-              NGIconButton(
-                icon: Icons.pause_rounded,
-                tooltip: l10n.pause,
-                onPressed: onPause,
-                variant: NGIconButtonVariant.plain,
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      l10n.appName,
-                      style: Theme.of(context).textTheme.titleMedium,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NGIconButton(
+                    icon: Icons.pause_rounded,
+                    tooltip: l10n.pause,
+                    onPressed: onPause,
+                    variant: NGIconButtonVariant.plain,
+                  ),
+                  if (showCoins)
+                    NGCoinBadge(amount: coinAmount, compact: true)
+                  else
+                    const SizedBox(
+                      width: AppSpacing.minTapTarget,
+                      height: AppSpacing.minTapTarget,
                     ),
-                  ],
-                ),
+                ],
               ),
-              if (showCoins) NGCoinBadge(amount: coinAmount, compact: true),
+              Text(
+                l10n.levelTitle(levelId),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
           if (optimal != null) ...[

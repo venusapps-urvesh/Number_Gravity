@@ -22,7 +22,6 @@ import '../widgets/game/game_pause_sheet.dart';
 import '../widgets/game/game_hud.dart';
 import '../widgets/game/helper_cost_sheet.dart';
 import '../widgets/game/level_intro_sheet.dart';
-import '../widgets/game/objective_banner.dart';
 import '../widgets/game/win_overlay.dart';
 import 'bridges/simulation_bridge.dart';
 import 'game_flow_controller.dart';
@@ -205,7 +204,6 @@ class _NumberGravityGameWidgetState
           options: widget.options,
           onPause: _showPauseMenu,
         ),
-        ObjectiveBanner(level: widget.level),
         Expanded(child: _FlameBoardHost(game: game)),
         _GameActionBarSection(
           level: widget.level,
@@ -531,6 +529,7 @@ class _GameHudSection extends ConsumerWidget {
     final balance = ref.watch(playerProgressProvider).value?.coins ?? 0;
 
     return GameHud(
+      levelId: level.id,
       movesUsed: session.movesUsed,
       optimalMoves: level.minimumMoves,
       coinAmount: balance,
