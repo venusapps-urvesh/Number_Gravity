@@ -1,4 +1,4 @@
-package com.venusapps.number_gravity
+package com.venusapps.numbergravity
 
 import io.flutter.embedding.android.FlutterActivity
 

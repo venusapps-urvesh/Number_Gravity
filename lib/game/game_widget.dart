@@ -109,35 +109,40 @@ class _NumberGravityGameWidgetState
         ref.read(gameSessionProvider(widget.level).notifier).onMoveCommitted();
         widget.onMoveCommitted?.call(board);
       },
-      onSessionSync: ({
-        required movesUsed,
-        required canUndo,
-        required canRedo,
-        required isAnimating,
-        required isWon,
-        required isStuck,
-      }) {
-        ref.read(gameSessionProvider(widget.level).notifier).syncFromGame(
-              movesUsed: movesUsed,
-              canUndo: canUndo,
-              canRedo: canRedo,
-              isAnimating: isAnimating,
-              isWon: isWon,
-              isStuck: isStuck,
-            );
-      },
-      onTileSelected: ({required tileId, required legalDirections, required forces}) {
-        ref.read(gameSessionProvider(widget.level).notifier).onTileSelected(
-              tileId: tileId,
-              forces: forces,
-              directions: legalDirections,
-            );
-      },
+      onSessionSync:
+          ({
+            required movesUsed,
+            required canUndo,
+            required canRedo,
+            required isAnimating,
+            required isWon,
+            required isStuck,
+          }) {
+            ref
+                .read(gameSessionProvider(widget.level).notifier)
+                .syncFromGame(
+                  movesUsed: movesUsed,
+                  canUndo: canUndo,
+                  canRedo: canRedo,
+                  isAnimating: isAnimating,
+                  isWon: isWon,
+                  isStuck: isStuck,
+                );
+          },
+      onTileSelected:
+          ({required tileId, required legalDirections, required forces}) {
+            ref
+                .read(gameSessionProvider(widget.level).notifier)
+                .onTileSelected(
+                  tileId: tileId,
+                  forces: forces,
+                  directions: legalDirections,
+                );
+          },
       onPreview: ({required direction, required ghostBoard}) {
-        ref.read(gameSessionProvider(widget.level).notifier).onPreview(
-              direction: direction,
-              ghostBoard: ghostBoard,
-            );
+        ref
+            .read(gameSessionProvider(widget.level).notifier)
+            .onPreview(direction: direction, ghostBoard: ghostBoard);
       },
       onSelectionCleared: () {
         ref.read(gameSessionProvider(widget.level).notifier).clearSelection();
@@ -155,12 +160,7 @@ class _NumberGravityGameWidgetState
             _completeWinNavigation(records, movesUsed);
           }
         } else {
-          _handleLevelWon(
-            GameFlowController(ref),
-            board,
-            movesUsed,
-            records,
-          );
+          _handleLevelWon(GameFlowController(ref), board, movesUsed, records);
         }
       },
       onLevelStuck: (board, movesUsed) {
@@ -213,6 +213,8 @@ class _NumberGravityGameWidgetState
                 WinOverlay(
                   movesUsed: _pendingWin!.movesUsed,
                   minimumMoves: widget.level.minimumMoves,
+                  reduceMotion: ref.watch(reduceMotionProvider).value ?? false,
+                  onLevels: _onWinLevels,
                   onNextLevel: () => _onWinNextLevel(_pendingWin!),
                   onReplay: _onWinReplay,
                 ),
@@ -276,6 +278,12 @@ class _NumberGravityGameWidgetState
     ref.read(gameSessionProvider(widget.level).notifier).onRestart();
   }
 
+  void _onWinLevels() {
+    setState(() => _pendingWin = null);
+    _handlingVictory = false;
+    GameFlowController(ref).exitGameplay(context, widget.level);
+  }
+
   Future<bool> _handleUndo() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
@@ -302,9 +310,9 @@ class _NumberGravityGameWidgetState
         );
         if (!spent) {
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(l10n.notEnoughCoins)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(l10n.notEnoughCoins)));
           }
           return false;
         }
@@ -342,9 +350,9 @@ class _NumberGravityGameWidgetState
       );
       if (!spent) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.notEnoughCoins)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.notEnoughCoins)));
         }
         return;
       }
@@ -353,9 +361,9 @@ class _NumberGravityGameWidgetState
     final used = await (_game?.showHint(tier: tier) ?? Future.value(false));
     if (!used) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.hintUnavailable)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.hintUnavailable)));
       }
       return;
     }
@@ -476,10 +484,7 @@ class _FlameBoardHostState extends State<_FlameBoardHost> {
           if (!mounted) {
             return;
           }
-          widget.game.applyLayout(
-            viewportWidth: width,
-            viewportHeight: height,
-          );
+          widget.game.applyLayout(viewportWidth: width, viewportHeight: height);
         });
 
         return Center(
@@ -488,9 +493,8 @@ class _FlameBoardHostState extends State<_FlameBoardHost> {
             height: layout.boardHeight,
             child: GameWidget(
               game: widget.game,
-              loadingBuilder: (context) => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              loadingBuilder: (context) =>
+                  const Center(child: CircularProgressIndicator()),
             ),
           ),
         );
@@ -551,13 +555,13 @@ class _GameActionBarSection extends ConsumerWidget {
     final undoSubtitle = options.economyEnabled && freeRemaining == 0
         ? l10n.undoCostCoins(coinCostUndoAfterFree)
         : null;
-    final undoBadgeCount =
-        options.economyEnabled && freeRemaining > 0 ? freeRemaining : null;
+    final undoBadgeCount = options.economyEnabled && freeRemaining > 0
+        ? freeRemaining
+        : null;
 
     return GameActionBar(
       canUndo: session.canUndo && !session.isAnimating,
-      canHint: !session.isAnimating &&
-          !session.isWon,
+      canHint: !session.isAnimating && !session.isWon,
       undoSubtitle: undoSubtitle,
       undoBadgeCount: undoBadgeCount,
       onUndo: () {

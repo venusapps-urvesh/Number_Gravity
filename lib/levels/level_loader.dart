@@ -11,6 +11,11 @@ import '../models/objective/objective_model.dart';
 import '../models/tile_model.dart';
 
 class LevelLoader {
+  String _solutionAssetPath(int levelId) {
+    final padded = levelId.toString().padLeft(3, '0');
+    return 'assets/levels/solutions/level_$padded.json';
+  }
+
   LevelModel parseLevel(Map<String, dynamic> json) {
     _validateLevelJson(json);
 
@@ -45,6 +50,19 @@ class LevelLoader {
     return levels
         .map((level) => parseLevel(level as Map<String, dynamic>))
         .toList(growable: false);
+  }
+
+  Future<List<String>> loadSolutionMovesForLevel(int levelId) async {
+    try {
+      final raw = await rootBundle.loadString(_solutionAssetPath(levelId));
+      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      final moves = decoded['solutionMoves'] as List<dynamic>? ?? const [];
+      return moves.map((move) => move as String).toList(growable: false);
+    } on FormatException {
+      throw LevelLoadException('Invalid solution JSON for level: $levelId');
+    } catch (_) {
+      return const [];
+    }
   }
 
   void _validateLevelJson(Map<String, dynamic> json) {

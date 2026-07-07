@@ -5,7 +5,8 @@ import 'level_loader.dart';
 import 'level_repository.dart';
 
 class AssetLevelRepository implements LevelRepository {
-  AssetLevelRepository({LevelLoader? loader}) : _loader = loader ?? LevelLoader();
+  AssetLevelRepository({LevelLoader? loader})
+    : _loader = loader ?? LevelLoader();
 
   final LevelLoader _loader;
   final Map<int, LevelModel> _cache = {};
@@ -51,9 +52,15 @@ class AssetLevelRepository implements LevelRepository {
   @override
   Future<List<LevelModel>> loadWorld(int worldId) async {
     final levels = await _loader.loadWorldFromAsset(_worldAssetPath(worldId));
-    for (final level in levels) {
+    final resolvedLevels = await Future.wait(
+      levels.map((level) async {
+        final solutionMoves = await _loader.loadSolutionMovesForLevel(level.id);
+        return level.copyWith(solutionMoves: solutionMoves);
+      }),
+    );
+    for (final level in resolvedLevels) {
       _cache[level.id] = level;
     }
-    return levels;
+    return resolvedLevels;
   }
 }

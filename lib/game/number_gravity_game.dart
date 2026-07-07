@@ -35,25 +35,28 @@ typedef LevelWonCallback =
 
 typedef LevelStuckCallback = void Function(BoardModel board, int movesUsed);
 
-typedef SessionSyncCallback = void Function({
-  required int movesUsed,
-  required bool canUndo,
-  required bool canRedo,
-  required bool isAnimating,
-  required bool isWon,
-  required bool isStuck,
-});
+typedef SessionSyncCallback =
+    void Function({
+      required int movesUsed,
+      required bool canUndo,
+      required bool canRedo,
+      required bool isAnimating,
+      required bool isWon,
+      required bool isStuck,
+    });
 
-typedef TileSelectedCallback = void Function({
-  required String tileId,
-  required List<Direction> legalDirections,
-  required List<ForceVector> forces,
-});
+typedef TileSelectedCallback =
+    void Function({
+      required String tileId,
+      required List<Direction> legalDirections,
+      required List<ForceVector> forces,
+    });
 
-typedef PreviewCallback = void Function({
-  required Direction direction,
-  required BoardModel ghostBoard,
-});
+typedef PreviewCallback =
+    void Function({
+      required Direction direction,
+      required BoardModel ghostBoard,
+    });
 
 class _HistoryEntry {
   const _HistoryEntry({
@@ -82,11 +85,11 @@ class NumberGravityGame extends FlameGame {
     this.onTileSelected,
     this.onPreview,
     this.onSelectionCleared,
-  })  : _board = level.board,
-        _layout = BoardLayout.defaultFor(
-          rows: level.board.rows,
-          cols: level.board.cols,
-        );
+  }) : _board = level.board,
+       _layout = BoardLayout.defaultFor(
+         rows: level.board.rows,
+         cols: level.board.cols,
+       );
 
   final SimulationBridge bridge;
   final LevelModel level;
@@ -197,14 +200,15 @@ class NumberGravityGame extends FlameGame {
       reduceMotion: reduceMotion,
     );
 
-    _boardRoot = PositionComponent(
-      position: Vector2.zero(),
-      size: Vector2(_layout.boardWidth, _layout.boardHeight),
-    )
-      ..add(_boardComponent)
-      ..add(_ghostOverlay)
-      ..add(_forceLines)
-      ..add(_selectionOverlay);
+    _boardRoot =
+        PositionComponent(
+            position: Vector2.zero(),
+            size: Vector2(_layout.boardWidth, _layout.boardHeight),
+          )
+          ..add(_boardComponent)
+          ..add(_ghostOverlay)
+          ..add(_forceLines)
+          ..add(_selectionOverlay);
 
     _selectionOverlay.size = Vector2(_layout.boardWidth, _layout.boardHeight);
     await world.add(_boardRoot!);
@@ -376,10 +380,7 @@ class NumberGravityGame extends FlameGame {
       return;
     }
     final result = bridge.previewMove(_board, move);
-    _ghostOverlay.showPreview(
-      baseBoard: _board,
-      ghostBoard: result.finalBoard,
-    );
+    _ghostOverlay.showPreview(baseBoard: _board, ghostBoard: result.finalBoard);
     onPreview?.call(direction: direction, ghostBoard: result.finalBoard);
   }
 
@@ -545,11 +546,24 @@ class NumberGravityGame extends FlameGame {
         : null;
     final preferredTileId = _selectedTileId ?? _resolveHintTileId();
 
-    if (scriptedDirection != null && preferredTileId != null) {
-      final preferredMoves = bridge.legalMoves(_board, preferredTileId);
-      if (preferredMoves.any((m) => m.direction == scriptedDirection)) {
-        return Move(tileId: preferredTileId, direction: scriptedDirection);
+    if (scriptedDirection != null) {
+      if (preferredTileId != null) {
+        final preferredMoves = bridge.legalMoves(_board, preferredTileId);
+        if (preferredMoves.any((m) => m.direction == scriptedDirection)) {
+          return Move(tileId: preferredTileId, direction: scriptedDirection);
+        }
       }
+
+      for (final tile in _board.tiles) {
+        if (!tile.isMovable) {
+          continue;
+        }
+        final legal = bridge.legalMoves(_board, tile.id);
+        if (legal.any((m) => m.direction == scriptedDirection)) {
+          return Move(tileId: tile.id, direction: scriptedDirection);
+        }
+      }
+      return null;
     }
 
     if (preferredTileId != null) {
@@ -607,7 +621,8 @@ class NumberGravityGame extends FlameGame {
   String? _primaryMovableTileId() {
     final objectiveTileId = switch (level.objective) {
       PositionObjective(:final tileId) => tileId,
-      SequenceObjective(:final tileIds) => tileIds.isEmpty ? null : tileIds.first,
+      SequenceObjective(:final tileIds) =>
+        tileIds.isEmpty ? null : tileIds.first,
       SumObjective(:final tileIds) => tileIds.isEmpty ? null : tileIds.first,
       BalanceObjective(:final regionTileIds) =>
         regionTileIds.isEmpty ? null : regionTileIds.first,
