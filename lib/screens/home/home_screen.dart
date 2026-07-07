@@ -54,6 +54,12 @@ class HomeScreen extends ConsumerWidget {
                         variant: NGIconButtonVariant.surface,
                         onPressed: () => AppShare.shareApp(context),
                       ),
+                      NGIconButton(
+                        icon: Icons.help_outline_rounded,
+                        tooltip: l10n.howToPlay,
+                        variant: NGIconButtonVariant.surface,
+                        onPressed: () => context.push(AppRoutes.howToPlay),
+                      ),
                       const Spacer(),
                       NGCoinBadge(amount: progress?.coins ?? 0),
                     ],
@@ -111,13 +117,6 @@ class HomeScreen extends ConsumerWidget {
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
                     onPressed: () => context.push(AppRoutes.daily),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  NGButton(
-                    label: l10n.howToPlay,
-                    icon: Icons.help_outline_rounded,
-                    variant: NGButtonVariant.secondary,
-                    onPressed: () => context.push(AppRoutes.howToPlay),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   NGButton(
