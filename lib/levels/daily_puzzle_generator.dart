@@ -14,6 +14,16 @@ class DailyPuzzleGenerator {
 
     final rows = 6 + random.nextInt(3);
     final cols = rows;
+    const startRow = 0;
+    const startCol = 0;
+    final goalRow = rows - 1;
+    final goalCol = cols - 1;
+    final solutionMoves = _solutionMovesForCornerPath(
+      startRow: startRow,
+      startCol: startCol,
+      goalRow: goalRow,
+      goalCol: goalCol,
+    );
     final board = BoardModel(
       rows: rows,
       cols: cols,
@@ -22,14 +32,14 @@ class DailyPuzzleGenerator {
           id: 'daily_t1',
           type: TileType.number,
           value: 2 + random.nextInt(4),
-          row: 0,
-          col: 0,
+          row: startRow,
+          col: startCol,
         ),
         TileModel(
           id: 'daily_g1',
           type: TileType.goal,
-          row: rows - 1,
-          col: cols - 1,
+          row: goalRow,
+          col: goalCol,
           isLocked: true,
         ),
       ],
@@ -42,11 +52,28 @@ class DailyPuzzleGenerator {
       board: board,
       objective: ObjectiveModel.position(
         tileId: 'daily_t1',
-        goalRow: rows - 1,
-        goalCol: cols - 1,
+        goalRow: goalRow,
+        goalCol: goalCol,
       ),
-      minimumMoves: 4,
-      solutionMoves: const ['R', 'D', 'R', 'D'],
+      minimumMoves: solutionMoves.length,
+      solutionMoves: solutionMoves,
     );
+  }
+
+  List<String> _solutionMovesForCornerPath({
+    required int startRow,
+    required int startCol,
+    required int goalRow,
+    required int goalCol,
+  }) {
+    final horizontalMoves = (goalCol - startCol).abs();
+    final verticalMoves = (goalRow - startRow).abs();
+    final horizontalDirection = goalCol >= startCol ? 'R' : 'L';
+    final verticalDirection = goalRow >= startRow ? 'D' : 'U';
+
+    return [
+      ...List.filled(horizontalMoves, horizontalDirection),
+      ...List.filled(verticalMoves, verticalDirection),
+    ];
   }
 }
