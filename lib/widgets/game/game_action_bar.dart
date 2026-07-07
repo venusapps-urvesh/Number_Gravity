@@ -35,10 +35,12 @@ class GameActionBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Row(
         children: [
-          _ActionPill(
-            icon: Icons.refresh_rounded,
-            label: l10n.restart,
-            onPressed: onRestart,
+          Expanded(
+            child: _ActionPill(
+              icon: Icons.refresh_rounded,
+              label: l10n.restart,
+              onPressed: onRestart,
+            ),
           ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
