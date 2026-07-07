@@ -3,9 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../levels/asset_level_repository.dart';
 import '../levels/level_repository.dart';
-import '../services/analytics/analytics_service.dart';
-import '../services/firebase/firebase_service.dart';
-import '../services/firebase/firebase_service_stub.dart';
 import '../services/replay/replay_service.dart';
 import '../simulation/board_applier.dart';
 import '../simulation/default_gravity_engine.dart';
@@ -17,17 +14,7 @@ import '../storage/repositories/settings_repository.dart';
 import '../storage/repositories/statistics_repository.dart';
 import '../storage/storage_initializer.dart';
 
-final firebaseServiceProvider = Provider<FirebaseService>((ref) {
-  return FirebaseServiceStub();
-});
-
-final analyticsServiceProvider = Provider<AnalyticsService>((ref) {
-  return AnalyticsService(ref.watch(firebaseServiceProvider));
-});
-
 final storageInitProvider = FutureProvider<StorageContainer>((ref) async {
-  final firebase = ref.watch(firebaseServiceProvider);
-  await firebase.initialize();
   return initializeStorage();
 });
 
