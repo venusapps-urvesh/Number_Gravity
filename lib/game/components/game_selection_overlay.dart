@@ -3,7 +3,6 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
-import '../../core/constants/board_constants.dart';
 import '../../models/move.dart';
 import 'board_component.dart';
 
@@ -11,16 +10,22 @@ class GameSelectionOverlay extends PositionComponent with TapCallbacks {
   GameSelectionOverlay({
     required this.boardComponent,
     this.onDirectionTapped,
+    this.onDirectionPreview,
   });
 
   final BoardComponent boardComponent;
   final void Function(Direction direction)? onDirectionTapped;
+  final void Function(Direction direction)? onDirectionPreview;
   final List<Direction> _legalDirections = [];
+
+  String? _selectedTileId;
+  Direction? _previewedDirection;
 
   void showForTile(String? tileId, List<Direction> directions) {
     _legalDirections
       ..clear()
       ..addAll(directions);
+    _previewedDirection = null;
     selectTile(tileId);
   }
 
@@ -29,13 +34,14 @@ class GameSelectionOverlay extends PositionComponent with TapCallbacks {
     boardComponent.setSelectedTile(tileId);
   }
 
-  String? _selectedTileId;
-
   void clear() {
     _legalDirections.clear();
     _selectedTileId = null;
+    _previewedDirection = null;
     boardComponent.setSelectedTile(null);
   }
+
+  double get _cellSize => boardComponent.layout.cellSize;
 
   @override
   void render(Canvas canvas) {
@@ -56,7 +62,7 @@ class GameSelectionOverlay extends PositionComponent with TapCallbacks {
         continue;
       }
 
-      final center = selected.position + Vector2.all(tileSizePx / 2);
+      final center = selected.position + Vector2.all(_cellSize / 2);
       final arrow = _arrowPoints(center, direction);
       final path = Path()
         ..moveTo(arrow.$1.x, arrow.$1.y)
@@ -77,7 +83,7 @@ class GameSelectionOverlay extends PositionComponent with TapCallbacks {
     if (selected == null) {
       return;
     }
-    final center = selected.position + Vector2.all(tileSizePx / 2);
+    final center = selected.position + Vector2.all(_cellSize / 2);
     final dx = local.x - center.x;
     final dy = local.y - center.y;
 
@@ -88,16 +94,25 @@ class GameSelectionOverlay extends PositionComponent with TapCallbacks {
       tapped = dy > 0 ? Direction.down : Direction.up;
     }
 
-    if (tapped != null && _legalDirections.contains(tapped)) {
-      onDirectionTapped?.call(tapped);
+    if (tapped == null || !_legalDirections.contains(tapped)) {
+      return;
     }
+
+    if (_previewedDirection == tapped) {
+      onDirectionTapped?.call(tapped);
+      _previewedDirection = null;
+      return;
+    }
+
+    _previewedDirection = tapped;
+    onDirectionPreview?.call(tapped);
   }
 
   (Vector2, Vector2, Vector2) _arrowPoints(
     Vector2 center,
     Direction direction,
   ) {
-    const offset = tileSizePx * 0.55;
+    final offset = _cellSize * 0.55;
     const size = 10.0;
     return switch (direction) {
       Direction.up => (

@@ -17,8 +17,7 @@ class GameFlowController {
 
   final WidgetRef ref;
 
-  Future<void> handleLevelWon({
-    required BuildContext context,
+  Future<int> persistLevelWin({
     required LevelModel level,
     required int movesUsed,
     required List<MoveRecord> moveRecords,
@@ -70,19 +69,51 @@ class GameFlowController {
 
     final solutionCode =
         ref.read(replayServiceProvider).encodeMoves(moveRecords);
+    // Stored for optional victory navigation.
+    _lastWinPayload = _WinPayload(
+      stars: stars,
+      movesUsed: movesUsed,
+      coinsEarned: coinsEarned,
+      balance: progress.coins,
+      solutionCode: solutionCode,
+    );
+
+    return stars;
+  }
+
+  _WinPayload? _lastWinPayload;
+
+  void navigateToVictory(BuildContext context, LevelModel level) {
+    final payload = _lastWinPayload;
+    if (payload == null || !context.mounted) {
+      return;
+    }
+    context.go(
+      '${AppRoutes.victory}/${level.id}'
+      '?stars=${payload.stars}'
+      '&moves=${payload.movesUsed}'
+      '&optimal=${level.minimumMoves}'
+      '&coins=${payload.coinsEarned}'
+      '&balance=${payload.balance}'
+      '&solution=${Uri.encodeComponent(payload.solutionCode)}',
+    );
+  }
+
+  Future<void> handleLevelWon({
+    required BuildContext context,
+    required LevelModel level,
+    required int movesUsed,
+    required List<MoveRecord> moveRecords,
+  }) async {
+    await persistLevelWin(
+      level: level,
+      movesUsed: movesUsed,
+      moveRecords: moveRecords,
+    );
     if (!context.mounted) {
       return;
     }
-
-    context.go(
-      '${AppRoutes.victory}/${level.id}'
-      '?stars=$stars'
-      '&moves=$movesUsed'
-      '&optimal=${level.minimumMoves}'
-      '&coins=$coinsEarned'
-      '&balance=${progress.coins - coinsEarned}'
-      '&solution=${Uri.encodeComponent(solutionCode)}',
-    );
+    navigateToVictory(context, level);
   }
 
   void exitGameplay(BuildContext context, LevelModel level) {
@@ -107,4 +138,20 @@ class GameFlowController {
     }
     return ok;
   }
+}
+
+class _WinPayload {
+  const _WinPayload({
+    required this.stars,
+    required this.movesUsed,
+    required this.coinsEarned,
+    required this.balance,
+    required this.solutionCode,
+  });
+
+  final int stars;
+  final int movesUsed;
+  final int coinsEarned;
+  final int balance;
+  final String solutionCode;
 }

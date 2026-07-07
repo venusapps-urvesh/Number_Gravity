@@ -2,13 +2,14 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../app/router/navigation.dart';
 import '../core/constants/game_constants.dart';
 import '../core/utils/responsive.dart';
 import '../l10n/app_localizations.dart';
 import '../levels/world_config.dart';
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
-import '../models/move.dart';
+import '../models/replay/move_record.dart';
 import '../providers/game_session_provider.dart';
 import '../providers/providers.dart';
 import '../services/economy/coin_service.dart';
@@ -21,23 +22,40 @@ import '../widgets/game/helper_cost_sheet.dart';
 import '../widgets/game/level_intro_sheet.dart';
 import '../widgets/game/objective_banner.dart';
 import '../widgets/game/star_progress_chip.dart';
+import '../widgets/game/win_overlay.dart';
 import 'bridges/simulation_bridge.dart';
 import 'game_flow_controller.dart';
+import 'gameplay_options.dart';
+import 'layout/board_layout.dart';
 import 'number_gravity_game.dart';
 
 class NumberGravityGameWidget extends ConsumerStatefulWidget {
   const NumberGravityGameWidget({
     required this.level,
+    this.options = GameplayOptions.campaign,
     this.onMoveCommitted,
     super.key,
   });
 
   final LevelModel level;
+  final GameplayOptions options;
   final void Function(BoardModel board)? onMoveCommitted;
 
   @override
   ConsumerState<NumberGravityGameWidget> createState() =>
       _NumberGravityGameWidgetState();
+}
+
+class _PendingWin {
+  const _PendingWin({
+    required this.board,
+    required this.movesUsed,
+    required this.records,
+  });
+
+  final BoardModel board;
+  final int movesUsed;
+  final List<MoveRecord> records;
 }
 
 class _NumberGravityGameWidgetState
@@ -47,6 +65,7 @@ class _NumberGravityGameWidgetState
   bool _handlingStuck = false;
   bool _levelStartRecorded = false;
   bool _introShown = false;
+  _PendingWin? _pendingWin;
 
   @override
   void initState() {
@@ -66,6 +85,7 @@ class _NumberGravityGameWidgetState
       _handlingStuck = false;
       _levelStartRecorded = false;
       _introShown = false;
+      _pendingWin = null;
       ref.read(gameSessionProvider(widget.level).notifier).onRestart();
       _initGame();
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -79,7 +99,6 @@ class _NumberGravityGameWidgetState
     final engine = ref.read(gravityEngineProvider);
     final colorBlind = ref.read(colorBlindModeProvider).value ?? false;
     final reduceMotion = ref.read(reduceMotionProvider).value ?? false;
-    final flow = GameFlowController(ref);
 
     _game = NumberGravityGame(
       bridge: SimulationBridge(engine: engine, applier: BoardApplier()),
@@ -107,10 +126,10 @@ class _NumberGravityGameWidgetState
               isStuck: isStuck,
             );
       },
-      onTileSelected: ({required tileId, required legalDirections}) {
+      onTileSelected: ({required tileId, required legalDirections, required forces}) {
         ref.read(gameSessionProvider(widget.level).notifier).onTileSelected(
               tileId: tileId,
-              forces: const [],
+              forces: forces,
               directions: legalDirections,
             );
       },
@@ -123,12 +142,27 @@ class _NumberGravityGameWidgetState
       onSelectionCleared: () {
         ref.read(gameSessionProvider(widget.level).notifier).clearSelection();
       },
-      onLevelWon: (board, movesUsed, records) => _handleLevelWon(
-        flow,
-        board,
-        movesUsed,
-        records,
-      ),
+      onLevelWon: (board, movesUsed, records) {
+        if (widget.options.showWinOverlay) {
+          setState(() {
+            _pendingWin = _PendingWin(
+              board: board,
+              movesUsed: movesUsed,
+              records: records,
+            );
+          });
+          if (widget.options.autoNavigateOnWin) {
+            _completeWinNavigation(records, movesUsed);
+          }
+        } else {
+          _handleLevelWon(
+            GameFlowController(ref),
+            board,
+            movesUsed,
+            records,
+          );
+        }
+      },
       onLevelStuck: (board, movesUsed) {
         final flow = GameFlowController(ref);
         _handleLevelStuck(flow, AppLocalizations.of(context));
@@ -163,23 +197,39 @@ class _NumberGravityGameWidgetState
       return const SizedBox.shrink();
     }
 
+    final flow = GameFlowController(ref);
+
     final column = Column(
       children: [
-        _GameHudSection(level: widget.level, onPause: _showPauseMenu),
+        _GameHudSection(
+          level: widget.level,
+          options: widget.options,
+          onPause: _showPauseMenu,
+          onBack: () => flow.exitGameplay(context, widget.level),
+        ),
         ObjectiveBanner(level: widget.level),
         Expanded(
-          child: _FlameBoardHost(
-            game: game,
-            onPanUpdate: _handlePanUpdate,
-            onPanEnd: _handlePanEnd,
+          child: Stack(
+            children: [
+              _FlameBoardHost(game: game),
+              if (_pendingWin != null && widget.options.showWinOverlay)
+                WinOverlay(
+                  movesUsed: _pendingWin!.movesUsed,
+                  minimumMoves: widget.level.minimumMoves,
+                  onNextLevel: () => _onWinNextLevel(_pendingWin!),
+                  onReplay: _onWinReplay,
+                ),
+            ],
           ),
         ),
         _GameActionBarSection(
           level: widget.level,
+          options: widget.options,
           onUndo: _handleUndo,
           onRedo: _handleRedo,
           onHint: _handleHint,
           onRestart: () {
+            setState(() => _pendingWin = null);
             _game?.restart();
             ref.read(gameSessionProvider(widget.level).notifier).onRestart();
           },
@@ -196,68 +246,77 @@ class _NumberGravityGameWidgetState
     return column;
   }
 
-  void _handlePanUpdate(DragUpdateDetails details) {
-    final delta = details.delta;
-    if (delta.distance < 4) {
+  Future<void> _onWinNextLevel(_PendingWin pending) async {
+    if (_handlingVictory || !mounted) {
       return;
     }
-    final direction = delta.dx.abs() >= delta.dy.abs()
-        ? (delta.dx > 0 ? Direction.right : Direction.left)
-        : (delta.dy > 0 ? Direction.down : Direction.up);
-    _game?.previewDirection(direction);
+    _handlingVictory = true;
+    await _completeWinNavigation(pending.records, pending.movesUsed);
+    if (!mounted) {
+      return;
+    }
   }
 
-  void _handlePanEnd(DragEndDetails details) {
-    final velocity = details.velocity.pixelsPerSecond;
-    _game?.clearPreview();
-    ref.read(gameSessionProvider(widget.level).notifier).clearPreview();
-
-    if (velocity.distance < 120) {
+  Future<void> _completeWinNavigation(
+    List<MoveRecord> records,
+    int movesUsed,
+  ) async {
+    final flow = GameFlowController(ref);
+    await flow.persistLevelWin(
+      level: widget.level,
+      movesUsed: movesUsed,
+      moveRecords: records,
+    );
+    if (!mounted) {
       return;
     }
+    final nextId = widget.level.id + 1;
+    if (nextId <= totalLaunchLevels) {
+      ngPushToPlay(context, nextId);
+      return;
+    }
+    flow.navigateToVictory(context, widget.level);
+  }
 
-    final absDx = velocity.dx.abs();
-    final absDy = velocity.dy.abs();
-    final direction = absDx >= absDy
-        ? (velocity.dx > 0 ? Direction.right : Direction.left)
-        : (velocity.dy > 0 ? Direction.down : Direction.up);
-
-    _game?.commitDirection(direction).then((_) {
-      if (mounted) {
-        ref.read(statisticsRepositoryProvider).recordMove();
-      }
-    });
+  void _onWinReplay() {
+    setState(() => _pendingWin = null);
+    _handlingVictory = false;
+    _game?.restart();
+    ref.read(gameSessionProvider(widget.level).notifier).onRestart();
   }
 
   Future<void> _handleUndo() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
     final session = ref.read(gameSessionProvider(widget.level));
-    final undoCost = undoCostForLevel(session.undoCountThisLevel);
-    final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
 
-    if (undoCost > 0) {
-      final confirmed = await showHelperCostSheet(
-        context,
-        title: l10n.undo,
-        body: l10n.undoCostCoins(undoCost),
-        cost: undoCost,
-        balance: balance,
-      );
-      if (confirmed != true || !mounted) {
-        return;
-      }
-      final spent = await flow.trySpendForHelper(
-        cost: undoCost,
-        sink: CoinSink.undo,
-      );
-      if (!spent) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.notEnoughCoins)),
-          );
+    if (widget.options.economyEnabled) {
+      final undoCost = undoCostForLevel(session.undoCountThisLevel);
+      final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
+
+      if (undoCost > 0) {
+        final confirmed = await showHelperCostSheet(
+          context,
+          title: l10n.undo,
+          body: l10n.undoCostCoins(undoCost),
+          cost: undoCost,
+          balance: balance,
+        );
+        if (confirmed != true || !mounted) {
+          return;
         }
-        return;
+        final spent = await flow.trySpendForHelper(
+          cost: undoCost,
+          sink: CoinSink.undo,
+        );
+        if (!spent) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(l10n.notEnoughCoins)),
+            );
+          }
+          return;
+        }
       }
     }
 
@@ -269,27 +328,31 @@ class _NumberGravityGameWidgetState
   Future<void> _handleRedo() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
-    final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
-    const cost = coinCostRedo;
 
-    final confirmed = await showHelperCostSheet(
-      context,
-      title: l10n.redo,
-      body: l10n.undoCostCoins(cost),
-      cost: cost,
-      balance: balance,
-    );
-    if (confirmed != true || !mounted) {
-      return;
-    }
-    final spent = await flow.trySpendForHelper(cost: cost, sink: CoinSink.redo);
-    if (!spent) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.notEnoughCoins)),
-        );
+    if (widget.options.economyEnabled) {
+      final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
+      const cost = coinCostRedo;
+
+      final confirmed = await showHelperCostSheet(
+        context,
+        title: l10n.redo,
+        body: l10n.undoCostCoins(cost),
+        cost: cost,
+        balance: balance,
+      );
+      if (confirmed != true || !mounted) {
+        return;
       }
-      return;
+      final spent =
+          await flow.trySpendForHelper(cost: cost, sink: CoinSink.redo);
+      if (!spent) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.notEnoughCoins)),
+          );
+        }
+        return;
+      }
     }
 
     _game?.redo();
@@ -299,43 +362,45 @@ class _NumberGravityGameWidgetState
   Future<void> _handleHint() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
-    final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
 
     final tier = await showHintTierSheet(context);
     if (tier == null || !mounted) {
       return;
     }
 
-    final cost = hintCostForTier(tier);
-    final confirmed = await showHelperCostSheet(
-      context,
-      title: l10n.hint,
-      body: switch (tier) {
-        1 => l10n.hintTier1Title,
-        2 => l10n.hintTier2Title,
-        _ => l10n.hintTier3Title,
-      },
-      cost: cost,
-      balance: balance,
-    );
-    if (confirmed != true || !mounted) {
-      return;
-    }
-
-    final spent = await flow.trySpendForHelper(
-      cost: cost,
-      sink: sinkForHintTier(tier),
-    );
-    if (!spent) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.notEnoughCoins)),
-        );
+    if (widget.options.economyEnabled) {
+      final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
+      final cost = hintCostForTier(tier);
+      final confirmed = await showHelperCostSheet(
+        context,
+        title: l10n.hint,
+        body: switch (tier) {
+          1 => l10n.hintTier1Title,
+          2 => l10n.hintTier2Title,
+          _ => l10n.hintTier3Title,
+        },
+        cost: cost,
+        balance: balance,
+      );
+      if (confirmed != true || !mounted) {
+        return;
       }
-      return;
+
+      final spent = await flow.trySpendForHelper(
+        cost: cost,
+        sink: sinkForHintTier(tier),
+      );
+      if (!spent) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.notEnoughCoins)),
+          );
+        }
+        return;
+      }
     }
 
-    final used = _game?.showHint(tier: tier) ?? false;
+    final used = await (_game?.showHint(tier: tier) ?? Future.value(false));
     if (!used) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -364,6 +429,7 @@ class _NumberGravityGameWidgetState
       onResume: () => _game?.setPaused(false),
       onRestart: () {
         _game?.setPaused(false);
+        setState(() => _pendingWin = null);
         _game?.restart();
         ref.read(gameSessionProvider(widget.level).notifier).onRestart();
       },
@@ -427,15 +493,9 @@ class _NumberGravityGameWidgetState
 
 /// Keeps [GameWidget] stable — must not rebuild when session HUD state changes.
 class _FlameBoardHost extends StatefulWidget {
-  const _FlameBoardHost({
-    required this.game,
-    required this.onPanUpdate,
-    required this.onPanEnd,
-  });
+  const _FlameBoardHost({required this.game});
 
   final NumberGravityGame game;
-  final GestureDragUpdateCallback onPanUpdate;
-  final GestureDragEndCallback onPanEnd;
 
   @override
   State<_FlameBoardHost> createState() => _FlameBoardHostState();
@@ -444,15 +504,44 @@ class _FlameBoardHost extends StatefulWidget {
 class _FlameBoardHostState extends State<_FlameBoardHost> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onPanUpdate: widget.onPanUpdate,
-        onPanEnd: widget.onPanEnd,
-        child: GameWidget(
-          game: widget.game,
-          backgroundBuilder: (context) => const SizedBox.shrink(),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final height = constraints.maxHeight;
+        if (width <= 0 || height <= 0) {
+          return const SizedBox.shrink();
+        }
+
+        final layout = BoardLayout.fit(
+          rows: widget.game.level.board.rows,
+          cols: widget.game.level.board.cols,
+          maxWidth: width,
+          maxHeight: height,
+        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) {
+            return;
+          }
+          widget.game.applyLayout(
+            viewportWidth: width,
+            viewportHeight: height,
+          );
+        });
+
+        return Center(
+          child: SizedBox(
+            width: layout.boardWidth,
+            height: layout.boardHeight,
+            child: GameWidget(
+              game: widget.game,
+              loadingBuilder: (context) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -460,11 +549,15 @@ class _FlameBoardHostState extends State<_FlameBoardHost> {
 class _GameHudSection extends ConsumerWidget {
   const _GameHudSection({
     required this.level,
+    required this.options,
     required this.onPause,
+    required this.onBack,
   });
 
   final LevelModel level;
+  final GameplayOptions options;
   final VoidCallback onPause;
+  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -476,7 +569,9 @@ class _GameHudSection extends ConsumerWidget {
       movesUsed: session.movesUsed,
       optimalMoves: level.minimumMoves,
       coinAmount: balance,
+      showCoins: options.economyEnabled,
       onPause: onPause,
+      onBack: onBack,
       starChip: StarProgressChip(
         movesUsed: session.movesUsed,
         minimumMoves: level.minimumMoves,
@@ -488,6 +583,7 @@ class _GameHudSection extends ConsumerWidget {
 class _GameActionBarSection extends ConsumerWidget {
   const _GameActionBarSection({
     required this.level,
+    required this.options,
     required this.onUndo,
     required this.onRedo,
     required this.onHint,
@@ -495,6 +591,7 @@ class _GameActionBarSection extends ConsumerWidget {
   });
 
   final LevelModel level;
+  final GameplayOptions options;
   final VoidCallback onUndo;
   final VoidCallback onRedo;
   final Future<void> Function() onHint;
@@ -512,9 +609,11 @@ class _GameActionBarSection extends ConsumerWidget {
       canHint: !session.isAnimating &&
           level.solutionMoves.isNotEmpty &&
           session.movesUsed < level.solutionMoves.length,
-      undoCostLabel:
-          undoCost == 0 ? l10n.undoCostFree : l10n.undoCostCoins(undoCost),
-      redoCostLabel: l10n.undoCostCoins(coinCostRedo),
+      undoCostLabel: options.economyEnabled
+          ? (undoCost == 0 ? l10n.undoCostFree : l10n.undoCostCoins(undoCost))
+          : null,
+      redoCostLabel:
+          options.economyEnabled ? l10n.undoCostCoins(coinCostRedo) : null,
       onUndo: onUndo,
       onRedo: onRedo,
       onHint: () => onHint(),

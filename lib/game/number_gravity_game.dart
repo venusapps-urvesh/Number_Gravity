@@ -3,20 +3,22 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/constants/game_constants.dart';
 import '../../models/board_model.dart';
 import '../../models/level/level_model.dart';
 import '../../models/move.dart';
 import '../../models/replay/move_record.dart';
+import '../../models/simulation/force_vector.dart';
 import '../../models/simulation/simulation_result.dart';
 import '../../models/tile_model.dart';
 import '../../simulation/objective_checker.dart';
 import '../../simulation/stuck_detector.dart';
+import 'animation/simulation_animator.dart';
 import 'bridges/simulation_bridge.dart';
 import 'components/board_component.dart';
 import 'components/force_line_component.dart';
 import 'components/game_selection_overlay.dart';
 import 'components/ghost_overlay_component.dart';
+import 'layout/board_layout.dart';
 
 typedef MoveCommitCallback =
     void Function(SimulationResult result, BoardModel board);
@@ -42,12 +44,27 @@ typedef SessionSyncCallback = void Function({
 typedef TileSelectedCallback = void Function({
   required String tileId,
   required List<Direction> legalDirections,
+  required List<ForceVector> forces,
 });
 
 typedef PreviewCallback = void Function({
   required Direction direction,
   required BoardModel ghostBoard,
 });
+
+class _HistoryEntry {
+  const _HistoryEntry({
+    required this.board,
+    this.selectedTileId,
+    required this.movesUsed,
+    required this.moveRecords,
+  });
+
+  final BoardModel board;
+  final String? selectedTileId;
+  final int movesUsed;
+  final List<MoveRecord> moveRecords;
+}
 
 class NumberGravityGame extends FlameGame {
   NumberGravityGame({
@@ -62,7 +79,11 @@ class NumberGravityGame extends FlameGame {
     this.onTileSelected,
     this.onPreview,
     this.onSelectionCleared,
-  }) : _board = level.board;
+  })  : _board = level.board,
+        _layout = BoardLayout.defaultFor(
+          rows: level.board.rows,
+          cols: level.board.cols,
+        );
 
   final SimulationBridge bridge;
   final LevelModel level;
@@ -77,28 +98,37 @@ class NumberGravityGame extends FlameGame {
   final VoidCallback? onSelectionCleared;
 
   BoardModel _board;
-  final List<BoardModel> _boardHistory = [];
-  final List<BoardModel> _boardForwardHistory = [];
-  final List<MoveRecord> _moveRecords = [];
+  BoardLayout _layout;
+  final List<_HistoryEntry> _history = [];
+  final List<_HistoryEntry> _forwardHistory = [];
   int _movesUsed = 0;
   String? _selectedTileId;
   late BoardComponent _boardComponent;
   late GameSelectionOverlay _selectionOverlay;
   late ForceLineComponent _forceLines;
   late GhostOverlayComponent _ghostOverlay;
+  late SimulationAnimator _animator;
+  PositionComponent? _boardRoot;
   bool _animating = false;
   bool _won = false;
   bool _stuck = false;
   bool _paused = false;
+  bool _loaded = false;
+  double _viewportWidth = 0;
+  double _viewportHeight = 0;
 
   BoardModel get board => _board;
-  bool get canUndo => _boardHistory.length > 1;
-  bool get canRedo => _boardForwardHistory.isNotEmpty;
+  BoardLayout get displayLayout => _layout;
+  bool get canUndo => _history.length > 1;
+  bool get canRedo => _forwardHistory.isNotEmpty;
   int get movesUsed => _movesUsed;
   bool get isAnimating => _animating;
   bool get isWon => _won;
   bool get isStuck => _stuck;
-  List<MoveRecord> get moveRecords => List.unmodifiable(_moveRecords);
+  List<MoveRecord> get moveRecords =>
+      List.unmodifiable(_currentEntry.moveRecords);
+
+  _HistoryEntry get _currentEntry => _history.last;
 
   @override
   Color backgroundColor() => Colors.transparent;
@@ -106,43 +136,112 @@ class NumberGravityGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    _boardHistory.add(_board);
+    _pushHistory(_board, selectedTileId: null, movesUsed: 0, moveRecords: []);
+    await _buildBoardScene();
+    _loaded = true;
+    if (_viewportWidth > 0 && _viewportHeight > 0) {
+      _applyViewport(_viewportWidth, _viewportHeight);
+    } else {
+      _updateCamera();
+    }
+    _syncSession();
+  }
 
+  /// Called when Flame reports the game surface size (matches GameWidget box).
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    if (size.x <= 0 || size.y <= 0) {
+      return;
+    }
+    final fitted = BoardLayout.fit(
+      rows: level.board.rows,
+      cols: level.board.cols,
+      maxWidth: size.x,
+      maxHeight: size.y,
+    );
+    if (fitted == _layout) {
+      _updateCamera();
+      return;
+    }
+    _layout = fitted;
+    if (_loaded) {
+      _boardComponent.updateLayout(_layout);
+      _selectionOverlay.size = Vector2(_layout.boardWidth, _layout.boardHeight);
+      _boardRoot?.size = Vector2(_layout.boardWidth, _layout.boardHeight);
+    }
+    _updateCamera();
+  }
+
+  Future<void> _buildBoardScene() async {
     _boardComponent = BoardComponent(
       board: _board,
+      layout: _layout,
       colorBlindMode: colorBlindMode,
       onTileTapped: _onTileTapped,
     );
     _selectionOverlay = GameSelectionOverlay(
       boardComponent: _boardComponent,
       onDirectionTapped: _onDirectionTapped,
-    );
-    _selectionOverlay.size = Vector2(
-      _boardComponent.boardWidth,
-      _boardComponent.boardHeight,
+      onDirectionPreview: previewDirection,
     );
     _forceLines = ForceLineComponent(boardComponent: _boardComponent);
     _ghostOverlay = GhostOverlayComponent(boardComponent: _boardComponent);
+    _animator = SimulationAnimator(
+      boardComponent: _boardComponent,
+      level: level,
+      reduceMotion: reduceMotion,
+    );
 
-    const boardPadding = 16.0;
-    final boardRoot = PositionComponent(position: Vector2.all(boardPadding))
+    _boardRoot = PositionComponent(
+      position: Vector2.zero(),
+      size: Vector2(_layout.boardWidth, _layout.boardHeight),
+    )
       ..add(_boardComponent)
       ..add(_ghostOverlay)
       ..add(_forceLines)
       ..add(_selectionOverlay);
 
-    await world.add(boardRoot);
+    _selectionOverlay.size = Vector2(_layout.boardWidth, _layout.boardHeight);
+    await world.add(_boardRoot!);
+  }
 
-    final resolution = Vector2(
-      _boardComponent.boardWidth + boardPadding * 2,
-      _boardComponent.boardHeight + boardPadding * 2,
+  /// Recomputes cell size from viewport constraints and centers the board.
+  void applyLayout({
+    required double viewportWidth,
+    required double viewportHeight,
+  }) {
+    _viewportWidth = viewportWidth;
+    _viewportHeight = viewportHeight;
+    if (!_loaded) {
+      return;
+    }
+    _applyViewport(viewportWidth, viewportHeight);
+  }
+
+  void _applyViewport(double viewportWidth, double viewportHeight) {
+    final newLayout = BoardLayout.fit(
+      rows: level.board.rows,
+      cols: level.board.cols,
+      maxWidth: viewportWidth,
+      maxHeight: viewportHeight,
     );
-    camera.viewport = FixedResolutionViewport(resolution: resolution);
-    camera.viewfinder
-      ..anchor = Anchor.topLeft
-      ..position = Vector2.zero();
+    if (newLayout == _layout) {
+      _updateCamera();
+      return;
+    }
 
-    _syncSession();
+    _layout = newLayout;
+    _boardComponent.updateLayout(_layout);
+    _selectionOverlay.size = Vector2(_layout.boardWidth, _layout.boardHeight);
+    _boardRoot?.size = Vector2(_layout.boardWidth, _layout.boardHeight);
+    _updateCamera();
+  }
+
+  void _updateCamera() {
+    final resolution = Vector2(_layout.boardWidth, _layout.boardHeight);
+    camera.viewport = FixedResolutionViewport(resolution: resolution);
+    camera.viewfinder.position = resolution / 2;
   }
 
   void _syncSession() {
@@ -156,6 +255,37 @@ class NumberGravityGame extends FlameGame {
         isStuck: _stuck,
       );
     });
+  }
+
+  void _replaceCurrentHistorySelection(String? tileId) {
+    if (_history.isEmpty) {
+      return;
+    }
+    final last = _history.removeLast();
+    _history.add(
+      _HistoryEntry(
+        board: last.board,
+        selectedTileId: tileId,
+        movesUsed: last.movesUsed,
+        moveRecords: last.moveRecords,
+      ),
+    );
+  }
+
+  void _pushHistory(
+    BoardModel board, {
+    required String? selectedTileId,
+    required int movesUsed,
+    required List<MoveRecord> moveRecords,
+  }) {
+    _history.add(
+      _HistoryEntry(
+        board: board,
+        selectedTileId: selectedTileId,
+        movesUsed: movesUsed,
+        moveRecords: List.unmodifiable(moveRecords),
+      ),
+    );
   }
 
   void setPaused(bool paused) {
@@ -173,18 +303,48 @@ class NumberGravityGame extends FlameGame {
     onSelectionCleared?.call();
   }
 
+  void _restoreSelection(String? tileId) {
+    if (tileId == null) {
+      _clearSelection();
+      return;
+    }
+    final tile = _board.tileById(tileId);
+    if (tile == null || !tile.isMovable) {
+      _clearSelection();
+      return;
+    }
+    _selectedTileId = tileId;
+    final directions = bridge
+        .legalMoves(_board, tileId)
+        .map((move) => move.direction)
+        .toList();
+    _selectionOverlay.showForTile(tileId, directions);
+    _forceLines.updateVectors(bridge.computeForces(_board, tileId));
+    onTileSelected?.call(
+      tileId: tileId,
+      legalDirections: directions,
+      forces: bridge.computeForces(_board, tileId),
+    );
+  }
+
   void _onTileTapped(TileModel tile) {
     if (_animating || _won || _stuck || _paused || !tile.isMovable) {
       return;
     }
     _selectedTileId = tile.id;
+    _replaceCurrentHistorySelection(tile.id);
     final directions = bridge
         .legalMoves(_board, tile.id)
         .map((move) => move.direction)
         .toList();
+    final forces = bridge.computeForces(_board, tile.id);
     _selectionOverlay.showForTile(tile.id, directions);
-    _forceLines.updateVectors(bridge.computeForces(_board, tile.id));
-    onTileSelected?.call(tileId: tile.id, legalDirections: directions);
+    _forceLines.updateVectors(forces);
+    onTileSelected?.call(
+      tileId: tile.id,
+      legalDirections: directions,
+      forces: forces,
+    );
     _syncSession();
   }
 
@@ -239,15 +399,23 @@ class NumberGravityGame extends FlameGame {
     _syncSession();
 
     final (result, newBoard) = bridge.commitMove(_board, move);
-    await _animateResult(result);
+    await _animator.animate(result);
     _board = newBoard;
     await _boardComponent.updateBoard(_board);
-    _boardHistory.add(newBoard);
-    _boardForwardHistory.clear();
-    _moveRecords.add(
+
+    final newRecords = [
+      ..._currentEntry.moveRecords,
       MoveRecord(tileId: move.tileId, direction: move.direction),
-    );
+    ];
     _movesUsed++;
+    _forwardHistory.clear();
+    _pushHistory(
+      newBoard,
+      selectedTileId: null,
+      movesUsed: _movesUsed,
+      moveRecords: newRecords,
+    );
+
     _animating = false;
     onMoveCommitted?.call(result, _board);
     _syncSession();
@@ -255,7 +423,7 @@ class NumberGravityGame extends FlameGame {
     if (const ObjectiveChecker().isSolved(level, _board)) {
       _won = true;
       _syncSession();
-      onLevelWon?.call(_board, _movesUsed, _moveRecords);
+      onLevelWon?.call(_board, _movesUsed, moveRecords);
     } else if (const StuckDetector().isStuck(level, _board)) {
       _stuck = true;
       _syncSession();
@@ -263,60 +431,52 @@ class NumberGravityGame extends FlameGame {
     }
   }
 
-  Future<void> _animateResult(SimulationResult result) async {
-    if (reduceMotion) {
-      final last = result.steps.isNotEmpty
-          ? result.steps.last.boardSnapshot
-          : result.finalBoard;
-      await _boardComponent.updateBoard(last);
-      return;
-    }
-
-    final delayMs = animationCycleStepMinMs +
-        ((animationCycleStepMaxMs - animationCycleStepMinMs) ~/ 2);
-
-    for (final step in result.steps) {
-      if (step.actions.isEmpty) {
-        continue;
-      }
-      await _boardComponent.updateBoard(step.boardSnapshot);
-      await Future<void>.delayed(Duration(milliseconds: delayMs));
-    }
-  }
-
   void undo() {
-    if (_animating || _won || _boardHistory.length <= 1) {
+    if (_animating || _won || _history.length <= 1) {
       return;
     }
 
     _stuck = false;
-    _boardForwardHistory.add(_boardHistory.last);
-    _boardHistory.removeLast();
-    if (_moveRecords.isNotEmpty) {
-      _moveRecords.removeLast();
-    }
-    _movesUsed = _movesUsed > 0 ? _movesUsed - 1 : 0;
-    _board = _boardHistory.last;
+    _forwardHistory.add(_history.removeLast());
+    final entry = _history.last;
+    _board = entry.board;
+    _movesUsed = entry.movesUsed;
     _boardComponent.updateBoard(_board);
-    _clearSelection();
+    _restoreSelection(entry.selectedTileId);
     _syncSession();
   }
 
   void redo() {
-    if (_animating || _won || _boardForwardHistory.isEmpty) {
+    if (_animating || _won || _forwardHistory.isEmpty) {
       return;
     }
 
     _stuck = false;
-    _boardHistory.add(_boardForwardHistory.removeLast());
-    _board = _boardHistory.last;
+    final entry = _forwardHistory.removeLast();
+    _board = entry.board;
+    _movesUsed = entry.movesUsed;
+    _pushHistory(
+      entry.board,
+      selectedTileId: entry.selectedTileId,
+      movesUsed: entry.movesUsed,
+      moveRecords: entry.moveRecords,
+    );
     _boardComponent.updateBoard(_board);
-    _movesUsed++;
-    _clearSelection();
+    _restoreSelection(entry.selectedTileId);
     _syncSession();
+
+    if (const ObjectiveChecker().isSolved(level, _board)) {
+      _won = true;
+      _syncSession();
+      onLevelWon?.call(_board, _movesUsed, moveRecords);
+    } else if (const StuckDetector().isStuck(level, _board)) {
+      _stuck = true;
+      _syncSession();
+      onLevelStuck?.call(_board, _movesUsed);
+    }
   }
 
-  bool showHint({required int tier}) {
+  Future<bool> showHint({required int tier}) async {
     if (_animating || _won || _stuck || level.solutionMoves.isEmpty) {
       return false;
     }
@@ -333,13 +493,15 @@ class NumberGravityGame extends FlameGame {
     if (tier == 1) {
       _selectedTileId = tileId;
       _selectionOverlay.selectTile(tileId);
-      _forceLines.updateVectors(bridge.computeForces(_board, tileId));
+      final forces = bridge.computeForces(_board, tileId);
+      _forceLines.updateVectors(forces);
       onTileSelected?.call(
         tileId: tileId,
         legalDirections: bridge
             .legalMoves(_board, tileId)
             .map((m) => m.direction)
             .toList(),
+        forces: forces,
       );
       return true;
     }
@@ -348,29 +510,23 @@ class NumberGravityGame extends FlameGame {
         .legalMoves(_board, tileId)
         .map((move) => move.direction)
         .toList();
+    if (!legalDirections.contains(direction)) {
+      return false;
+    }
+
     if (tier == 2) {
-      if (!legalDirections.contains(direction)) {
-        return false;
-      }
       _selectedTileId = tileId;
       _selectionOverlay.showForTile(tileId, [direction]);
       _forceLines.updateVectors(bridge.computeForces(_board, tileId));
       return true;
     }
 
-    // Tier 3 — full move
-    if (!legalDirections.contains(direction)) {
-      return false;
-    }
     _selectedTileId = tileId;
-    _selectionOverlay.showForTile(tileId, [direction]);
-    _forceLines.updateVectors(bridge.computeForces(_board, tileId));
+    await commitDirection(direction);
     return true;
   }
 
-  String? _resolveHintTileId() {
-    return _primaryMovableTileId();
-  }
+  String? _resolveHintTileId() => _primaryMovableTileId();
 
   void restart() {
     if (_animating) {
@@ -386,11 +542,17 @@ class NumberGravityGame extends FlameGame {
 
   void setBoard(BoardModel board) {
     _board = board;
-    _boardHistory
+    _history
       ..clear()
-      ..add(board);
-    _boardForwardHistory.clear();
-    _moveRecords.clear();
+      ..add(
+        _HistoryEntry(
+          board: board,
+          selectedTileId: null,
+          movesUsed: 0,
+          moveRecords: const [],
+        ),
+      );
+    _forwardHistory.clear();
     _movesUsed = 0;
     _won = false;
     _stuck = false;

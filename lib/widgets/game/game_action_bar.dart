@@ -112,9 +112,11 @@ class _ActionPill extends StatelessWidget {
             opacity: enabled ? 1 : 0.4,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(icon, color: enabled ? primary : muted, size: 20),
                     const SizedBox(width: 4),
@@ -122,6 +124,7 @@ class _ActionPill extends StatelessWidget {
                       child: Text(
                         label,
                         overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: enabled ? null : muted,
@@ -133,6 +136,8 @@ class _ActionPill extends StatelessWidget {
                 if (subtitle != null)
                   Text(
                     subtitle!,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                           color: muted,
                         ),

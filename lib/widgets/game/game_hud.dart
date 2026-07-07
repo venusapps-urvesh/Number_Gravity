@@ -13,7 +13,9 @@ class GameHud extends StatelessWidget {
     required this.optimalMoves,
     required this.onPause,
     super.key,
+    this.onBack,
     this.coinAmount = 0,
+    this.showCoins = true,
     this.starChip,
   });
 
@@ -21,7 +23,9 @@ class GameHud extends StatelessWidget {
   final int movesUsed;
   final int? optimalMoves;
   final VoidCallback onPause;
+  final VoidCallback? onBack;
   final int coinAmount;
+  final bool showCoins;
   final Widget? starChip;
 
   @override
@@ -58,6 +62,13 @@ class GameHud extends StatelessWidget {
         children: [
           Row(
             children: [
+              if (onBack != null)
+                NGIconButton(
+                  icon: Icons.arrow_back_rounded,
+                  tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+                  onPressed: onBack,
+                  variant: NGIconButtonVariant.plain,
+                ),
               NGIconButton(
                 icon: Icons.pause_rounded,
                 tooltip: l10n.pause,
@@ -80,7 +91,7 @@ class GameHud extends StatelessWidget {
                   ],
                 ),
               ),
-              NGCoinBadge(amount: coinAmount, compact: true),
+              if (showCoins) NGCoinBadge(amount: coinAmount, compact: true),
             ],
           ),
           if (optimal != null) ...[

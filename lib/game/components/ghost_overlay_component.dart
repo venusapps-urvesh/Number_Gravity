@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
-import '../../core/constants/board_constants.dart';
 import '../../models/board_model.dart';
 import '../../models/tile_model.dart';
 import '../../models/tile_type.dart';
@@ -28,6 +27,10 @@ class GhostOverlayComponent extends Component {
     _ghostBoard = null;
     _baseBoard = null;
   }
+
+  double get _cellSize => boardComponent.layout.cellSize;
+
+  double get _cornerRadius => boardComponent.layout.cornerRadius;
 
   @override
   void render(Canvas canvas) {
@@ -56,10 +59,10 @@ class GhostOverlayComponent extends Component {
     final rect = Rect.fromLTWH(
       topLeft.x,
       topLeft.y,
-      tileSizePx,
-      tileSizePx,
+      _cellSize,
+      _cellSize,
     );
-    final radius = Radius.circular(tileCornerRadiusPx);
+    final radius = Radius.circular(_cornerRadius);
 
     final fill = Paint()
       ..color = AppColors.positive.withValues(alpha: 0.18)
@@ -73,12 +76,13 @@ class GhostOverlayComponent extends Component {
     canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), border);
 
     if (tile.value != 0) {
+      final fontSize = boardComponent.layout.fontSize;
       final painter = TextPainter(
         text: TextSpan(
           text: tile.value > 0 ? '+${tile.value}' : '${tile.value}',
           style: TextStyle(
             color: AppColors.positive.withValues(alpha: 0.7),
-            fontSize: 20,
+            fontSize: fontSize,
             fontWeight: FontWeight.w700,
           ),
         ),

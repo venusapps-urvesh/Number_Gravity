@@ -57,8 +57,9 @@ const int coinCostHintTier3 = 80;
 const int freeUndosPerLevel = 1;
 
 /// Animation timings in milliseconds (Section 11).
-const int animationCycleStepMinMs = 150;
-const int animationCycleStepMaxMs = 250;
+const int animationCycleStepMs = 200;
+const int animationCycleStepMinMs = animationCycleStepMs;
+const int animationCycleStepMaxMs = animationCycleStepMs;
 const int animationTransitionMaxMs = 700;
 
 /// World progression (Section 7).

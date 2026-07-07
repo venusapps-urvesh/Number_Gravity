@@ -3,7 +3,6 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
-import '../../core/constants/board_constants.dart';
 import '../../models/tile_model.dart';
 import '../../models/tile_type.dart';
 import '../../widgets/common/goal_star_icon.dart';
@@ -11,26 +10,47 @@ import '../../widgets/common/goal_star_icon.dart';
 class TileComponent extends PositionComponent with TapCallbacks {
   TileComponent({
     required this.tile,
+    required this.cellSize,
+    required this.cornerRadius,
+    required this.fontSize,
     required this.colorBlindMode,
     this.onTap,
   }) : super(
-          size: Vector2.all(tileSizePx),
+          size: Vector2.all(cellSize),
           anchor: Anchor.topLeft,
         );
 
   TileModel tile;
+  final double cellSize;
+  final double cornerRadius;
+  final double fontSize;
   final bool colorBlindMode;
   final void Function(TileModel tile)? onTap;
   bool selected = false;
+  bool glowing = false;
+
+  void updateCellSize(double newSize) {
+    size = Vector2.all(newSize);
+  }
 
   @override
   void render(Canvas canvas) {
     final rect = size.toRect();
-    final radius = Radius.circular(tileCornerRadiusPx);
+    final radius = Radius.circular(cornerRadius);
     final background = _backgroundColor();
 
     final paint = Paint()..color = background;
     canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), paint);
+
+    if (glowing) {
+      final glow = Paint()
+        ..color = AppColors.goal.withValues(alpha: 0.45)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(rect.inflate(4), radius),
+        glow,
+      );
+    }
 
     if (selected) {
       final border = Paint()
@@ -69,9 +89,9 @@ class TileComponent extends PositionComponent with TapCallbacks {
       final painter = TextPainter(
         text: TextSpan(
           text: text,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 22,
+            fontSize: fontSize,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -133,8 +153,8 @@ class TileComponent extends PositionComponent with TapCallbacks {
       ..color = Colors.white
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
-    final cx = rect.right - 12;
-    final cy = rect.top + 12;
+    final cx = rect.right - cellSize * 0.18;
+    final cy = rect.top + cellSize * 0.18;
     if (tile.value > 0) {
       canvas.drawLine(Offset(cx, cy - 5), Offset(cx, cy + 5), paint);
       canvas.drawLine(Offset(cx - 5, cy), Offset(cx + 5, cy), paint);
