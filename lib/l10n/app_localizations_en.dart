@@ -495,6 +495,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get undoCostFree => 'Free';
 
   @override
+  String undoFreeTriesLeft(int count) {
+    return '$count free';
+  }
+
+  @override
   String undoCostCoins(int cost) {
     return '$cost coins';
   }

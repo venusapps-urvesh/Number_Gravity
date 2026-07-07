@@ -26,12 +26,21 @@ void main() {
         Hive.registerAdapter(PlayerProgressAdapter());
       }
       final box = await Hive.openBox<PlayerProgress>(HiveBoxes.playerProgress);
+      if (!box.containsKey(HiveProgressRepository.progressKey)) {
+        await box.put(HiveProgressRepository.progressKey, PlayerProgress());
+      }
       repository = HiveProgressRepository(box);
     });
 
     tearDown(() async {
       await Hive.close();
       await tempDir.delete(recursive: true);
+    });
+
+    test('first install grants starting coins once', () async {
+      final progress = await repository.getProgress();
+      expect(progress.coins, startingCoins);
+      expect(progress.gameplayEarnedCoins, 0);
     });
 
     test('level 2 is locked until level 1 is completed', () async {

@@ -208,6 +208,12 @@
   "redo": "Rehacer",
   "helperCostLabel": "Costo: {cost} monedas · Saldo: {balance}",
   "undoCostFree": "Gratis",
+  "undoFreeTriesLeft": "{count} gratis",
+  "@undoFreeTriesLeft": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "undoCostCoins": "{cost} monedas",
   "hintTier1Title": "Qué ficha",
   "hintTier1Cost": "20 monedas",

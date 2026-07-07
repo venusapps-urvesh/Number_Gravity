@@ -239,6 +239,12 @@
     }
   },
   "undoCostFree": "Free",
+  "undoFreeTriesLeft": "{count} free",
+  "@undoFreeTriesLeft": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "undoCostCoins": "{cost} coins",
   "@undoCostCoins": {
     "placeholders": {

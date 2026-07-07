@@ -208,6 +208,12 @@
   "redo": "Rétablir",
   "helperCostLabel": "Coût : {cost} pièces · Solde : {balance}",
   "undoCostFree": "Gratuit",
+  "undoFreeTriesLeft": "{count} gratuit",
+  "@undoFreeTriesLeft": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "undoCostCoins": "{cost} pièces",
   "hintTier1Title": "Quelle tuile",
   "hintTier1Cost": "20 pièces",

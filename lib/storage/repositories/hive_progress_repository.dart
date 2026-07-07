@@ -10,16 +10,16 @@ class HiveProgressRepository implements ProgressRepository {
 
   final Box<PlayerProgress> _box;
 
-  static const String _progressKey = 'progress';
+  static const String progressKey = 'progress';
 
-  PlayerProgress _read() => _box.get(_progressKey) ?? PlayerProgress();
+  PlayerProgress _read() => _box.get(progressKey) ?? PlayerProgress();
 
   @override
   Future<PlayerProgress> getProgress() async => _read();
 
   @override
   Future<void> saveProgress(PlayerProgress progress) async {
-    await _box.put(_progressKey, progress);
+    await _box.put(progressKey, progress);
   }
 
   @override
@@ -85,6 +85,9 @@ class HiveProgressRepository implements ProgressRepository {
 class ProgressRepositoryFactory {
   static Future<HiveProgressRepository> create() async {
     final box = await Hive.openBox<PlayerProgress>(HiveBoxes.playerProgress);
+    if (!box.containsKey(HiveProgressRepository.progressKey)) {
+      await box.put(HiveProgressRepository.progressKey, PlayerProgress());
+    }
     return HiveProgressRepository(box);
   }
 }

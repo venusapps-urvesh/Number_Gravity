@@ -976,6 +976,12 @@ abstract class AppLocalizations {
   /// **'Free'**
   String get undoCostFree;
 
+  /// No description provided for @undoFreeTriesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} free'**
+  String undoFreeTriesLeft(int count);
+
   /// No description provided for @undoCostCoins.
   ///
   /// In en, this message translates to:

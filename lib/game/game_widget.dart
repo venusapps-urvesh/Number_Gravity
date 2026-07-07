@@ -197,15 +197,12 @@ class _NumberGravityGameWidgetState
       return const SizedBox.shrink();
     }
 
-    final flow = GameFlowController(ref);
-
     final column = Column(
       children: [
         _GameHudSection(
           level: widget.level,
           options: widget.options,
           onPause: _showPauseMenu,
-          onBack: () => flow.exitGameplay(context, widget.level),
         ),
         ObjectiveBanner(level: widget.level),
         Expanded(
@@ -226,13 +223,7 @@ class _NumberGravityGameWidgetState
           level: widget.level,
           options: widget.options,
           onUndo: _handleUndo,
-          onRedo: _handleRedo,
           onHint: _handleHint,
-          onRestart: () {
-            setState(() => _pendingWin = null);
-            _game?.restart();
-            ref.read(gameSessionProvider(widget.level).notifier).onRestart();
-          },
         ),
       ],
     );
@@ -551,13 +542,11 @@ class _GameHudSection extends ConsumerWidget {
     required this.level,
     required this.options,
     required this.onPause,
-    required this.onBack,
   });
 
   final LevelModel level;
   final GameplayOptions options;
   final VoidCallback onPause;
-  final VoidCallback onBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -571,7 +560,6 @@ class _GameHudSection extends ConsumerWidget {
       coinAmount: balance,
       showCoins: options.economyEnabled,
       onPause: onPause,
-      onBack: onBack,
       starChip: StarProgressChip(
         movesUsed: session.movesUsed,
         minimumMoves: level.minimumMoves,
@@ -585,39 +573,34 @@ class _GameActionBarSection extends ConsumerWidget {
     required this.level,
     required this.options,
     required this.onUndo,
-    required this.onRedo,
     required this.onHint,
-    required this.onRestart,
   });
 
   final LevelModel level;
   final GameplayOptions options;
   final VoidCallback onUndo;
-  final VoidCallback onRedo;
   final Future<void> Function() onHint;
-  final VoidCallback onRestart;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final session = ref.watch(gameSessionProvider(level));
-    final undoCost = undoCostForLevel(session.undoCountThisLevel);
+    final freeRemaining = freeUndosRemaining(session.undoCountThisLevel);
+    final undoSubtitle = options.economyEnabled && freeRemaining == 0
+        ? l10n.undoCostCoins(coinCostUndoAfterFree)
+        : null;
+    final undoBadgeCount =
+        options.economyEnabled && freeRemaining > 0 ? freeRemaining : null;
 
     return GameActionBar(
       canUndo: session.canUndo && !session.isAnimating,
-      canRedo: session.canRedo && !session.isAnimating,
       canHint: !session.isAnimating &&
           level.solutionMoves.isNotEmpty &&
           session.movesUsed < level.solutionMoves.length,
-      undoCostLabel: options.economyEnabled
-          ? (undoCost == 0 ? l10n.undoCostFree : l10n.undoCostCoins(undoCost))
-          : null,
-      redoCostLabel:
-          options.economyEnabled ? l10n.undoCostCoins(coinCostRedo) : null,
+      undoSubtitle: undoSubtitle,
+      undoBadgeCount: undoBadgeCount,
       onUndo: onUndo,
-      onRedo: onRedo,
       onHint: () => onHint(),
-      onRestart: onRestart,
     );
   }
 }

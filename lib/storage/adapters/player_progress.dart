@@ -1,10 +1,11 @@
 import 'package:hive/hive.dart';
 
+import '../../core/constants/game_constants.dart';
 import 'level_progress.dart';
 
 class PlayerProgress extends HiveObject {
   PlayerProgress({
-    this.coins = 0,
+    this.coins = startingCoins,
     this.gameplayEarnedCoins = 0,
     this.unlockedWorlds = const [1],
     this.levelProgress = const {},

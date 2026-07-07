@@ -8,6 +8,11 @@ int undoCostForLevel(int undoCountThisLevel) {
   return coinCostUndoAfterFree;
 }
 
+int freeUndosRemaining(int undoCountThisLevel) {
+  final remaining = freeUndosPerLevel - undoCountThisLevel;
+  return remaining > 0 ? remaining : 0;
+}
+
 int hintCostForTier(int tier) {
   return switch (tier) {
     1 => coinCostHintTier1,

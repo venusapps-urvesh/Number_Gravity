@@ -36,9 +36,18 @@ class _MemoryProgressRepository implements ProgressRepository {
 
 void main() {
   group('HelperPricing', () {
-    test('first undo is free', () {
+    test('free undos remaining counts down to zero', () {
+      expect(freeUndosRemaining(0), 3);
+      expect(freeUndosRemaining(1), 2);
+      expect(freeUndosRemaining(2), 1);
+      expect(freeUndosRemaining(3), 0);
+    });
+
+    test('first three undos are free per level', () {
       expect(undoCostForLevel(0), 0);
-      expect(undoCostForLevel(1), coinCostUndoAfterFree);
+      expect(undoCostForLevel(1), 0);
+      expect(undoCostForLevel(2), 0);
+      expect(undoCostForLevel(3), coinCostUndoAfterFree);
     });
 
     test('hint tiers map to doc costs', () {
