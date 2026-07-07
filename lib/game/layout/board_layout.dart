@@ -23,12 +23,13 @@ class BoardLayout {
   double get fontSize => (22 / tileSizePx) * cellSize;
 
   /// Fits the board inside [maxWidth] x [maxHeight] with [padding] on each side.
+  /// Cell size scales with grid dimensions — smaller grids get larger tiles.
   factory BoardLayout.fit({
     required int rows,
     required int cols,
     required double maxWidth,
     required double maxHeight,
-    double padding = 16,
+    double padding = 8,
   }) {
     const gap = boardCellGapPx;
     final availableW = maxWidth - padding * 2;
@@ -36,11 +37,7 @@ class BoardLayout {
 
     final cellFromW = (availableW - (cols - 1) * gap) / cols;
     final cellFromH = (availableH - (rows - 1) * gap) / rows;
-    var cellSize = cellFromW < cellFromH ? cellFromW : cellFromH;
-
-    if (cellSize > tileSizePx) {
-      cellSize = tileSizePx;
-    }
+    final cellSize = cellFromW < cellFromH ? cellFromW : cellFromH;
 
     return BoardLayout(
       rows: rows,

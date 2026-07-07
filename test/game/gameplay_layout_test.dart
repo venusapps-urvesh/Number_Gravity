@@ -6,6 +6,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:number_gravity/core/constants/board_constants.dart';
 import 'package:number_gravity/game/bridges/simulation_bridge.dart';
 import 'package:number_gravity/game/layout/board_layout.dart';
 import 'package:number_gravity/game/number_gravity_game.dart';
@@ -110,6 +111,7 @@ void main() {
   test('BoardLayout fits 4x4 through 8x8 inside viewport', () {
     const viewport = Size(360, 360);
 
+    double? previousCellSize;
     for (final size in [4, 6, 8]) {
       final layout = BoardLayout.fit(
         rows: size,
@@ -121,7 +123,27 @@ void main() {
       expect(layout.boardWidth, lessThanOrEqualTo(viewport.width));
       expect(layout.boardHeight, lessThanOrEqualTo(viewport.height));
       expect(layout.cellSize, greaterThan(0));
+      if (previousCellSize != null) {
+        expect(
+          layout.cellSize,
+          lessThan(previousCellSize!),
+          reason: 'larger grids should use smaller cells',
+        );
+      }
+      previousCellSize = layout.cellSize;
     }
+  });
+
+  test('BoardLayout scales 4x4 cells larger than fixed design size', () {
+    const viewport = Size(360, 500);
+    final layout = BoardLayout.fit(
+      rows: 4,
+      cols: 4,
+      maxWidth: viewport.width,
+      maxHeight: viewport.height,
+    );
+
+    expect(layout.cellSize, greaterThan(tileSizePx));
   });
 
   testWidgets('4x4 board renders inside gameplay column layout', (tester) async {

@@ -73,37 +73,33 @@ class LevelSelectScreen extends ConsumerWidget {
                               ).colorScheme.primary.withValues(alpha: 0.4)
                             : null,
                         borderWidth: completed ? 1 : 0,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '${level.id}',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                if (stars > 0) ...[
-                                  const SizedBox(height: 4),
-                                  NGStarRating(
-                                    stars: stars,
-                                    size: 12,
-                                    spacing: 0,
+                        child: unlocked
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${level.id}',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.titleMedium,
                                   ),
+                                  if (stars > 0) ...[
+                                    const SizedBox(height: 4),
+                                    NGStarRating(
+                                      stars: stars,
+                                      size: 12,
+                                      spacing: 0,
+                                    ),
+                                  ],
                                 ],
-                              ],
-                            ),
-                            if (!unlocked)
-                              Icon(
+                              )
+                            : Icon(
                                 Icons.lock_rounded,
-                                size: 16,
+                                size: 20,
                                 color: AppColors.onSurfaceMuted(
                                   Theme.of(context).brightness,
                                 ),
                               ),
-                          ],
-                        ),
                       ),
                     );
                   },
