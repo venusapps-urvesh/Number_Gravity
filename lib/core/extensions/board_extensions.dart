@@ -21,11 +21,11 @@ extension BoardModelExtensions on BoardModel {
       return true;
     }
 
-    if (destination.type.blocksMovement || destination.isLocked) {
+    if (destination.isMovable) {
       return false;
     }
 
-    return false;
+    return !destination.type.blocksMovement;
   }
 
   List<Move> legalMovesForTile(String tileId) {

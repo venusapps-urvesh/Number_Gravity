@@ -207,22 +207,7 @@ class _NumberGravityGameWidgetState
           onPause: _showPauseMenu,
         ),
         ObjectiveBanner(level: widget.level),
-        Expanded(
-          child: Stack(
-            children: [
-              _FlameBoardHost(game: game),
-              if (_pendingWin != null && widget.options.showWinOverlay)
-                WinOverlay(
-                  movesUsed: _pendingWin!.movesUsed,
-                  minimumMoves: widget.level.minimumMoves,
-                  reduceMotion: ref.watch(reduceMotionProvider).value ?? false,
-                  onLevels: _onWinLevels,
-                  onNextLevel: () => _onWinNextLevel(_pendingWin!),
-                  onReplay: _onWinReplay,
-                ),
-            ],
-          ),
-        ),
+        Expanded(child: _FlameBoardHost(game: game)),
         _GameActionBarSection(
           level: widget.level,
           options: widget.options,
@@ -233,12 +218,43 @@ class _NumberGravityGameWidgetState
     );
 
     if (isTablet) {
-      return Padding(
+      final content = Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: column,
       );
+      return Stack(
+        children: [
+          content,
+          if (_pendingWin != null && widget.options.showWinOverlay)
+            Positioned.fill(
+              child: WinOverlay(
+                movesUsed: _pendingWin!.movesUsed,
+                minimumMoves: widget.level.minimumMoves,
+                reduceMotion: ref.watch(reduceMotionProvider).value ?? false,
+                onLevels: _onWinLevels,
+                onNextLevel: () => _onWinNextLevel(_pendingWin!),
+                onReplay: _onWinReplay,
+              ),
+            ),
+        ],
+      );
     }
-    return column;
+    return Stack(
+      children: [
+        column,
+        if (_pendingWin != null && widget.options.showWinOverlay)
+          Positioned.fill(
+            child: WinOverlay(
+              movesUsed: _pendingWin!.movesUsed,
+              minimumMoves: widget.level.minimumMoves,
+              reduceMotion: ref.watch(reduceMotionProvider).value ?? false,
+              onLevels: _onWinLevels,
+              onNextLevel: () => _onWinNextLevel(_pendingWin!),
+              onReplay: _onWinReplay,
+            ),
+          ),
+      ],
+    );
   }
 
   Future<void> _onWinNextLevel(_PendingWin pending) async {
