@@ -6,7 +6,7 @@ part 'move_record.freezed.dart';
 part 'move_record.g.dart';
 
 @freezed
-class MoveRecord with _$MoveRecord {
+abstract class MoveRecord with _$MoveRecord {
   const factory MoveRecord({
     required String tileId,
     required Direction direction,

@@ -6,10 +6,9 @@ import 'board_applier.dart';
 
 class GhostSimulator {
   GhostSimulator({
-    required GravityEngine engine,
+    required this._engine,
     BoardApplier? applier,
-  })  : _engine = engine,
-        _applier = applier ?? BoardApplier();
+  }) : _applier = applier ?? BoardApplier();
 
   final GravityEngine _engine;
   final BoardApplier _applier;

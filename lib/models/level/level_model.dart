@@ -8,7 +8,7 @@ part 'level_model.freezed.dart';
 part 'level_model.g.dart';
 
 @freezed
-class LevelModel with _$LevelModel {
+abstract class LevelModel with _$LevelModel {
   const factory LevelModel({
     required int id,
     required int world,

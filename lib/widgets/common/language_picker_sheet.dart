@@ -11,7 +11,9 @@ class AppShare {
 
   static Future<void> shareApp(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return Share.share(l10n.shareAppMessage, subject: l10n.appName);
+    return SharePlus.instance.share(
+      ShareParams(text: l10n.shareAppMessage, subject: l10n.appName),
+    );
   }
 
   static Future<void> shareSolution(
@@ -23,7 +25,9 @@ class AppShare {
     final message =
         '${l10n.shareSolution}\n'
         '${l10n.levelTitle(levelId)}: $solutionCode';
-    return Share.share(message, subject: l10n.appName);
+    return SharePlus.instance.share(
+      ShareParams(text: message, subject: l10n.appName),
+    );
   }
 }
 

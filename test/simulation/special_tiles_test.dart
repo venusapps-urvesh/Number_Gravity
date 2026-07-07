@@ -3,7 +3,6 @@ import 'package:number_gravity/models/board_model.dart';
 import 'package:number_gravity/models/move.dart';
 import 'package:number_gravity/models/tile_model.dart';
 import 'package:number_gravity/models/tile_type.dart';
-import 'package:number_gravity/simulation/board_applier.dart';
 import 'package:number_gravity/simulation/default_gravity_engine.dart';
 import 'package:number_gravity/simulation/ghost_simulator.dart';
 import 'package:number_gravity/simulation/rules/portal_processor.dart';

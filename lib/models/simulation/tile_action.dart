@@ -18,7 +18,7 @@ enum TileActionType {
 }
 
 @freezed
-class TileAction with _$TileAction {
+abstract class TileAction with _$TileAction {
   const factory TileAction({
     required String tileId,
     required TileActionType actionType,

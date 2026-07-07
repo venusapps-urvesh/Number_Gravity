@@ -6,20 +6,19 @@ part of 'tile_action.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TileActionImpl _$$TileActionImplFromJson(Map<String, dynamic> json) =>
-    _$TileActionImpl(
-      tileId: json['tileId'] as String,
-      actionType: $enumDecode(_$TileActionTypeEnumMap, json['actionType']),
-      fromRow: (json['fromRow'] as num).toInt(),
-      fromCol: (json['fromCol'] as num).toInt(),
-      toRow: (json['toRow'] as num).toInt(),
-      toCol: (json['toCol'] as num).toInt(),
-      resultingValue: (json['resultingValue'] as num?)?.toInt(),
-      relatedTileId: json['relatedTileId'] as String?,
-      direction: $enumDecodeNullable(_$DirectionEnumMap, json['direction']),
-    );
+_TileAction _$TileActionFromJson(Map<String, dynamic> json) => _TileAction(
+  tileId: json['tileId'] as String,
+  actionType: $enumDecode(_$TileActionTypeEnumMap, json['actionType']),
+  fromRow: (json['fromRow'] as num).toInt(),
+  fromCol: (json['fromCol'] as num).toInt(),
+  toRow: (json['toRow'] as num).toInt(),
+  toCol: (json['toCol'] as num).toInt(),
+  resultingValue: (json['resultingValue'] as num?)?.toInt(),
+  relatedTileId: json['relatedTileId'] as String?,
+  direction: $enumDecodeNullable(_$DirectionEnumMap, json['direction']),
+);
 
-Map<String, dynamic> _$$TileActionImplToJson(_$TileActionImpl instance) =>
+Map<String, dynamic> _$TileActionToJson(_TileAction instance) =>
     <String, dynamic>{
       'tileId': instance.tileId,
       'actionType': _$TileActionTypeEnumMap[instance.actionType]!,

@@ -13,12 +13,11 @@ import 'tile_component.dart';
 class BoardComponent extends PositionComponent {
   BoardComponent({
     required this.board,
-    required BoardLayout layout,
+    required this.layout,
     this.onTileTapped,
     this.onTileSwiped,
     this.colorBlindMode = false,
-  })  : layout = layout,
-        super(anchor: Anchor.topLeft);
+  }) : super(anchor: Anchor.topLeft);
 
   BoardModel board;
   BoardLayout layout;

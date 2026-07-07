@@ -6,7 +6,7 @@ part 'tile_model.freezed.dart';
 part 'tile_model.g.dart';
 
 @freezed
-class TileModel with _$TileModel {
+abstract class TileModel with _$TileModel {
   const TileModel._();
 
   const factory TileModel({

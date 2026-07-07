@@ -97,7 +97,7 @@ class GameHud extends StatelessWidget {
                     fontWeight: overPar ? FontWeight.w700 : FontWeight.normal,
                   ),
             ),
-            if (starChip != null) starChip!,
+            ...[starChip].whereType<Widget>(),
           ],
         ],
       ),

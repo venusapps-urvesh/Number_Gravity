@@ -6,16 +6,15 @@ part of 'force_vector.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ForceVectorImpl _$$ForceVectorImplFromJson(Map<String, dynamic> json) =>
-    _$ForceVectorImpl(
-      sourceTileId: json['sourceTileId'] as String,
-      targetTileId: json['targetTileId'] as String,
-      force: (json['force'] as num).toDouble(),
-      direction: $enumDecode(_$DirectionEnumMap, json['direction']),
-      isRepulsion: json['isRepulsion'] as bool,
-    );
+_ForceVector _$ForceVectorFromJson(Map<String, dynamic> json) => _ForceVector(
+  sourceTileId: json['sourceTileId'] as String,
+  targetTileId: json['targetTileId'] as String,
+  force: (json['force'] as num).toDouble(),
+  direction: $enumDecode(_$DirectionEnumMap, json['direction']),
+  isRepulsion: json['isRepulsion'] as bool,
+);
 
-Map<String, dynamic> _$$ForceVectorImplToJson(_$ForceVectorImpl instance) =>
+Map<String, dynamic> _$ForceVectorToJson(_ForceVector instance) =>
     <String, dynamic>{
       'sourceTileId': instance.sourceTileId,
       'targetTileId': instance.targetTileId,

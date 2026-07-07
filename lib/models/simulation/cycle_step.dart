@@ -7,7 +7,7 @@ part 'cycle_step.freezed.dart';
 part 'cycle_step.g.dart';
 
 @freezed
-class CycleStep with _$CycleStep {
+abstract class CycleStep with _$CycleStep {
   const factory CycleStep({
     required int cycleIndex,
     @Default([]) List<TileAction> actions,

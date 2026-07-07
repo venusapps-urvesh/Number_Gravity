@@ -7,7 +7,7 @@ part 'simulation_result.freezed.dart';
 part 'simulation_result.g.dart';
 
 @freezed
-class SimulationResult with _$SimulationResult {
+abstract class SimulationResult with _$SimulationResult {
   const factory SimulationResult({
     @Default([]) List<CycleStep> steps,
     required BoardModel finalBoard,

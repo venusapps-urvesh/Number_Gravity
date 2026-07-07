@@ -9,10 +9,9 @@ import '../../simulation/gravity_engine.dart';
 
 class SimulationBridge {
   SimulationBridge({
-    required GravityEngine engine,
+    required this._engine,
     BoardApplier? applier,
-  }) : _engine = engine,
-       _applier = applier ?? BoardApplier();
+  }) : _applier = applier ?? BoardApplier();
 
   final GravityEngine _engine;
   final BoardApplier _applier;

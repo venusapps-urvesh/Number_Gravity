@@ -6,13 +6,12 @@ part of 'move_record.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MoveRecordImpl _$$MoveRecordImplFromJson(Map<String, dynamic> json) =>
-    _$MoveRecordImpl(
-      tileId: json['tileId'] as String,
-      direction: $enumDecode(_$DirectionEnumMap, json['direction']),
-    );
+_MoveRecord _$MoveRecordFromJson(Map<String, dynamic> json) => _MoveRecord(
+  tileId: json['tileId'] as String,
+  direction: $enumDecode(_$DirectionEnumMap, json['direction']),
+);
 
-Map<String, dynamic> _$$MoveRecordImplToJson(_$MoveRecordImpl instance) =>
+Map<String, dynamic> _$MoveRecordToJson(_MoveRecord instance) =>
     <String, dynamic>{
       'tileId': instance.tileId,
       'direction': _$DirectionEnumMap[instance.direction]!,

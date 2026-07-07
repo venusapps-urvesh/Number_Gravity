@@ -317,40 +317,6 @@ class _NumberGravityGameWidgetState
     return true;
   }
 
-  Future<void> _handleRedo() async {
-    final l10n = AppLocalizations.of(context);
-    final flow = GameFlowController(ref);
-
-    if (widget.options.economyEnabled) {
-      final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
-      const cost = coinCostRedo;
-
-      final confirmed = await showHelperCostSheet(
-        context,
-        title: l10n.redo,
-        body: l10n.undoCostCoins(cost),
-        cost: cost,
-        balance: balance,
-      );
-      if (confirmed != true || !mounted) {
-        return;
-      }
-      final spent =
-          await flow.trySpendForHelper(cost: cost, sink: CoinSink.redo);
-      if (!spent) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.notEnoughCoins)),
-          );
-        }
-        return;
-      }
-    }
-
-    _game?.redo();
-    ref.read(gameSessionProvider(widget.level).notifier).onRedo();
-  }
-
   Future<void> _handleHint() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);

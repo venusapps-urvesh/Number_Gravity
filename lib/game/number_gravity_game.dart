@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../models/board_model.dart';
 import '../../models/level/level_model.dart';
 import '../../models/move.dart';
+import '../../models/objective/objective_model.dart';
 import '../../models/replay/move_record.dart';
 import '../../models/simulation/force_vector.dart';
 import '../../models/simulation/simulation_result.dart';
@@ -604,16 +605,17 @@ class NumberGravityGame extends FlameGame {
   }
 
   String? _primaryMovableTileId() {
-    final objectiveTileId = level.objective.when(
-      position: (tileId, _, _) => tileId,
-      sequence: (tileIds, _) => tileIds.isEmpty ? null : tileIds.first,
-      sum: (tileIds, _) => tileIds.isEmpty ? null : tileIds.first,
-      balance: (regionTileIds, _) =>
-          regionTileIds.isEmpty ? null : regionTileIds.first,
-      collection: (tileGoals) =>
-          tileGoals.isEmpty ? null : tileGoals.keys.first,
-      chain: (ids) => ids.isEmpty ? null : ids.first,
-    );
+    final objectiveTileId = switch (level.objective) {
+      PositionObjective(:final tileId) => tileId,
+      SequenceObjective(:final tileIds) => tileIds.isEmpty ? null : tileIds.first,
+      SumObjective(:final tileIds) => tileIds.isEmpty ? null : tileIds.first,
+      BalanceObjective(:final regionTileIds) =>
+        regionTileIds.isEmpty ? null : regionTileIds.first,
+      CollectionObjective(:final tileGoals) =>
+        tileGoals.isEmpty ? null : tileGoals.keys.first,
+      ChainObjective(:final subObjectiveIds) =>
+        subObjectiveIds.isEmpty ? null : subObjectiveIds.first,
+    };
 
     if (objectiveTileId != null) {
       final tile = _board.tileById(objectiveTileId);

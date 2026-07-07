@@ -214,6 +214,7 @@ class TileComponent extends PositionComponent with TapCallbacks, DragCallbacks {
 
   @override
   void onDragStart(DragStartEvent event) {
+    super.onDragStart(event);
     _dragStart = event.canvasPosition;
     _dragLast = event.canvasPosition;
   }
@@ -225,6 +226,7 @@ class TileComponent extends PositionComponent with TapCallbacks, DragCallbacks {
 
   @override
   void onDragEnd(DragEndEvent event) {
+    super.onDragEnd(event);
     final start = _dragStart;
     final end = _dragLast;
     _dragStart = null;

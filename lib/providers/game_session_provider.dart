@@ -84,9 +84,13 @@ class GameSessionState {
   }
 }
 
-class GameSessionNotifier extends FamilyNotifier<GameSessionState, LevelModel> {
+class GameSessionNotifier extends Notifier<GameSessionState> {
+  GameSessionNotifier(this.level);
+
+  final LevelModel level;
+
   @override
-  GameSessionState build(LevelModel arg) => const GameSessionState();
+  GameSessionState build() => const GameSessionState();
 
   void syncFromGame({
     required int movesUsed,

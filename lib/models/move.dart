@@ -49,7 +49,7 @@ extension DirectionX on Direction {
 }
 
 @freezed
-class Move with _$Move {
+abstract class Move with _$Move {
   const factory Move({
     required String tileId,
     required Direction direction,

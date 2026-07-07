@@ -6,24 +6,23 @@ part of 'tile_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TileModelImpl _$$TileModelImplFromJson(Map<String, dynamic> json) =>
-    _$TileModelImpl(
-      id: json['id'] as String,
-      type: $enumDecode(_$TileTypeEnumMap, json['type']),
-      value: (json['value'] as num?)?.toInt() ?? 0,
-      row: (json['row'] as num).toInt(),
-      col: (json['col'] as num).toInt(),
-      isLocked: json['isLocked'] as bool? ?? false,
-      portalPairId: json['portalPairId'] as String?,
-      switchId: json['switchId'] as String?,
-      doorId: json['doorId'] as String?,
-      isDoorOpen: json['isDoorOpen'] as bool? ?? false,
-      allowsMerge: json['allowsMerge'] as bool? ?? false,
-      allowsSplit: json['allowsSplit'] as bool? ?? false,
-      modifierFactor: (json['modifierFactor'] as num?)?.toInt() ?? 1,
-    );
+_TileModel _$TileModelFromJson(Map<String, dynamic> json) => _TileModel(
+  id: json['id'] as String,
+  type: $enumDecode(_$TileTypeEnumMap, json['type']),
+  value: (json['value'] as num?)?.toInt() ?? 0,
+  row: (json['row'] as num).toInt(),
+  col: (json['col'] as num).toInt(),
+  isLocked: json['isLocked'] as bool? ?? false,
+  portalPairId: json['portalPairId'] as String?,
+  switchId: json['switchId'] as String?,
+  doorId: json['doorId'] as String?,
+  isDoorOpen: json['isDoorOpen'] as bool? ?? false,
+  allowsMerge: json['allowsMerge'] as bool? ?? false,
+  allowsSplit: json['allowsSplit'] as bool? ?? false,
+  modifierFactor: (json['modifierFactor'] as num?)?.toInt() ?? 1,
+);
 
-Map<String, dynamic> _$$TileModelImplToJson(_$TileModelImpl instance) =>
+Map<String, dynamic> _$TileModelToJson(_TileModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': _$TileTypeEnumMap[instance.type]!,

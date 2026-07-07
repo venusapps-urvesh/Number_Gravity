@@ -1,17 +1,18 @@
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
+import '../models/objective/objective_model.dart';
 import '../models/tile_type.dart';
 
 class ObjectiveChecker {
   const ObjectiveChecker();
 
   bool isSolved(LevelModel level, BoardModel board) {
-    return level.objective.when(
-      position: (tileId, goalRow, goalCol) {
+    return switch (level.objective) {
+      PositionObjective(:final tileId, :final goalRow, :final goalCol) => () {
         final tile = board.tileById(tileId);
         return tile != null && tile.row == goalRow && tile.col == goalCol;
-      },
-      sequence: (tileIds, targetValues) {
+      }(),
+      SequenceObjective(:final tileIds, :final targetValues) => () {
         if (tileIds.length != targetValues.length) {
           return false;
         }
@@ -22,8 +23,8 @@ class ObjectiveChecker {
           }
         }
         return true;
-      },
-      sum: (tileIds, targetSum) {
+      }(),
+      SumObjective(:final tileIds, :final targetSum) => () {
         var total = 0;
         for (final id in tileIds) {
           final tile = board.tileById(id);
@@ -33,8 +34,8 @@ class ObjectiveChecker {
           total += tile.value;
         }
         return total == targetSum;
-      },
-      balance: (regionTileIds, targetValue) {
+      }(),
+      BalanceObjective(:final regionTileIds, :final targetValue) => () {
         for (final id in regionTileIds) {
           final tile = board.tileById(id);
           if (tile == null || tile.value != targetValue) {
@@ -42,8 +43,8 @@ class ObjectiveChecker {
           }
         }
         return true;
-      },
-      collection: (tileGoals) {
+      }(),
+      CollectionObjective(:final tileGoals) => () {
         for (final entry in tileGoals.entries) {
           final tile = board.tileById(entry.key);
           if (tile == null) {
@@ -57,8 +58,8 @@ class ObjectiveChecker {
           }
         }
         return true;
-      },
-      chain: (subObjectiveIds) {
+      }(),
+      ChainObjective(:final subObjectiveIds) => () {
         if (subObjectiveIds.isEmpty) {
           return false;
         }
@@ -81,7 +82,7 @@ class ObjectiveChecker {
           }
         }
         return true;
-      },
-    );
+      }(),
+    };
   }
 }
