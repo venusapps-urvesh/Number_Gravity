@@ -3,11 +3,12 @@ import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../models/move.dart';
 import '../../models/tile_model.dart';
 import '../../models/tile_type.dart';
 import '../../widgets/common/goal_star_icon.dart';
 
-class TileComponent extends PositionComponent with TapCallbacks {
+class TileComponent extends PositionComponent with TapCallbacks, DragCallbacks {
   TileComponent({
     required this.tile,
     required this.cellSize,
@@ -15,6 +16,7 @@ class TileComponent extends PositionComponent with TapCallbacks {
     required this.fontSize,
     required this.colorBlindMode,
     this.onTap,
+    this.onSwipe,
   }) : super(
           size: Vector2.all(cellSize),
           anchor: Anchor.topLeft,
@@ -26,8 +28,11 @@ class TileComponent extends PositionComponent with TapCallbacks {
   final double fontSize;
   final bool colorBlindMode;
   final void Function(TileModel tile)? onTap;
+  final void Function(TileModel tile, Direction direction)? onSwipe;
   bool selected = false;
   bool glowing = false;
+  Vector2? _dragStart;
+  Vector2? _dragLast;
 
   void updateCellSize(double newSize) {
     size = Vector2.all(newSize);
@@ -204,6 +209,46 @@ class TileComponent extends PositionComponent with TapCallbacks {
   void onTapUp(TapUpEvent event) {
     if (tile.isMovable) {
       onTap?.call(tile);
+    }
+  }
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    _dragStart = event.canvasPosition;
+    _dragLast = event.canvasPosition;
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) {
+    _dragLast = event.canvasEndPosition;
+  }
+
+  @override
+  void onDragEnd(DragEndEvent event) {
+    final start = _dragStart;
+    final end = _dragLast;
+    _dragStart = null;
+    _dragLast = null;
+    if (start == null || !tile.isMovable) {
+      return;
+    }
+    if (end == null) {
+      return;
+    }
+
+    final dx = end.x - start.x;
+    final dy = end.y - start.y;
+    final threshold = cellSize * 0.22;
+
+    Direction? direction;
+    if (dx.abs() >= dy.abs() && dx.abs() > threshold) {
+      direction = dx > 0 ? Direction.right : Direction.left;
+    } else if (dy.abs() > threshold) {
+      direction = dy > 0 ? Direction.down : Direction.up;
+    }
+
+    if (direction != null) {
+      onSwipe?.call(tile, direction);
     }
   }
 }

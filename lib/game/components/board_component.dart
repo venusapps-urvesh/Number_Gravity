@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../models/board_model.dart';
+import '../../models/move.dart';
 import '../../models/tile_model.dart';
 import '../animation/tile_effects.dart';
 import '../layout/board_layout.dart';
@@ -14,6 +15,7 @@ class BoardComponent extends PositionComponent {
     required this.board,
     required BoardLayout layout,
     this.onTileTapped,
+    this.onTileSwiped,
     this.colorBlindMode = false,
   })  : layout = layout,
         super(anchor: Anchor.topLeft);
@@ -21,6 +23,7 @@ class BoardComponent extends PositionComponent {
   BoardModel board;
   BoardLayout layout;
   final void Function(TileModel tile)? onTileTapped;
+  final void Function(TileModel tile, Direction direction)? onTileSwiped;
   final bool colorBlindMode;
 
   final Map<String, TileComponent> _tileComponents = {};
@@ -88,6 +91,7 @@ class BoardComponent extends PositionComponent {
           fontSize: layout.fontSize,
           colorBlindMode: colorBlindMode,
           onTap: onTileTapped,
+          onSwipe: onTileSwiped,
         )..position = position;
         _tileComponents[tile.id] = component;
         await add(component);

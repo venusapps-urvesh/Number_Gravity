@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
@@ -179,6 +181,7 @@ class NumberGravityGame extends FlameGame {
       layout: _layout,
       colorBlindMode: colorBlindMode,
       onTileTapped: _onTileTapped,
+      onTileSwiped: _onTileSwiped,
     );
     _selectionOverlay = GameSelectionOverlay(
       boardComponent: _boardComponent,
@@ -348,6 +351,15 @@ class NumberGravityGame extends FlameGame {
     _syncSession();
   }
 
+  void _onTileSwiped(TileModel tile, Direction direction) {
+    if (_animating || _won || _stuck || _paused || !tile.isMovable) {
+      return;
+    }
+    _selectedTileId = tile.id;
+    _replaceCurrentHistorySelection(tile.id);
+    unawaited(commitDirection(direction));
+  }
+
   void previewDirection(Direction direction) {
     if (_animating || _won || _stuck || _paused) {
       return;
@@ -477,18 +489,16 @@ class NumberGravityGame extends FlameGame {
   }
 
   Future<bool> showHint({required int tier}) async {
-    if (_animating || _won || _stuck || level.solutionMoves.isEmpty) {
-      return false;
-    }
-    if (_movesUsed >= level.solutionMoves.length) {
+    if (_animating || _won || _stuck) {
       return false;
     }
 
-    final direction = DirectionX.fromShortCode(level.solutionMoves[_movesUsed]);
-    final tileId = _resolveHintTileId();
-    if (direction == null || tileId == null) {
+    final hintMove = _resolveHintMove();
+    if (hintMove == null) {
       return false;
     }
+    final tileId = hintMove.tileId;
+    final direction = hintMove.direction;
 
     if (tier == 1) {
       _selectedTileId = tileId;
@@ -527,6 +537,38 @@ class NumberGravityGame extends FlameGame {
   }
 
   String? _resolveHintTileId() => _primaryMovableTileId();
+
+  Move? _resolveHintMove() {
+    final scriptedDirection = _movesUsed < level.solutionMoves.length
+        ? DirectionX.fromShortCode(level.solutionMoves[_movesUsed])
+        : null;
+    final preferredTileId = _selectedTileId ?? _resolveHintTileId();
+
+    if (scriptedDirection != null && preferredTileId != null) {
+      final preferredMoves = bridge.legalMoves(_board, preferredTileId);
+      if (preferredMoves.any((m) => m.direction == scriptedDirection)) {
+        return Move(tileId: preferredTileId, direction: scriptedDirection);
+      }
+    }
+
+    if (preferredTileId != null) {
+      final preferredMoves = bridge.legalMoves(_board, preferredTileId);
+      if (preferredMoves.isNotEmpty) {
+        return preferredMoves.first;
+      }
+    }
+
+    for (final tile in _board.tiles) {
+      if (!tile.isMovable) {
+        continue;
+      }
+      final legal = bridge.legalMoves(_board, tile.id);
+      if (legal.isNotEmpty) {
+        return legal.first;
+      }
+    }
+    return null;
+  }
 
   void restart() {
     if (_animating) {

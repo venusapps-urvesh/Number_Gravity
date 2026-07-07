@@ -354,11 +354,7 @@ class _NumberGravityGameWidgetState
   Future<void> _handleHint() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
-
-    final tier = await showHintTierSheet(context);
-    if (tier == null || !mounted) {
-      return;
-    }
+    const tier = 3;
 
     if (widget.options.economyEnabled) {
       final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
@@ -366,11 +362,7 @@ class _NumberGravityGameWidgetState
       final confirmed = await showHelperCostSheet(
         context,
         title: l10n.hint,
-        body: switch (tier) {
-          1 => l10n.hintTier1Title,
-          2 => l10n.hintTier2Title,
-          _ => l10n.hintTier3Title,
-        },
+        body: l10n.hintTier3Title,
         cost: cost,
         balance: balance,
       );
@@ -599,8 +591,7 @@ class _GameActionBarSection extends ConsumerWidget {
     return GameActionBar(
       canUndo: session.canUndo && !session.isAnimating,
       canHint: !session.isAnimating &&
-          level.solutionMoves.isNotEmpty &&
-          session.movesUsed < level.solutionMoves.length,
+          !session.isWon,
       undoSubtitle: undoSubtitle,
       undoBadgeCount: undoBadgeCount,
       onUndo: () {
