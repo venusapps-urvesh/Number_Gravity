@@ -1,5 +1,6 @@
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
+import '../models/tile_type.dart';
 
 class ObjectiveChecker {
   const ObjectiveChecker();
@@ -57,7 +58,30 @@ class ObjectiveChecker {
         }
         return true;
       },
-      chain: (_) => false,
+      chain: (subObjectiveIds) {
+        if (subObjectiveIds.isEmpty) {
+          return false;
+        }
+        final goalCells = <String>{};
+        for (final tile in board.tiles) {
+          if (tile.type == TileType.goal) {
+            goalCells.add('${tile.row},${tile.col}');
+          }
+        }
+        if (goalCells.isEmpty) {
+          return false;
+        }
+        for (final tileId in subObjectiveIds) {
+          final tile = board.tileById(tileId);
+          if (tile == null) {
+            return false;
+          }
+          if (!goalCells.contains('${tile.row},${tile.col}')) {
+            return false;
+          }
+        }
+        return true;
+      },
     );
   }
 }

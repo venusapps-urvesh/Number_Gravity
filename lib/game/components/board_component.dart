@@ -1,5 +1,7 @@
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 
+import '../../app/theme/app_colors.dart';
 import '../../core/constants/board_constants.dart';
 import '../../models/board_model.dart';
 import '../../models/tile_model.dart';
@@ -28,6 +30,19 @@ class BoardComponent extends PositionComponent {
   Future<void> onLoad() async {
     size = Vector2(boardWidth, boardHeight);
     await _syncTiles();
+  }
+
+  @override
+  void render(Canvas canvas) {
+    final rect = size.toRect();
+    final paint = Paint()
+      ..color = AppColors.neutral200.withValues(alpha: 0.55)
+      ..style = PaintingStyle.fill;
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, const Radius.circular(12)),
+      paint,
+    );
+    super.render(canvas);
   }
 
   Future<void> updateBoard(BoardModel newBoard) async {
@@ -82,4 +97,6 @@ class BoardComponent extends PositionComponent {
     final topLeft = _cellPosition(row, col);
     return topLeft + Vector2.all(tileSizePx / 2);
   }
+
+  Vector2 cellTopLeft(int row, int col) => _cellPosition(row, col);
 }

@@ -36,6 +36,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -73,6 +91,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -118,6 +154,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -155,6 +209,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -200,6 +272,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,
@@ -237,6 +327,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -282,6 +390,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -319,6 +445,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -364,6 +508,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -401,6 +563,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,
@@ -446,6 +626,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -483,6 +681,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -528,6 +744,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -565,6 +799,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -610,6 +862,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,
@@ -647,6 +917,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -692,6 +980,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -729,6 +1035,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -774,6 +1098,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -811,6 +1153,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,
@@ -856,6 +1216,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -893,6 +1271,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -938,6 +1334,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -975,6 +1389,24 @@
           "row": 5,
           "col": 5,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -1020,6 +1452,24 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 4,
+          "col": 4,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,

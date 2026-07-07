@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
@@ -6,10 +7,14 @@ import '../../core/constants/board_constants.dart';
 import '../../models/move.dart';
 import 'board_component.dart';
 
-class GameSelectionOverlay extends PositionComponent {
-  GameSelectionOverlay({required this.boardComponent});
+class GameSelectionOverlay extends PositionComponent with TapCallbacks {
+  GameSelectionOverlay({
+    required this.boardComponent,
+    this.onDirectionTapped,
+  });
 
   final BoardComponent boardComponent;
+  final void Function(Direction direction)? onDirectionTapped;
   final List<Direction> _legalDirections = [];
 
   void showForTile(String? tileId, List<Direction> directions) {
@@ -59,6 +64,32 @@ class GameSelectionOverlay extends PositionComponent {
         ..lineTo(arrow.$3.x, arrow.$3.y)
         ..close();
       canvas.drawPath(path, paint);
+    }
+  }
+
+  @override
+  void onTapUp(TapUpEvent event) {
+    if (_selectedTileId == null || _legalDirections.isEmpty) {
+      return;
+    }
+    final local = event.localPosition;
+    final selected = boardComponent.tileComponentFor(_selectedTileId!);
+    if (selected == null) {
+      return;
+    }
+    final center = selected.position + Vector2.all(tileSizePx / 2);
+    final dx = local.x - center.x;
+    final dy = local.y - center.y;
+
+    Direction? tapped;
+    if (dx.abs() > dy.abs()) {
+      tapped = dx > 0 ? Direction.right : Direction.left;
+    } else if (dy.abs() > 8) {
+      tapped = dy > 0 ? Direction.down : Direction.up;
+    }
+
+    if (tapped != null && _legalDirections.contains(tapped)) {
+      onDirectionTapped?.call(tapped);
     }
   }
 

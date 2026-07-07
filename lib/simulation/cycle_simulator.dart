@@ -187,10 +187,8 @@ class CycleSimulator {
       working = working.withTile(current);
     }
 
-    final modifierCell = working.tileAt(row, col);
-    if (modifierCell != null &&
-        modifierCell.id != current.id &&
-        _isModifier(modifierCell.type)) {
+    final modifierCell = working.backgroundTileAt(row, col);
+    if (modifierCell != null && _isModifier(modifierCell.type)) {
       final modifierResult = _modifierProcessor.apply(
         board: working,
         tile: current,

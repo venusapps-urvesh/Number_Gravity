@@ -13,7 +13,7 @@ class PortalProcessor {
     required int row,
     required int col,
   }) {
-    final cell = board.tileAt(row, col);
+    final cell = board.backgroundTileAt(row, col);
     if (cell == null || cell.type != TileType.portal) {
       return PortalResult.unchanged(tile, row, col);
     }

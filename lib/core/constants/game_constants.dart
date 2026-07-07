@@ -48,6 +48,14 @@ const int coinsPerStar1 = 5;
 const int coinsPerStar2 = 15;
 const int coinsPerStar3 = 30;
 
+/// Coin sinks for in-level helpers (Section 13.3).
+const int coinCostUndoAfterFree = 10;
+const int coinCostRedo = 5;
+const int coinCostHintTier1 = 20;
+const int coinCostHintTier2 = 40;
+const int coinCostHintTier3 = 80;
+const int freeUndosPerLevel = 1;
+
 /// Animation timings in milliseconds (Section 11).
 const int animationCycleStepMinMs = 150;
 const int animationCycleStepMaxMs = 250;

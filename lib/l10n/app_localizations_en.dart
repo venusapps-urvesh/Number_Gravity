@@ -445,4 +445,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get howToPlayStart => 'Start Level 1';
+
+  @override
+  String objectivePosition(String tileId) {
+    return 'Move tile $tileId to the gold star';
+  }
+
+  @override
+  String objectiveSequence(String sequence) {
+    return 'Arrange tiles: $sequence';
+  }
+
+  @override
+  String objectiveSum(int target) {
+    return 'Make selected tiles sum to $target';
+  }
+
+  @override
+  String objectiveBalance(int target) {
+    return 'Balance all region tiles to $target';
+  }
+
+  @override
+  String get objectiveCollection => 'Route every tile to its goal';
+
+  @override
+  String get objectiveChain => 'Land all chain tiles on goal cells';
+
+  @override
+  String worldMechanic(String mechanic) {
+    return 'New mechanic: $mechanic';
+  }
+
+  @override
+  String get letsPlay => 'Let\'s play';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String helperCostLabel(int cost, int balance) {
+    return 'Cost: $cost coins · Balance: $balance';
+  }
+
+  @override
+  String get undoCostFree => 'Free';
+
+  @override
+  String undoCostCoins(int cost) {
+    return '$cost coins';
+  }
+
+  @override
+  String get hintTier1Title => 'Which tile';
+
+  @override
+  String get hintTier1Cost => '20 coins';
+
+  @override
+  String get hintTier2Title => 'Direction';
+
+  @override
+  String get hintTier2Cost => '40 coins';
+
+  @override
+  String get hintTier3Title => 'Full move';
+
+  @override
+  String get hintTier3Cost => '80 coins';
+
+  @override
+  String get hintUnavailable => 'No hint available for this position';
+
+  @override
+  String get notEnoughCoins => 'Not enough coins';
+
+  @override
+  String get movesOverPar => 'Over par — fewer moves earn more stars';
 }

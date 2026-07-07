@@ -14,7 +14,7 @@ class ModifierProcessor {
     required int row,
     required int col,
   }) {
-    final modifier = board.tileAt(row, col);
+    final modifier = board.backgroundTileAt(row, col);
     if (modifier == null || tile.type != TileType.number) {
       return ModifierResult.unchanged(tile);
     }

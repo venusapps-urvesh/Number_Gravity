@@ -9,12 +9,14 @@ class NGStarRating extends StatelessWidget {
     this.maxStars = 3,
     this.size = 48,
     this.spacing = 8,
+    this.color,
   });
 
   final int stars;
   final int maxStars;
   final double size;
   final double spacing;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class NGStarRating extends StatelessWidget {
             earned ? Icons.star_rounded : Icons.star_outline_rounded,
             size: size,
             color: earned
-                ? AppColors.goal
+                ? (color ?? AppColors.goal)
                 : (isDark ? AppColors.neutral600 : AppColors.neutral300),
           ),
         );

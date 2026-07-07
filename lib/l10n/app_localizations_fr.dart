@@ -448,4 +448,85 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get howToPlayStart => 'Commencer le Niveau 1';
+
+  @override
+  String objectivePosition(String tileId) {
+    return 'Placez la tuile $tileId sur l\'étoile dorée';
+  }
+
+  @override
+  String objectiveSequence(String sequence) {
+    return 'Alignez les tuiles : $sequence';
+  }
+
+  @override
+  String objectiveSum(int target) {
+    return 'Les tuiles doivent totaliser $target';
+  }
+
+  @override
+  String objectiveBalance(int target) {
+    return 'Équilibrez les tuiles de la région à $target';
+  }
+
+  @override
+  String get objectiveCollection => 'Amenez chaque tuile à son objectif';
+
+  @override
+  String get objectiveChain =>
+      'Placez toutes les tuiles de la chaîne sur des objectifs';
+
+  @override
+  String worldMechanic(String mechanic) {
+    return 'Nouvelle mécanique : $mechanic';
+  }
+
+  @override
+  String get letsPlay => 'Jouons';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String helperCostLabel(int cost, int balance) {
+    return 'Coût : $cost pièces · Solde : $balance';
+  }
+
+  @override
+  String get undoCostFree => 'Gratuit';
+
+  @override
+  String undoCostCoins(int cost) {
+    return '$cost pièces';
+  }
+
+  @override
+  String get hintTier1Title => 'Quelle tuile';
+
+  @override
+  String get hintTier1Cost => '20 pièces';
+
+  @override
+  String get hintTier2Title => 'Direction';
+
+  @override
+  String get hintTier2Cost => '40 pièces';
+
+  @override
+  String get hintTier3Title => 'Coup complet';
+
+  @override
+  String get hintTier3Cost => '80 pièces';
+
+  @override
+  String get hintUnavailable => 'Aucun indice disponible';
+
+  @override
+  String get notEnoughCoins => 'Pièces insuffisantes';
+
+  @override
+  String get movesOverPar => 'Au-dessus du par';
 }

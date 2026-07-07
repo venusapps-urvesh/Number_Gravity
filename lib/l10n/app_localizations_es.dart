@@ -447,4 +447,84 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get howToPlayStart => 'Empezar Nivel 1';
+
+  @override
+  String objectivePosition(String tileId) {
+    return 'Coloca la ficha $tileId en la estrella dorada';
+  }
+
+  @override
+  String objectiveSequence(String sequence) {
+    return 'Ordena las fichas: $sequence';
+  }
+
+  @override
+  String objectiveSum(int target) {
+    return 'Las fichas deben sumar $target';
+  }
+
+  @override
+  String objectiveBalance(int target) {
+    return 'Iguala las fichas de la región a $target';
+  }
+
+  @override
+  String get objectiveCollection => 'Lleva cada ficha a su meta';
+
+  @override
+  String get objectiveChain => 'Coloca todas las fichas de la cadena en metas';
+
+  @override
+  String worldMechanic(String mechanic) {
+    return 'Nueva mecánica: $mechanic';
+  }
+
+  @override
+  String get letsPlay => 'Juguemos';
+
+  @override
+  String get confirm => 'Confirmar';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String helperCostLabel(int cost, int balance) {
+    return 'Costo: $cost monedas · Saldo: $balance';
+  }
+
+  @override
+  String get undoCostFree => 'Gratis';
+
+  @override
+  String undoCostCoins(int cost) {
+    return '$cost monedas';
+  }
+
+  @override
+  String get hintTier1Title => 'Qué ficha';
+
+  @override
+  String get hintTier1Cost => '20 monedas';
+
+  @override
+  String get hintTier2Title => 'Dirección';
+
+  @override
+  String get hintTier2Cost => '40 monedas';
+
+  @override
+  String get hintTier3Title => 'Movimiento completo';
+
+  @override
+  String get hintTier3Cost => '80 monedas';
+
+  @override
+  String get hintUnavailable => 'No hay pista disponible';
+
+  @override
+  String get notEnoughCoins => 'Monedas insuficientes';
+
+  @override
+  String get movesOverPar => 'Por encima del par';
 }

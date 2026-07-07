@@ -193,5 +193,65 @@
   "howToPlayStarsBody": "Finish in the minimum moves for 3 stars. Up to two extra moves still earns 2 stars. Fewer moves mean more coins and better rankings.",
   "howToPlayControlsTitle": "Undo & Hint",
   "howToPlayControlsBody": "Made a mistake? Tap Undo to rewind one move. Stuck? Use Hint to see a suggested direction. Hints are limited — use them wisely.",
-  "howToPlayStart": "Start Level 1"
+  "howToPlayStart": "Start Level 1",
+
+  "objectivePosition": "Move tile {tileId} to the gold star",
+  "@objectivePosition": {
+    "placeholders": {
+      "tileId": {"type": "String"}
+    }
+  },
+  "objectiveSequence": "Arrange tiles: {sequence}",
+  "@objectiveSequence": {
+    "placeholders": {
+      "sequence": {"type": "String"}
+    }
+  },
+  "objectiveSum": "Make selected tiles sum to {target}",
+  "@objectiveSum": {
+    "placeholders": {
+      "target": {"type": "int"}
+    }
+  },
+  "objectiveBalance": "Balance all region tiles to {target}",
+  "@objectiveBalance": {
+    "placeholders": {
+      "target": {"type": "int"}
+    }
+  },
+  "objectiveCollection": "Route every tile to its goal",
+  "objectiveChain": "Land all chain tiles on goal cells",
+  "worldMechanic": "New mechanic: {mechanic}",
+  "@worldMechanic": {
+    "placeholders": {
+      "mechanic": {"type": "String"}
+    }
+  },
+  "letsPlay": "Let's play",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "redo": "Redo",
+  "helperCostLabel": "Cost: {cost} coins · Balance: {balance}",
+  "@helperCostLabel": {
+    "placeholders": {
+      "cost": {"type": "int"},
+      "balance": {"type": "int"}
+    }
+  },
+  "undoCostFree": "Free",
+  "undoCostCoins": "{cost} coins",
+  "@undoCostCoins": {
+    "placeholders": {
+      "cost": {"type": "int"}
+    }
+  },
+  "hintTier1Title": "Which tile",
+  "hintTier1Cost": "20 coins",
+  "hintTier2Title": "Direction",
+  "hintTier2Cost": "40 coins",
+  "hintTier3Title": "Full move",
+  "hintTier3Cost": "80 coins",
+  "hintUnavailable": "No hint available for this position",
+  "notEnoughCoins": "Not enough coins",
+  "movesOverPar": "Over par — fewer moves earn more stars"
 }

@@ -7,17 +7,25 @@ class GameActionBar extends StatelessWidget {
   const GameActionBar({
     required this.onUndo,
     required this.onHint,
+    required this.onRedo,
+    required this.onRestart,
     super.key,
     this.canUndo = false,
+    this.canRedo = false,
     this.canHint = true,
-    this.hintCount = 0,
+    this.undoCostLabel,
+    this.redoCostLabel,
   });
 
   final VoidCallback onUndo;
   final VoidCallback onHint;
+  final VoidCallback onRedo;
+  final VoidCallback onRestart;
   final bool canUndo;
+  final bool canRedo;
   final bool canHint;
-  final int hintCount;
+  final String? undoCostLabel;
+  final String? redoCostLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +35,27 @@ class GameActionBar extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       child: Row(
         children: [
+          _ActionPill(
+            icon: Icons.refresh_rounded,
+            label: l10n.restart,
+            onPressed: onRestart,
+          ),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: _ActionPill(
               icon: Icons.undo_rounded,
               label: l10n.undo,
+              subtitle: undoCostLabel,
               onPressed: canUndo ? onUndo : null,
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: _ActionPill(
+              icon: Icons.redo_rounded,
+              label: l10n.redo,
+              subtitle: redoCostLabel,
+              onPressed: canRedo ? onRedo : null,
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -40,7 +64,6 @@ class GameActionBar extends StatelessWidget {
               icon: Icons.lightbulb_outline_rounded,
               label: l10n.hint,
               onPressed: canHint ? onHint : null,
-              badge: hintCount > 0 ? hintCount : null,
             ),
           ),
         ],
@@ -54,13 +77,13 @@ class _ActionPill extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onPressed,
-    this.badge,
+    this.subtitle,
   });
 
   final IconData icon;
   final String label;
   final VoidCallback? onPressed;
-  final int? badge;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -85,49 +108,37 @@ class _ActionPill extends StatelessWidget {
             shape: StadiumBorder(side: BorderSide(color: border)),
             color: surface,
           ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Opacity(
-                opacity: enabled ? 1 : 0.4,
-                child: Row(
+          child: Opacity(
+            opacity: enabled ? 1 : 0.4,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(icon, color: enabled ? primary : muted, size: 22),
-                    const SizedBox(width: 8),
-                    Text(
-                      label,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: enabled ? null : muted,
+                    Icon(icon, color: enabled ? primary : muted, size: 20),
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        label,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: enabled ? null : muted,
+                            ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              if (badge != null)
-                Positioned(
-                  top: 6,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 6,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      '$badge',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                if (subtitle != null)
+                  Text(
+                    subtitle!,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: muted,
+                        ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

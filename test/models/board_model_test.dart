@@ -37,6 +37,31 @@ void main() {
       expect(board.tileAt(0, 1), isNull);
     });
 
+    test('backgroundTileAt finds non-movable under movable', () {
+      final layered = BoardModel(
+        rows: 4,
+        cols: 4,
+        tiles: [
+          const TileModel(
+            id: 't1',
+            type: TileType.number,
+            value: 3,
+            row: 1,
+            col: 1,
+          ),
+          const TileModel(
+            id: 'p1',
+            type: TileType.portal,
+            value: 0,
+            row: 1,
+            col: 1,
+            isLocked: true,
+          ),
+        ],
+      );
+      expect(layered.backgroundTileAt(1, 1)?.type, TileType.portal);
+    });
+
     test('toFlatHash is deterministic', () {
       expect(board.toFlatHash(), board.toFlatHash());
     });

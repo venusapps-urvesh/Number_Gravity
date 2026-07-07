@@ -31,6 +31,27 @@ class BoardModel with _$BoardModel {
     return background;
   }
 
+  /// Non-movable tile at a cell (portal, modifier, switch, wall, goal).
+  TileModel? backgroundTileAt(int row, int col) {
+    for (final tile in tiles) {
+      if (tile.row == row && tile.col == col && !tile.isMovable) {
+        return tile;
+      }
+    }
+    return null;
+  }
+
+  /// All tiles stacked at a cell (movable + background).
+  List<TileModel> tilesAt(int row, int col) {
+    final result = <TileModel>[];
+    for (final tile in tiles) {
+      if (tile.row == row && tile.col == col) {
+        result.add(tile);
+      }
+    }
+    return result;
+  }
+
   TileModel? tileById(String id) {
     for (final tile in tiles) {
       if (tile.id == id) {

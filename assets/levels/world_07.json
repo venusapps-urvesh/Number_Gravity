@@ -36,6 +36,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 3,
@@ -72,6 +91,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -118,6 +145,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 5,
@@ -154,6 +200,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -200,6 +254,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 7,
@@ -236,6 +309,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -282,6 +363,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 4,
@@ -318,6 +418,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -364,6 +472,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 6,
@@ -400,6 +527,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -446,6 +581,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 3,
@@ -482,6 +636,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -528,6 +690,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 5,
@@ -564,6 +745,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -610,6 +799,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 7,
@@ -646,6 +854,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -692,6 +908,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 4,
@@ -728,6 +963,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -774,6 +1017,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 6,
@@ -810,6 +1072,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -856,6 +1126,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 3,
@@ -892,6 +1181,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -938,6 +1235,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 5,
@@ -974,6 +1290,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "f1",
+          "type": "freeze",
+          "value": 3,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -1020,6 +1344,25 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 5,
+          "isLocked": true,
+          "switchId": "sw1"
+        },
+        {
+          "id": "dr1",
+          "type": "door",
+          "value": 0,
+          "row": 3,
+          "col": 3,
+          "isLocked": true,
+          "doorId": "sw1",
+          "isDoorOpen": false
         }
       ],
       "minimumMoves": 7,

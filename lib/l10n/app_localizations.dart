@@ -903,6 +903,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Start Level 1'**
   String get howToPlayStart;
+
+  /// No description provided for @objectivePosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Move tile {tileId} to the gold star'**
+  String objectivePosition(String tileId);
+
+  /// No description provided for @objectiveSequence.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrange tiles: {sequence}'**
+  String objectiveSequence(String sequence);
+
+  /// No description provided for @objectiveSum.
+  ///
+  /// In en, this message translates to:
+  /// **'Make selected tiles sum to {target}'**
+  String objectiveSum(int target);
+
+  /// No description provided for @objectiveBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance all region tiles to {target}'**
+  String objectiveBalance(int target);
+
+  /// No description provided for @objectiveCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Route every tile to its goal'**
+  String get objectiveCollection;
+
+  /// No description provided for @objectiveChain.
+  ///
+  /// In en, this message translates to:
+  /// **'Land all chain tiles on goal cells'**
+  String get objectiveChain;
+
+  /// No description provided for @worldMechanic.
+  ///
+  /// In en, this message translates to:
+  /// **'New mechanic: {mechanic}'**
+  String worldMechanic(String mechanic);
+
+  /// No description provided for @letsPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s play'**
+  String get letsPlay;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @helperCostLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost: {cost} coins · Balance: {balance}'**
+  String helperCostLabel(int cost, int balance);
+
+  /// No description provided for @undoCostFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get undoCostFree;
+
+  /// No description provided for @undoCostCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'{cost} coins'**
+  String undoCostCoins(int cost);
+
+  /// No description provided for @hintTier1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Which tile'**
+  String get hintTier1Title;
+
+  /// No description provided for @hintTier1Cost.
+  ///
+  /// In en, this message translates to:
+  /// **'20 coins'**
+  String get hintTier1Cost;
+
+  /// No description provided for @hintTier2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get hintTier2Title;
+
+  /// No description provided for @hintTier2Cost.
+  ///
+  /// In en, this message translates to:
+  /// **'40 coins'**
+  String get hintTier2Cost;
+
+  /// No description provided for @hintTier3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Full move'**
+  String get hintTier3Title;
+
+  /// No description provided for @hintTier3Cost.
+  ///
+  /// In en, this message translates to:
+  /// **'80 coins'**
+  String get hintTier3Cost;
+
+  /// No description provided for @hintUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No hint available for this position'**
+  String get hintUnavailable;
+
+  /// No description provided for @notEnoughCoins.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough coins'**
+  String get notEnoughCoins;
+
+  /// No description provided for @movesOverPar.
+  ///
+  /// In en, this message translates to:
+  /// **'Over par — fewer moves earn more stars'**
+  String get movesOverPar;
 }
 
 class _AppLocalizationsDelegate

@@ -24,6 +24,7 @@ class ForceLineComponent extends Component {
         continue;
       }
       final center = boardComponent.cellCenter(target.row, target.col);
+      final length = (vector.force.clamp(0.5, 5.0) * 8) + 12;
       final paint = Paint()
         ..color = (vector.isRepulsion ? AppColors.negative : AppColors.positive)
             .withValues(alpha: 0.7)
@@ -31,10 +32,10 @@ class ForceLineComponent extends Component {
         ..style = PaintingStyle.stroke;
 
       final end = switch (vector.direction) {
-        Direction.up => center + Vector2(0, -24),
-        Direction.down => center + Vector2(0, 24),
-        Direction.left => center + Vector2(-24, 0),
-        Direction.right => center + Vector2(24, 0),
+        Direction.up => center + Vector2(0, -length),
+        Direction.down => center + Vector2(0, length),
+        Direction.left => center + Vector2(-length, 0),
+        Direction.right => center + Vector2(length, 0),
       };
 
       canvas.drawLine(center.toOffset(), end.toOffset(), paint);

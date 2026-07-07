@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../core/constants/game_constants.dart';
 import '../../l10n/app_localizations.dart';
 import '../common/ng_coin_badge.dart';
 import '../common/ng_icon_button.dart';
@@ -13,6 +14,7 @@ class GameHud extends StatelessWidget {
     required this.onPause,
     super.key,
     this.coinAmount = 0,
+    this.starChip,
   });
 
   final int levelId;
@@ -20,6 +22,7 @@ class GameHud extends StatelessWidget {
   final int? optimalMoves;
   final VoidCallback onPause;
   final int coinAmount;
+  final Widget? starChip;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,8 @@ class GameHud extends StatelessWidget {
     final border = AppColors.surfaceBorder(brightness);
     final muted = AppColors.onSurfaceMuted(brightness);
     final optimal = optimalMoves;
+    final overPar = optimal != null && movesUsed > optimal + starThresholdTwoStars;
+    final moveColor = overPar ? AppColors.negative : muted;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -85,8 +90,12 @@ class GameHud extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(
                 context,
-              ).textTheme.bodyMedium?.copyWith(color: muted),
+              ).textTheme.bodyMedium?.copyWith(
+                    color: moveColor,
+                    fontWeight: overPar ? FontWeight.w700 : FontWeight.normal,
+                  ),
             ),
+            if (starChip != null) starChip!,
           ],
         ],
       ),

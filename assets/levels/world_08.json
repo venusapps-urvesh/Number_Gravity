@@ -36,6 +36,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -73,6 +91,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -118,6 +145,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 5,
@@ -200,6 +236,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,
@@ -237,6 +291,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 3,
@@ -282,6 +345,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 4,
@@ -364,6 +436,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 6,
@@ -401,6 +491,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 7,
@@ -446,6 +545,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 3,
@@ -528,6 +636,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 5,
@@ -565,6 +691,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 6,
@@ -610,6 +745,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 7,
@@ -692,6 +836,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 4,
@@ -729,6 +891,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 5,
@@ -774,6 +945,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 6,
@@ -827,10 +1007,10 @@
       "rows": 8,
       "cols": 8,
       "objective": {
-        "type": "position",
-        "tileId": "t1",
-        "goalRow": 7,
-        "goalCol": 7
+        "type": "chain",
+        "subObjectiveIds": [
+          "t1"
+        ]
       },
       "tiles": [
         {
@@ -856,6 +1036,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 3,
@@ -872,10 +1070,10 @@
       "rows": 8,
       "cols": 8,
       "objective": {
-        "type": "position",
-        "tileId": "t1",
-        "goalRow": 7,
-        "goalCol": 7
+        "type": "chain",
+        "subObjectiveIds": [
+          "t1"
+        ]
       },
       "tiles": [
         {
@@ -893,6 +1091,15 @@
           "row": 7,
           "col": 7,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 2,
+          "col": 2,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -909,10 +1116,10 @@
       "rows": 8,
       "cols": 8,
       "objective": {
-        "type": "position",
-        "tileId": "t1",
-        "goalRow": 7,
-        "goalCol": 7
+        "type": "chain",
+        "subObjectiveIds": [
+          "t1"
+        ]
       },
       "tiles": [
         {
@@ -938,6 +1145,15 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "s1",
+          "type": "switchTile",
+          "value": 0,
+          "row": 1,
+          "col": 6,
+          "isLocked": true,
+          "switchId": "sw1"
         }
       ],
       "minimumMoves": 5,
@@ -954,10 +1170,10 @@
       "rows": 8,
       "cols": 8,
       "objective": {
-        "type": "position",
-        "tileId": "t1",
-        "goalRow": 7,
-        "goalCol": 7
+        "type": "chain",
+        "subObjectiveIds": [
+          "t1"
+        ]
       },
       "tiles": [
         {
@@ -991,10 +1207,10 @@
       "rows": 8,
       "cols": 8,
       "objective": {
-        "type": "position",
-        "tileId": "t1",
-        "goalRow": 7,
-        "goalCol": 7
+        "type": "chain",
+        "subObjectiveIds": [
+          "t1"
+        ]
       },
       "tiles": [
         {
@@ -1020,6 +1236,24 @@
           "row": 4,
           "col": 4,
           "isLocked": true
+        },
+        {
+          "id": "p1",
+          "type": "portal",
+          "value": 0,
+          "row": 1,
+          "col": 1,
+          "isLocked": true,
+          "portalPairId": "p2"
+        },
+        {
+          "id": "p2",
+          "type": "portal",
+          "value": 0,
+          "row": 6,
+          "col": 2,
+          "isLocked": true,
+          "portalPairId": "p1"
         }
       ],
       "minimumMoves": 7,

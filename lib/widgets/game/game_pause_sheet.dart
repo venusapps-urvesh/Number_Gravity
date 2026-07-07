@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../app/router/routes.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../common/ng_button.dart';
@@ -9,6 +11,11 @@ Future<void> showGamePauseSheet(
   required VoidCallback onResume,
   required VoidCallback onRestart,
   required VoidCallback onLevels,
+  bool colorBlindEnabled = false,
+  bool reduceMotionEnabled = false,
+  ValueChanged<bool>? onColorBlindChanged,
+  ValueChanged<bool>? onReduceMotionChanged,
+  VoidCallback? onHowToPlay,
 }) {
   final l10n = AppLocalizations.of(context);
 
@@ -53,6 +60,22 @@ Future<void> showGamePauseSheet(
                         fontWeight: FontWeight.w800,
                       ),
                 ),
+                if (onColorBlindChanged != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(l10n.colorBlindMode),
+                    value: colorBlindEnabled,
+                    onChanged: onColorBlindChanged,
+                  ),
+                ],
+                if (onReduceMotionChanged != null)
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(l10n.reduceMotion),
+                    value: reduceMotionEnabled,
+                    onChanged: onReduceMotionChanged,
+                  ),
                 const SizedBox(height: AppSpacing.md),
                 NGButton(
                   label: l10n.resume,
@@ -73,6 +96,19 @@ Future<void> showGamePauseSheet(
                     onRestart();
                   },
                 ),
+                if (onHowToPlay != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  NGButton(
+                    label: l10n.howToPlay,
+                    icon: Icons.help_outline_rounded,
+                    variant: NGButtonVariant.secondary,
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                      onHowToPlay();
+                      context.push(AppRoutes.howToPlay);
+                    },
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.sm),
                 NGButton(
                   label: l10n.levels,
@@ -97,6 +133,7 @@ Future<void> showGameStuckSheet(
   required VoidCallback onUndo,
   required VoidCallback onRestart,
   required VoidCallback onExit,
+  VoidCallback? onHint,
 }) {
   final l10n = AppLocalizations.of(context);
 
@@ -152,10 +189,22 @@ Future<void> showGameStuckSheet(
                       ?.copyWith(color: muted),
                 ),
                 const SizedBox(height: AppSpacing.md),
+                if (onHint != null) ...[
+                  NGButton(
+                    label: l10n.hint,
+                    icon: Icons.lightbulb_outline_rounded,
+                    variant: NGButtonVariant.accent,
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                      onHint();
+                    },
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                ],
                 NGButton(
                   label: l10n.undo,
                   icon: Icons.undo_rounded,
-                  variant: NGButtonVariant.accent,
+                  variant: NGButtonVariant.secondary,
                   onPressed: () {
                     Navigator.of(dialogContext).pop();
                     onUndo();

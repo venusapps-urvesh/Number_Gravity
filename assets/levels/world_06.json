@@ -36,6 +36,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 3,
@@ -73,6 +82,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -118,6 +136,14 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true
         }
       ],
       "minimumMoves": 5,
@@ -155,6 +181,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 6,
@@ -200,6 +235,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 7,
@@ -236,6 +280,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -282,6 +334,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -319,6 +380,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 5,
@@ -364,6 +434,14 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true
         }
       ],
       "minimumMoves": 6,
@@ -401,6 +479,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 7,
@@ -446,6 +533,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 3,
@@ -482,6 +578,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -528,6 +632,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 5,
@@ -565,6 +678,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 6,
@@ -610,6 +732,14 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true
         }
       ],
       "minimumMoves": 7,
@@ -647,6 +777,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 3,
@@ -692,6 +831,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -728,6 +876,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -774,6 +930,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 6,
@@ -811,6 +976,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 7,
@@ -856,6 +1030,14 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true
         }
       ],
       "minimumMoves": 3,
@@ -893,6 +1075,15 @@
           "row": 6,
           "col": 6,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 4,
@@ -938,6 +1129,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "d1",
+          "type": "divider",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 5,
@@ -974,6 +1174,14 @@
           "value": 0,
           "row": 6,
           "col": 6,
+          "isLocked": true
+        },
+        {
+          "id": "i1",
+          "type": "inverter",
+          "value": 0,
+          "row": 3,
+          "col": 1,
           "isLocked": true
         }
       ],
@@ -1020,6 +1228,15 @@
           "row": 3,
           "col": 3,
           "isLocked": true
+        },
+        {
+          "id": "m1",
+          "type": "multiplier",
+          "value": 0,
+          "row": 3,
+          "col": 1,
+          "isLocked": true,
+          "modifierFactor": 2
         }
       ],
       "minimumMoves": 7,
