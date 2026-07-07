@@ -29,6 +29,8 @@
   "restart": "Recommencer",
   "pause": "Pause",
   "resume": "Reprendre",
+  "stuckTitle": "Plus de coups",
+  "stuckBody": "Le plateau n'a plus de coups valides. Essayez d'annuler ou de recommencer.",
   "swipeToMove": "Glissez pour déplacer",
   "levelTitle": "Niveau {id}",
   "@levelTitle": {

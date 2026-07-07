@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../models/level/level_model.dart';
 import '../../providers/providers.dart';
 import '../../screens/achievements/achievements_screen.dart';
 import '../../screens/daily/daily_puzzle_screen.dart';
@@ -73,6 +74,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.daily,
         builder: (context, state) => DailyPuzzleScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.dailyPlay,
+        builder: (context, state) {
+          final level = state.extra as LevelModel?;
+          if (level == null) {
+            return const LoadingScreen();
+          }
+          return GameplayScreen(level: level);
+        },
       ),
       GoRoute(
         path: AppRoutes.settings,

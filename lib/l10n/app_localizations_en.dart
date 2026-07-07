@@ -96,6 +96,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resume => 'Resume';
 
   @override
+  String get stuckTitle => 'No moves left';
+
+  @override
+  String get stuckBody => 'The board has no valid moves. Try undo or restart.';
+
+  @override
   String get swipeToMove => 'Swipe to move';
 
   @override

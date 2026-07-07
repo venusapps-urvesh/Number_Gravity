@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import '../app/router/navigation.dart';
 import '../app/router/routes.dart';
 import '../core/constants/game_constants.dart';
+import '../levels/world_config.dart';
 import '../core/utils/responsive.dart';
 import '../l10n/app_localizations.dart';
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
 import '../models/move.dart';
 import '../models/replay/move_record.dart';
-import '../providers/game_session_provider.dart';
 import '../providers/providers.dart';
 import '../simulation/board_applier.dart';
 import '../widgets/game/game_action_bar.dart';
@@ -43,6 +43,19 @@ class _NumberGravityGameWidgetState
   int _movesUsed = 0;
   int _hintsRemaining = 2;
   bool _handlingVictory = false;
+  bool _handlingStuck = false;
+  bool _levelStartRecorded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_levelStartRecorded && mounted) {
+        _levelStartRecorded = true;
+        ref.read(statisticsRepositoryProvider).recordLevelStart();
+      }
+    });
+  }
 
   @override
   void didUpdateWidget(covariant NumberGravityGameWidget oldWidget) {
@@ -52,6 +65,14 @@ class _NumberGravityGameWidgetState
       _movesUsed = 0;
       _hintsRemaining = 2;
       _handlingVictory = false;
+      _handlingStuck = false;
+      _levelStartRecorded = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_levelStartRecorded && mounted) {
+          _levelStartRecorded = true;
+          ref.read(statisticsRepositoryProvider).recordLevelStart();
+        }
+      });
     }
   }
 
@@ -72,6 +93,7 @@ class _NumberGravityGameWidgetState
         widget.onMoveCommitted?.call(board);
       },
       onLevelWon: _handleLevelWon,
+      onLevelStuck: _handleLevelStuck,
     );
 
     final board = GameWidget(game: _game!);
@@ -139,6 +161,7 @@ class _NumberGravityGameWidgetState
     _game?.commitDirection(direction).then((_) {
       if (mounted) {
         setState(() => _movesUsed = _game?.movesUsed ?? _movesUsed);
+        ref.read(statisticsRepositoryProvider).recordMove();
       }
     });
   }
@@ -154,7 +177,7 @@ class _NumberGravityGameWidgetState
         setState(() => _movesUsed = 0);
       },
       onLevels: () {
-        ngExitPlayToLevels(context, widget.level.world);
+        _exitGameplay();
       },
     ).whenComplete(() => _game?.setPaused(false));
   }
@@ -176,6 +199,47 @@ class _NumberGravityGameWidgetState
     ref.read(statisticsRepositoryProvider).recordHintUsed();
   }
 
+  void _exitGameplay() {
+    if (widget.level.world == 0) {
+      context.go(AppRoutes.daily);
+      return;
+    }
+    ngExitPlayToLevels(context, widget.level.world);
+  }
+
+  void _handleLevelStuck(BoardModel board, int movesUsed) {
+    if (_handlingStuck || !mounted) {
+      return;
+    }
+    _handlingStuck = true;
+
+    showGameStuckSheet(
+      context,
+      onUndo: () {
+        _game?.undo();
+        _game?.clearStuck();
+        setState(() {
+          _movesUsed = _game?.movesUsed ?? 0;
+          _handlingStuck = false;
+        });
+        ref.read(statisticsRepositoryProvider).recordUndo();
+      },
+      onRestart: () {
+        _game?.restart();
+        _game?.clearStuck();
+        setState(() {
+          _movesUsed = 0;
+          _handlingStuck = false;
+        });
+      },
+      onExit: () {
+        _game?.clearStuck();
+        _handlingStuck = false;
+        _exitGameplay();
+      },
+    );
+  }
+
   Future<void> _handleLevelWon(
     BoardModel board,
     int movesUsed,
@@ -190,11 +254,18 @@ class _NumberGravityGameWidgetState
       movesUsed: movesUsed,
       minimumMoves: widget.level.minimumMoves,
     );
-    final coinsEarned = switch (stars) {
-      3 => coinsPerStar3,
-      2 => coinsPerStar2,
-      _ => coinsPerStar1,
-    };
+
+    final progressBefore =
+        await ref.read(progressRepositoryProvider).getProgress();
+    final isFirstClear =
+        !(progressBefore.levelProgress[widget.level.id]?.isCompleted ?? false);
+    final coinsEarned = isFirstClear
+        ? switch (stars) {
+            3 => coinsPerStar3,
+            2 => coinsPerStar2,
+            _ => coinsPerStar1,
+          }
+        : 0;
 
     await ref
         .read(progressRepositoryProvider)
@@ -203,12 +274,27 @@ class _NumberGravityGameWidgetState
           stars: stars,
           movesUsed: movesUsed,
         );
+
+    final world = worldForLevel(widget.level.id);
+    if (world != null &&
+        widget.level.id == world.endLevel &&
+        world.id < totalWorlds) {
+      await ref.read(progressRepositoryProvider).unlockWorld(world.id + 1);
+    }
+
     await ref.read(statisticsRepositoryProvider).recordLevelComplete();
 
     final progress = await ref.read(progressRepositoryProvider).getProgress();
-    progress.coins += coinsEarned;
-    progress.gameplayEarnedCoins += coinsEarned;
-    await ref.read(progressRepositoryProvider).saveProgress(progress);
+    if (coinsEarned > 0) {
+      progress.coins += coinsEarned;
+      progress.gameplayEarnedCoins += coinsEarned;
+    }
+    if (widget.level.world == 0) {
+      progress.dailyStreak += 1;
+    }
+    if (coinsEarned > 0 || widget.level.world == 0) {
+      await ref.read(progressRepositoryProvider).saveProgress(progress);
+    }
     ref.invalidate(playerProgressProvider);
 
     final solutionCode = ref

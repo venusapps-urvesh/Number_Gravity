@@ -29,6 +29,8 @@
   "restart": "Reiniciar",
   "pause": "Pausa",
   "resume": "Reanudar",
+  "stuckTitle": "Sin movimientos",
+  "stuckBody": "El tablero no tiene movimientos válidos. Prueba deshacer o reiniciar.",
   "swipeToMove": "Desliza para mover",
   "levelTitle": "Nivel {id}",
   "@levelTitle": {

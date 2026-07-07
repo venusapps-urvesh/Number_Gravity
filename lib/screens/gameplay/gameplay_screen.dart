@@ -3,28 +3,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../game/game_widget.dart';
 import '../../l10n/app_localizations.dart';
+import '../../models/level/level_model.dart';
 import '../../providers/providers.dart';
 import '../../widgets/common/ng_loading.dart';
 import '../../widgets/common/ng_scaffold.dart';
 
 class GameplayScreen extends ConsumerWidget {
   const GameplayScreen({
-    required this.levelId,
+    this.levelId,
+    this.level,
     super.key,
-  });
+  }) : assert(levelId != null || level != null);
 
-  final int levelId;
+  final int? levelId;
+  final LevelModel? level;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final levelFuture = ref.watch(_levelProvider(levelId));
+
+    if (level != null) {
+      return NGScaffold(
+        body: NumberGravityGameWidget(level: level!),
+      );
+    }
+
+    final levelFuture = ref.watch(_levelProvider(levelId!));
 
     return NGScaffold(
       body: levelFuture.when(
         loading: () => NGLoading(message: l10n.loading),
         error: (error, _) => Center(child: Text(error.toString())),
-        data: (level) => NumberGravityGameWidget(level: level),
+        data: (loadedLevel) => NumberGravityGameWidget(level: loadedLevel),
       ),
     );
   }

@@ -29,6 +29,8 @@
   "restart": "Restart",
   "pause": "Pause",
   "resume": "Resume",
+  "stuckTitle": "No moves left",
+  "stuckBody": "The board has no valid moves. Try undo or restart.",
   "swipeToMove": "Swipe to move",
   "levelTitle": "Level {id}",
   "@levelTitle": {

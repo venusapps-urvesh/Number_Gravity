@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../levels/world_config.dart';
+import '../../models/level/level_model.dart';
 import 'routes.dart';
 
 /// Back navigation that follows the app's screen hierarchy instead of the
@@ -36,6 +37,10 @@ void ngPushToPlay(BuildContext context, int levelId) {
   context.push(AppRoutes.playPath(levelId));
 }
 
+void ngPushToDailyPlay(BuildContext context, LevelModel level) {
+  context.push(AppRoutes.dailyPlay, extra: level);
+}
+
 void ngGoToPlay(BuildContext context, int levelId) {
   context.go(AppRoutes.playPath(levelId));
 }
@@ -60,6 +65,10 @@ String _parentRouteFor(String location) {
 
   if (location.startsWith('${AppRoutes.levels}/')) {
     return AppRoutes.worlds;
+  }
+
+  if (location == AppRoutes.dailyPlay) {
+    return AppRoutes.daily;
   }
 
   if (location.startsWith('${AppRoutes.play}/')) {

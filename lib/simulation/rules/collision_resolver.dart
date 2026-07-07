@@ -1,5 +1,4 @@
 import '../../core/constants/game_constants.dart';
-import '../../models/board_model.dart';
 import '../../models/simulation/tile_action.dart';
 import '../../models/tile_model.dart';
 

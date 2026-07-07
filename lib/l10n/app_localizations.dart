@@ -274,6 +274,18 @@ abstract class AppLocalizations {
   /// **'Resume'**
   String get resume;
 
+  /// No description provided for @stuckTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No moves left'**
+  String get stuckTitle;
+
+  /// No description provided for @stuckBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The board has no valid moves. Try undo or restart.'**
+  String get stuckBody;
+
   /// No description provided for @swipeToMove.
   ///
   /// In en, this message translates to:

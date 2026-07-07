@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
-import '../../providers/game_session_provider.dart';
 import '../common/ng_coin_badge.dart';
 import '../common/ng_icon_button.dart';
 
@@ -21,20 +20,6 @@ class GameHud extends StatelessWidget {
   final int? optimalMoves;
   final VoidCallback onPause;
   final int coinAmount;
-
-  factory GameHud.fromSession({
-    required GameSessionState session,
-    required VoidCallback onPause,
-    int coinAmount = 0,
-  }) {
-    return GameHud(
-      levelId: session.level.id,
-      movesUsed: session.movesUsed,
-      optimalMoves: session.level.minimumMoves,
-      onPause: onPause,
-      coinAmount: coinAmount,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

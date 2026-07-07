@@ -8,6 +8,7 @@ class AppRoutes {
   static const levels = '/levels';
   static const play = '/play';
   static const daily = '/daily';
+  static const dailyPlay = '/daily/play';
   static const settings = '/settings';
   static const leaderboard = '/leaderboard';
   static const shop = '/shop';

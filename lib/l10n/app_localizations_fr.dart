@@ -96,6 +96,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get resume => 'Reprendre';
 
   @override
+  String get stuckTitle => 'Plus de coups';
+
+  @override
+  String get stuckBody =>
+      'Le plateau n\'a plus de coups valides. Essayez d\'annuler ou de recommencer.';
+
+  @override
   String get swipeToMove => 'Glissez pour déplacer';
 
   @override

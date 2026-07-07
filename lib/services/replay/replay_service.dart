@@ -30,10 +30,11 @@ class ReplayService {
     var run = 0;
 
     void flush() {
-      if (lastDirection == null) {
+      final direction = lastDirection;
+      if (direction == null) {
         return;
       }
-      buffer.write(lastDirection!.shortCode);
+      buffer.write(direction.shortCode);
       if (run > 1) {
         buffer.write(run);
       }

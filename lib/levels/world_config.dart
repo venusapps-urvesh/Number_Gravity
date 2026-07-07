@@ -1,5 +1,5 @@
 import '../core/constants/game_constants.dart';
-import '../models/level/level_model.dart';
+import '../storage/adapters/player_progress.dart';
 
 class WorldConfig {
   const WorldConfig({
@@ -85,3 +85,19 @@ const List<WorldConfig> worldConfigs = [
     endLevel: totalLaunchLevels,
   ),
 ];
+
+WorldConfig? worldForLevel(int levelId) {
+  for (final world in worldConfigs) {
+    if (levelId >= world.startLevel && levelId <= world.endLevel) {
+      return world;
+    }
+  }
+  return null;
+}
+
+bool isLevelUnlocked(PlayerProgress progress, int levelId) {
+  if (levelId <= 1) {
+    return true;
+  }
+  return progress.levelProgress[levelId - 1]?.isCompleted ?? false;
+}

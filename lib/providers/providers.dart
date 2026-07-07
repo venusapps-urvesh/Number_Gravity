@@ -6,6 +6,7 @@ import '../levels/level_repository.dart';
 import '../services/analytics/analytics_service.dart';
 import '../services/firebase/firebase_service.dart';
 import '../services/firebase/firebase_service_stub.dart';
+import '../services/replay/replay_service.dart';
 import '../simulation/board_applier.dart';
 import '../simulation/default_gravity_engine.dart';
 import '../simulation/gravity_engine.dart';
@@ -67,6 +68,10 @@ final simulationServiceProvider = Provider<SimulationService>((ref) {
     engine: ref.watch(gravityEngineProvider),
     applier: ref.watch(boardApplierProvider),
   );
+});
+
+final replayServiceProvider = Provider<ReplayService>((ref) {
+  return ReplayService(engine: ref.watch(gravityEngineProvider));
 });
 
 final themeModeProvider =

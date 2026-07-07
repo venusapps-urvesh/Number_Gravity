@@ -1,6 +1,5 @@
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
-import '../models/objective/objective_model.dart';
 
 class ObjectiveChecker {
   const ObjectiveChecker();

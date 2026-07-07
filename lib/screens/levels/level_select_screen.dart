@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/router/navigation.dart';
+import '../../app/theme/app_colors.dart';
 import '../../core/utils/responsive.dart';
+import '../../levels/world_config.dart';
 import '../../l10n/app_localizations.dart';
 import '../../providers/providers.dart';
 import '../../widgets/common/ng_card.dart';
@@ -55,28 +57,53 @@ class LevelSelectScreen extends ConsumerWidget {
                     final stars = progress?.levelProgress[level.id]?.stars ?? 0;
                     final completed =
                         progress?.levelProgress[level.id]?.isCompleted ?? false;
+                    final unlocked = progress == null ||
+                        isLevelUnlocked(progress, level.id);
 
-                    return NGCard(
-                      padding: const EdgeInsets.all(8),
-                      onTap: () => ngPushToPlay(context, level.id),
-                      borderColor: completed
-                          ? Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.4)
-                          : null,
-                      borderWidth: completed ? 1 : 0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${level.id}',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          if (stars > 0) ...[
-                            const SizedBox(height: 4),
-                            NGStarRating(stars: stars, size: 12, spacing: 0),
+                    return Opacity(
+                      opacity: unlocked ? 1 : 0.5,
+                      child: NGCard(
+                        padding: const EdgeInsets.all(8),
+                        onTap: unlocked
+                            ? () => ngPushToPlay(context, level.id)
+                            : null,
+                        borderColor: completed
+                            ? Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: 0.4)
+                            : null,
+                        borderWidth: completed ? 1 : 0,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${level.id}',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                if (stars > 0) ...[
+                                  const SizedBox(height: 4),
+                                  NGStarRating(
+                                    stars: stars,
+                                    size: 12,
+                                    spacing: 0,
+                                  ),
+                                ],
+                              ],
+                            ),
+                            if (!unlocked)
+                              Icon(
+                                Icons.lock_rounded,
+                                size: 16,
+                                color: AppColors.onSurfaceMuted(
+                                  Theme.of(context).brightness,
+                                ),
+                              ),
                           ],
-                        ],
+                        ),
                       ),
                     );
                   },

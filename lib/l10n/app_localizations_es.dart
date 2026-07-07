@@ -96,6 +96,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get resume => 'Reanudar';
 
   @override
+  String get stuckTitle => 'Sin movimientos';
+
+  @override
+  String get stuckBody =>
+      'El tablero no tiene movimientos válidos. Prueba deshacer o reiniciar.';
+
+  @override
   String get swipeToMove => 'Desliza para mover';
 
   @override

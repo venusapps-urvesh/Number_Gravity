@@ -6,6 +6,7 @@ import '../../l10n/app_localizations.dart';
 import '../../levels/world_config.dart';
 import '../../providers/providers.dart';
 import '../../storage/adapters/player_progress.dart';
+import '../../storage/adapters/statistics_data.dart';
 import '../../widgets/common/ng_card.dart';
 import '../../widgets/common/ng_page_header.dart';
 import '../../widgets/common/ng_responsive_layout.dart';
@@ -40,13 +41,21 @@ final _unlockedProvider = FutureProvider<Set<String>>((ref) async {
   return records.map((r) => r.id).toSet();
 });
 
+final _achievementDataProvider =
+    FutureProvider<({PlayerProgress progress, StatisticsData stats})>((ref) async {
+  await ref.watch(storageInitProvider.future);
+  final progress = await ref.read(progressRepositoryProvider).getProgress();
+  final stats = await ref.read(statisticsRepositoryProvider).getStatistics();
+  return (progress: progress, stats: stats);
+});
+
 class AchievementsScreen extends ConsumerWidget {
   const AchievementsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final progressAsync = ref.watch(playerProgressProvider);
+    final achievementData = ref.watch(_achievementDataProvider);
     final unlocked = ref.watch(_unlockedProvider).value ?? const <String>{};
 
     return NGScaffold(
@@ -54,11 +63,11 @@ class AchievementsScreen extends ConsumerWidget {
         children: [
           NGPageHeader(title: l10n.achievements),
           Expanded(
-            child: progressAsync.when(
+            child: achievementData.when(
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, _) => Center(child: Text('$e')),
-              data: (progress) {
-                final items = _build(l10n, progress);
+              data: (data) {
+                final items = _build(l10n, data.progress, data.stats);
                 final done = items.where((a) => a.isComplete).length;
                 items.sort((a, b) {
                   final aClaimable = a.isComplete && !unlocked.contains(a.id);
@@ -112,7 +121,11 @@ class AchievementsScreen extends ConsumerWidget {
     );
   }
 
-  List<_Achievement> _build(AppLocalizations l10n, PlayerProgress progress) {
+  List<_Achievement> _build(
+    AppLocalizations l10n,
+    PlayerProgress progress,
+    StatisticsData stats,
+  ) {
     final world1 = worldConfigs.first;
     final world1Done = List.generate(
       world1.endLevel - world1.startLevel + 1,
@@ -121,6 +134,8 @@ class AchievementsScreen extends ConsumerWidget {
 
     final threeStar =
         progress.levelProgress.values.where((p) => p.stars >= 3).length;
+    final noHintProgress =
+        (stats.levelsCompleted - stats.hintsUsed).clamp(0, 999);
 
     return [
       _Achievement(
@@ -165,7 +180,7 @@ class AchievementsScreen extends ConsumerWidget {
         description: l10n.achNoHintDesc,
         icon: Icons.psychology_rounded,
         color: AppColors.negative,
-        progress: 0,
+        progress: noHintProgress,
         target: 25,
       ),
       _Achievement(
@@ -174,7 +189,7 @@ class AchievementsScreen extends ConsumerWidget {
         description: l10n.achDailyDesc,
         icon: Icons.calendar_month_rounded,
         color: AppColors.coinGold,
-        progress: 0,
+        progress: progress.dailyStreak,
         target: 30,
       ),
     ];

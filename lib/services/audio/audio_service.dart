@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AudioService {
   bool musicEnabled = true;
   bool sfxEnabled = true;

@@ -78,7 +78,7 @@ class DailyPuzzleScreen extends ConsumerWidget {
                     icon: Icons.play_arrow_rounded,
                     variant: NGButtonVariant.accent,
                     accent: NGButtonAccent.daily,
-                    onPressed: () => ngPushToPlay(context, puzzle.id),
+                    onPressed: () => ngPushToDailyPlay(context, puzzle),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(

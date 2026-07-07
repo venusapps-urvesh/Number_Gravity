@@ -10,6 +10,7 @@ import '../../models/replay/move_record.dart';
 import '../../models/simulation/simulation_result.dart';
 import '../../models/tile_model.dart';
 import '../../simulation/objective_checker.dart';
+import '../../simulation/stuck_detector.dart';
 import 'bridges/simulation_bridge.dart';
 import 'components/board_component.dart';
 import 'components/force_line_component.dart';
@@ -25,6 +26,8 @@ typedef LevelWonCallback =
       List<MoveRecord> moveRecords,
     );
 
+typedef LevelStuckCallback = void Function(BoardModel board, int movesUsed);
+
 class NumberGravityGame extends FlameGame {
   NumberGravityGame({
     required this.bridge,
@@ -32,6 +35,7 @@ class NumberGravityGame extends FlameGame {
     this.colorBlindMode = false,
     this.onMoveCommitted,
     this.onLevelWon,
+    this.onLevelStuck,
   }) : _board = level.board;
 
   final SimulationBridge bridge;
@@ -39,6 +43,7 @@ class NumberGravityGame extends FlameGame {
   final bool colorBlindMode;
   final MoveCommitCallback? onMoveCommitted;
   final LevelWonCallback? onLevelWon;
+  final LevelStuckCallback? onLevelStuck;
 
   BoardModel _board;
   final List<BoardModel> _boardHistory = [];
@@ -50,6 +55,7 @@ class NumberGravityGame extends FlameGame {
   late ForceLineComponent _forceLines;
   bool _animating = false;
   bool _won = false;
+  bool _stuck = false;
   bool _paused = false;
 
   BoardModel get board => _board;
@@ -101,7 +107,7 @@ class NumberGravityGame extends FlameGame {
   }
 
   void _onTileTapped(TileModel tile) {
-    if (_animating || _won || _paused) {
+    if (_animating || _won || _stuck || _paused) {
       return;
     }
     _selectedTileId = tile.id;
@@ -110,7 +116,7 @@ class NumberGravityGame extends FlameGame {
   }
 
   Future<void> commitDirection(Direction direction) async {
-    if (_animating || _won || _paused) {
+    if (_animating || _won || _stuck || _paused) {
       return;
     }
 
@@ -145,6 +151,9 @@ class NumberGravityGame extends FlameGame {
     if (const ObjectiveChecker().isSolved(level, _board)) {
       _won = true;
       onLevelWon?.call(_board, _movesUsed, _moveRecords);
+    } else if (const StuckDetector().isStuck(level, _board)) {
+      _stuck = true;
+      onLevelStuck?.call(_board, _movesUsed);
     }
   }
 
@@ -163,6 +172,8 @@ class NumberGravityGame extends FlameGame {
       return;
     }
 
+    _stuck = false;
+
     _boardHistory.removeLast();
     if (_moveRecords.isNotEmpty) {
       _moveRecords.removeLast();
@@ -176,7 +187,7 @@ class NumberGravityGame extends FlameGame {
   }
 
   bool showHint() {
-    if (_animating || _won || level.solutionMoves.isEmpty) {
+    if (_animating || _won || _stuck || level.solutionMoves.isEmpty) {
       return false;
     }
     if (_movesUsed >= level.solutionMoves.length) {
@@ -210,6 +221,10 @@ class NumberGravityGame extends FlameGame {
     setBoard(level.board);
   }
 
+  void clearStuck() {
+    _stuck = false;
+  }
+
   void setBoard(BoardModel board) {
     _board = board;
     _boardHistory
@@ -218,6 +233,7 @@ class NumberGravityGame extends FlameGame {
     _moveRecords.clear();
     _movesUsed = 0;
     _won = false;
+    _stuck = false;
     _boardComponent.updateBoard(board);
     _selectionOverlay.clear();
     _forceLines.updateVectors(const []);
