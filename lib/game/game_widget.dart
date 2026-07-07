@@ -23,7 +23,6 @@ import '../widgets/game/game_hud.dart';
 import '../widgets/game/helper_cost_sheet.dart';
 import '../widgets/game/level_intro_sheet.dart';
 import '../widgets/game/objective_banner.dart';
-import '../widgets/game/star_progress_chip.dart';
 import '../widgets/game/win_overlay.dart';
 import 'bridges/simulation_bridge.dart';
 import 'game_flow_controller.dart';
@@ -532,16 +531,11 @@ class _GameHudSection extends ConsumerWidget {
     final balance = ref.watch(playerProgressProvider).value?.coins ?? 0;
 
     return GameHud(
-      levelId: level.id,
       movesUsed: session.movesUsed,
       optimalMoves: level.minimumMoves,
       coinAmount: balance,
       showCoins: options.economyEnabled,
       onPause: onPause,
-      starChip: StarProgressChip(
-        movesUsed: session.movesUsed,
-        minimumMoves: level.minimumMoves,
-      ),
     );
   }
 }

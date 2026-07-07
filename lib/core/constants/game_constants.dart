@@ -40,8 +40,9 @@ const int solverDepthCapAdvanced = 80;
 const int solverDepthCapExpert = 150;
 
 /// Star thresholds (Section 7).
-const int starThresholdOptimal = 0;
-const int starThresholdTwoStars = 2;
+/// Keep a small grace window because some level minimums are aspirational.
+const int starThresholdOptimal = 1;
+const int starThresholdTwoStars = 4;
 
 /// Coin rewards on first clear (Section 7) — used in Phase 6+.
 const int coinsPerStar1 = 5;
@@ -86,7 +87,7 @@ int solverDepthCapForTier(String tier) {
 }
 
 int starsForMoves({required int movesUsed, required int minimumMoves}) {
-  if (movesUsed <= minimumMoves) {
+  if (movesUsed <= minimumMoves + starThresholdOptimal) {
     return 3;
   }
   if (movesUsed <= minimumMoves + starThresholdTwoStars) {

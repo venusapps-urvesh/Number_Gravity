@@ -8,23 +8,19 @@ import '../common/ng_icon_button.dart';
 
 class GameHud extends StatelessWidget {
   const GameHud({
-    required this.levelId,
     required this.movesUsed,
     required this.optimalMoves,
     required this.onPause,
     super.key,
     this.coinAmount = 0,
     this.showCoins = true,
-    this.starChip,
   });
 
-  final int levelId;
   final int movesUsed;
   final int? optimalMoves;
   final VoidCallback onPause;
   final int coinAmount;
   final bool showCoins;
-  final Widget? starChip;
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +66,8 @@ class GameHud extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      l10n.levelTitle(levelId),
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
                       l10n.appName,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: muted),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 ),
@@ -97,7 +87,6 @@ class GameHud extends StatelessWidget {
                     fontWeight: overPar ? FontWeight.w700 : FontWeight.normal,
                   ),
             ),
-            ...[starChip].whereType<Widget>(),
           ],
         ],
       ),
