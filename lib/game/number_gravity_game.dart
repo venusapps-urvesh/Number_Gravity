@@ -544,45 +544,79 @@ class NumberGravityGame extends FlameGame {
     final scriptedDirection = _movesUsed < level.solutionMoves.length
         ? DirectionX.fromShortCode(level.solutionMoves[_movesUsed])
         : null;
-    final preferredTileId = _selectedTileId ?? _resolveHintTileId();
-
-    if (scriptedDirection != null) {
-      if (preferredTileId != null) {
-        final preferredMoves = bridge.legalMoves(_board, preferredTileId);
-        if (preferredMoves.any((m) => m.direction == scriptedDirection)) {
-          return Move(tileId: preferredTileId, direction: scriptedDirection);
-        }
-      }
-
-      for (final tile in _board.tiles) {
-        if (!tile.isMovable) {
-          continue;
-        }
-        final legal = bridge.legalMoves(_board, tile.id);
-        if (legal.any((m) => m.direction == scriptedDirection)) {
-          return Move(tileId: tile.id, direction: scriptedDirection);
-        }
-      }
-      return null;
-    }
-
-    if (preferredTileId != null) {
-      final preferredMoves = bridge.legalMoves(_board, preferredTileId);
-      if (preferredMoves.isNotEmpty) {
-        return preferredMoves.first;
-      }
-    }
+    final candidates = <Move>[];
 
     for (final tile in _board.tiles) {
       if (!tile.isMovable) {
         continue;
       }
       final legal = bridge.legalMoves(_board, tile.id);
-      if (legal.isNotEmpty) {
-        return legal.first;
+      for (final move in legal) {
+        if (scriptedDirection != null && move.direction != scriptedDirection) {
+          continue;
+        }
+        candidates.add(Move(tileId: tile.id, direction: move.direction));
       }
     }
-    return null;
+
+    if (candidates.isEmpty) {
+      return null;
+    }
+
+    final preferredTileId = _selectedTileId ?? _resolveHintTileId();
+    final scored =
+        candidates
+            .map((move) {
+              return (move: move, score: _scoreHintMove(move, preferredTileId));
+            })
+            .toList(growable: false)
+          ..sort((a, b) => a.score.compareTo(b.score));
+    return scored.first.move;
+  }
+
+  int _scoreHintMove(Move move, String? preferredTileId) {
+    var score = 0;
+    if (preferredTileId != null && move.tileId != preferredTileId) {
+      score += 120;
+    }
+
+    final previous = _currentEntry.moveRecords;
+    if (previous.isNotEmpty) {
+      final last = previous.last;
+      final isImmediateReverse =
+          last.tileId == move.tileId &&
+          _isOppositeDirection(last.direction, move.direction);
+      if (isImmediateReverse) {
+        score += 10_000;
+      }
+    }
+
+    final preview = bridge.previewMove(_board, move).finalBoard;
+    if (const ObjectiveChecker().isSolved(level, preview)) {
+      return -10_000;
+    }
+
+    switch (level.objective) {
+      case PositionObjective(:final tileId, :final goalRow, :final goalCol):
+        final objectiveTile = preview.tileById(tileId);
+        if (objectiveTile != null) {
+          final distance =
+              (objectiveTile.row - goalRow).abs() +
+              (objectiveTile.col - goalCol).abs();
+          score += distance * 100;
+        }
+        break;
+      default:
+        break;
+    }
+    return score;
+  }
+
+  bool _isOppositeDirection(Direction a, Direction b) {
+    return (a == Direction.up && b == Direction.down) ||
+        (a == Direction.down && b == Direction.up) ||
+        (a == Direction.left && b == Direction.right) ||
+        (a == Direction.right && b == Direction.left);
   }
 
   void restart() {

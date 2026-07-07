@@ -1,8 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../app/router/navigation.dart';
+import '../app/router/routes.dart';
 import '../core/constants/game_constants.dart';
 import '../core/utils/responsive.dart';
 import '../l10n/app_localizations.dart';
@@ -333,14 +335,10 @@ class _NumberGravityGameWidgetState
     if (widget.options.economyEnabled) {
       final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
       final cost = hintCostForTier(tier);
-      final confirmed = await showHelperCostSheet(
-        context,
-        title: l10n.hint,
-        body: l10n.hintTier3Title,
-        cost: cost,
-        balance: balance,
-      );
-      if (confirmed != true || !mounted) {
+      if (balance < cost) {
+        if (mounted) {
+          context.push(AppRoutes.shop);
+        }
         return;
       }
 
@@ -350,9 +348,7 @@ class _NumberGravityGameWidgetState
       );
       if (!spent) {
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(l10n.notEnoughCoins)));
+          context.push(AppRoutes.shop);
         }
         return;
       }
