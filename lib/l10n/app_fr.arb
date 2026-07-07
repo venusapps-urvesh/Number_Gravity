@@ -205,7 +205,6 @@
   "letsPlay": "Jouons",
   "confirm": "Confirmer",
   "cancel": "Annuler",
-  "redo": "Rétablir",
   "helperCostLabel": "Coût : {cost} pièces · Solde : {balance}",
   "undoCostFree": "Gratuit",
   "undoFreeTriesLeft": "{count} gratuit",

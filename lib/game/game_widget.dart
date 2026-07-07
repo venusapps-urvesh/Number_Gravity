@@ -276,7 +276,7 @@ class _NumberGravityGameWidgetState
     ref.read(gameSessionProvider(widget.level).notifier).onRestart();
   }
 
-  Future<void> _handleUndo() async {
+  Future<bool> _handleUndo() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
     final session = ref.read(gameSessionProvider(widget.level));
@@ -294,7 +294,7 @@ class _NumberGravityGameWidgetState
           balance: balance,
         );
         if (confirmed != true || !mounted) {
-          return;
+          return false;
         }
         final spent = await flow.trySpendForHelper(
           cost: undoCost,
@@ -306,7 +306,7 @@ class _NumberGravityGameWidgetState
               SnackBar(content: Text(l10n.notEnoughCoins)),
             );
           }
-          return;
+          return false;
         }
       }
     }
@@ -314,6 +314,7 @@ class _NumberGravityGameWidgetState
     _game?.undo();
     ref.read(gameSessionProvider(widget.level).notifier).onUndo();
     ref.read(statisticsRepositoryProvider).recordUndo();
+    return true;
   }
 
   Future<void> _handleRedo() async {
@@ -460,12 +461,15 @@ class _NumberGravityGameWidgetState
         _game?.clearStuck();
         _handleHint();
       },
-      onUndo: () {
-        _game?.undo();
-        _game?.clearStuck();
-        ref.read(gameSessionProvider(widget.level).notifier).onUndo();
+      onUndo: () async {
+        final undone = await _handleUndo();
+        if (!mounted) {
+          return;
+        }
+        if (undone) {
+          _game?.clearStuck();
+        }
         setState(() => _handlingStuck = false);
-        ref.read(statisticsRepositoryProvider).recordUndo();
       },
       onRestart: () {
         _game?.restart();
@@ -578,7 +582,7 @@ class _GameActionBarSection extends ConsumerWidget {
 
   final LevelModel level;
   final GameplayOptions options;
-  final VoidCallback onUndo;
+  final Future<bool> Function() onUndo;
   final Future<void> Function() onHint;
 
   @override
@@ -599,7 +603,9 @@ class _GameActionBarSection extends ConsumerWidget {
           session.movesUsed < level.solutionMoves.length,
       undoSubtitle: undoSubtitle,
       undoBadgeCount: undoBadgeCount,
-      onUndo: onUndo,
+      onUndo: () {
+        onUndo();
+      },
       onHint: () => onHint(),
     );
   }

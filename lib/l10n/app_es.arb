@@ -205,7 +205,6 @@
   "letsPlay": "Juguemos",
   "confirm": "Confirmar",
   "cancel": "Cancelar",
-  "redo": "Rehacer",
   "helperCostLabel": "Costo: {cost} monedas · Saldo: {balance}",
   "undoCostFree": "Gratis",
   "undoFreeTriesLeft": "{count} gratis",

@@ -230,7 +230,6 @@
   "letsPlay": "Let's play",
   "confirm": "Confirm",
   "cancel": "Cancel",
-  "redo": "Redo",
   "helperCostLabel": "Cost: {cost} coins · Balance: {balance}",
   "@helperCostLabel": {
     "placeholders": {

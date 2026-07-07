@@ -59,17 +59,15 @@ class NGCard extends StatelessWidget {
       ),
     );
 
-    if (onTap == null) {
-      return card;
-    }
-
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: onTap,
-        child: card,
-      ),
+      child: onTap == null
+          ? card
+          : InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: onTap,
+              child: card,
+            ),
     );
   }
 }
