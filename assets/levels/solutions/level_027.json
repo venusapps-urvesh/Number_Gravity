@@ -1,8 +1,9 @@
 {
   "levelId": 27,
   "solutionMoves": [
-    "R",
-    "D",
-    "R"
+    "t2:R",
+    "t1:R",
+    "t3:U",
+    "t1:R"
   ]
 }

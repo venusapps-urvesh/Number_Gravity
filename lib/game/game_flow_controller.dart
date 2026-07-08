@@ -21,6 +21,7 @@ class GameFlowController {
     required LevelModel level,
     required int movesUsed,
     required List<MoveRecord> moveRecords,
+    int hintsUsedThisLevel = 0,
   }) async {
     final stars = starsForMoves(
       movesUsed: movesUsed,
@@ -31,13 +32,27 @@ class GameFlowController {
         await ref.read(progressRepositoryProvider).getProgress();
     final isFirstClear =
         !(progressBefore.levelProgress[level.id]?.isCompleted ?? false);
-    final coinsEarned = isFirstClear
-        ? switch (stars) {
-            3 => coinsPerStar3,
-            2 => coinsPerStar2,
-            _ => coinsPerStar1,
-          }
-        : 0;
+
+    var coinsEarned = 0;
+    if (isFirstClear) {
+      coinsEarned += switch (stars) {
+        3 => coinsPerStar3,
+        2 => coinsPerStar2,
+        _ => coinsPerStar1,
+      };
+      if (level.world > 0) {
+        coinsEarned += firstClearBonusForWorld(level.world);
+      }
+      if (hintsUsedThisLevel == 0) {
+        coinsEarned += coinsNoHintBonus;
+      }
+    } else if (level.world > 0) {
+      coinsEarned += coinsReplayClear;
+    }
+
+    if (level.world == 0 && isFirstClear) {
+      coinsEarned += coinsDailyPuzzleClear;
+    }
 
     await ref.read(progressRepositoryProvider).setLevelStars(
           levelId: level.id,
@@ -56,13 +71,16 @@ class GameFlowController {
 
     final progress = await ref.read(progressRepositoryProvider).getProgress();
     if (coinsEarned > 0) {
+      final leaderboardEligible = isFirstClear || level.world == 0;
       progress.coins += coinsEarned;
-      progress.gameplayEarnedCoins += coinsEarned;
+      if (leaderboardEligible) {
+        progress.gameplayEarnedCoins += coinsEarned;
+      }
     }
-    if (level.world == 0) {
-      progress.dailyStreak += 1;
+    if (level.world == 0 && isFirstClear) {
+      progress.lastDailyPuzzleDate = _todayKey(DateTime.now());
     }
-    if (coinsEarned > 0 || level.world == 0) {
+    if (coinsEarned > 0 || (level.world == 0 && isFirstClear)) {
       await ref.read(progressRepositoryProvider).saveProgress(progress);
     }
     ref.invalidate(playerProgressProvider);
@@ -104,11 +122,13 @@ class GameFlowController {
     required LevelModel level,
     required int movesUsed,
     required List<MoveRecord> moveRecords,
+    int hintsUsedThisLevel = 0,
   }) async {
     await persistLevelWin(
       level: level,
       movesUsed: movesUsed,
       moveRecords: moveRecords,
+      hintsUsedThisLevel: hintsUsedThisLevel,
     );
     if (!context.mounted) {
       return;
@@ -137,6 +157,31 @@ class GameFlowController {
       ref.invalidate(playerProgressProvider);
     }
     return ok;
+  }
+
+  Future<int> claimDailyLoginRewardIfNeeded() async {
+    final today = _todayKey(DateTime.now());
+    final progress = await ref.read(progressRepositoryProvider).getProgress();
+    if (progress.lastDailyLoginDate == today) {
+      return 0;
+    }
+
+    final dayIndex = progress.dailyStreak.clamp(0, dailyLoginRewards.length - 1);
+    final reward = dailyLoginRewards[dayIndex];
+    progress.coins += reward;
+    progress.gameplayEarnedCoins += reward;
+    progress.lastDailyLoginDate = today;
+    if (progress.dailyStreak < dailyLoginRewards.length) {
+      progress.dailyStreak += 1;
+    }
+    await ref.read(progressRepositoryProvider).saveProgress(progress);
+    ref.invalidate(playerProgressProvider);
+    return reward;
+  }
+
+  static String _todayKey(DateTime date) {
+    String two(int n) => n.toString().padLeft(2, '0');
+    return '${date.year}-${two(date.month)}-${two(date.day)}';
   }
 }
 

@@ -10,6 +10,8 @@ class PlayerProgress extends HiveObject {
     this.unlockedWorlds = const [1],
     this.levelProgress = const {},
     this.dailyStreak = 0,
+    this.lastDailyLoginDate,
+    this.lastDailyPuzzleDate,
   });
 
   int coins;
@@ -17,4 +19,6 @@ class PlayerProgress extends HiveObject {
   List<int> unlockedWorlds;
   Map<int, LevelProgress> levelProgress;
   int dailyStreak;
+  String? lastDailyLoginDate;
+  String? lastDailyPuzzleDate;
 }

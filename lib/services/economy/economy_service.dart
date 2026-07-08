@@ -29,4 +29,21 @@ class EconomyService {
     await _repository.saveProgress(progress);
     return true;
   }
+
+  Future<int> earn({
+    required int amount,
+    bool countsTowardLeaderboard = true,
+  }) async {
+    if (amount <= 0) {
+      final progress = await _repository.getProgress();
+      return progress.coins;
+    }
+    final progress = await _repository.getProgress();
+    progress.coins += amount;
+    if (countsTowardLeaderboard) {
+      progress.gameplayEarnedCoins += amount;
+    }
+    await _repository.saveProgress(progress);
+    return progress.coins;
+  }
 }

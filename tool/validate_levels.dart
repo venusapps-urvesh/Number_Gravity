@@ -4,25 +4,55 @@
 import 'dart:convert';
 import 'dart:io';
 
-void main(List<String> args) {
-  final levelsDir = Directory('assets/levels');
+import 'package:number_gravity/core/constants/game_constants.dart';
+import 'package:number_gravity/models/board_model.dart';
+import 'package:number_gravity/models/level/level_model.dart';
+import 'package:number_gravity/models/level/level_tier.dart';
+import 'package:number_gravity/models/objective/objective_model.dart';
+import 'package:number_gravity/models/tile_model.dart';
+import 'package:number_gravity/tooling/validator/level_validator.dart';
+
+Future<void> main() async {
+  final validator = LevelValidator();
   var valid = 0;
   var invalid = 0;
 
-  for (final file in levelsDir.listSync().whereType<File>()) {
-    if (!file.path.endsWith('.json')) {
+  for (var world = 1; world <= totalWorlds; world++) {
+    final worldFile = File(
+      'assets/levels/world_${world.toString().padLeft(2, '0')}.json',
+    );
+    if (!worldFile.existsSync()) {
       continue;
     }
-    final decoded = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+
+    final decoded = jsonDecode(worldFile.readAsStringSync()) as Map<String, dynamic>;
     final levels = decoded['levels'] as List<dynamic>;
-    for (final level in levels) {
-      final map = level as Map<String, dynamic>;
-      final ok = _validate(map);
-      if (ok) {
+
+    for (final raw in levels) {
+      final map = raw as Map<String, dynamic>;
+      final level = _parseLevel(map);
+
+      final solutionPath = File(
+        'assets/levels/solutions/level_${level.id.toString().padLeft(3, '0')}.json',
+      );
+      final moves = solutionPath.existsSync()
+          ? ((jsonDecode(solutionPath.readAsStringSync())
+                  as Map<String, dynamic>)['solutionMoves'] as List<dynamic>)
+              .map((m) => m as String)
+              .toList()
+          : (map['solutionMoves'] as List<dynamic>? ?? const [])
+              .map((m) => m as String)
+              .toList();
+
+      final merged = level.copyWith(solutionMoves: moves);
+      final result = validator.validate(merged);
+      if (result.valid) {
         valid++;
       } else {
         invalid++;
-        print('Invalid level ${map['id']} in ${file.path}');
+        print(
+          'Invalid level ${level.id}: ${result.issues.map((i) => i.label).join(', ')}',
+        );
       }
     }
   }
@@ -33,14 +63,24 @@ void main(List<String> args) {
   }
 }
 
-bool _validate(Map<String, dynamic> level) {
-  final required = ['id', 'world', 'tier', 'rows', 'cols', 'objective', 'tiles'];
-  for (final key in required) {
-    if (!level.containsKey(key)) {
-      return false;
-    }
-  }
-  final rows = level['rows'] as int;
-  final cols = level['cols'] as int;
-  return rows > 0 && cols > 0 && rows <= 10 && cols <= 10;
+LevelModel _parseLevel(Map<String, dynamic> json) {
+  return LevelModel(
+    id: json['id'] as int,
+    world: json['world'] as int,
+    tier: LevelTier.values.byName(json['tier'] as String),
+    board: BoardModel(
+      rows: json['rows'] as int,
+      cols: json['cols'] as int,
+      tiles: (json['tiles'] as List<dynamic>)
+          .map((t) => TileModel.fromJson(t as Map<String, dynamic>))
+          .toList(),
+    ),
+    objective: ObjectiveModel.fromJson(
+      json['objective'] as Map<String, dynamic>,
+    ),
+    minimumMoves: json['minimumMoves'] as int,
+    solutionMoves: (json['solutionMoves'] as List<dynamic>? ?? const [])
+        .map((m) => m as String)
+        .toList(),
+  );
 }

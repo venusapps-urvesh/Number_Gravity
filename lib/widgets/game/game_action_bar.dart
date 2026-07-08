@@ -7,17 +7,23 @@ class GameActionBar extends StatelessWidget {
     required this.onUndo,
     required this.onHint,
     super.key,
+    this.onRedo,
     this.canUndo = false,
+    this.canRedo = false,
     this.canHint = true,
     this.undoSubtitle,
+    this.redoSubtitle,
     this.undoBadgeCount,
   });
 
   final VoidCallback onUndo;
   final VoidCallback onHint;
+  final VoidCallback? onRedo;
   final bool canUndo;
+  final bool canRedo;
   final bool canHint;
   final String? undoSubtitle;
+  final String? redoSubtitle;
   final int? undoBadgeCount;
 
   @override
@@ -32,6 +38,12 @@ class GameActionBar extends StatelessWidget {
             subtitle: undoSubtitle,
             badgeCount: undoBadgeCount,
             onPressed: canUndo ? onUndo : null,
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          _ActionPill(
+            icon: Icons.redo_rounded,
+            subtitle: redoSubtitle,
+            onPressed: canRedo && onRedo != null ? onRedo : null,
           ),
           const SizedBox(width: AppSpacing.sm),
           _ActionPill(

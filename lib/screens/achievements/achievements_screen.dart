@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/game_constants.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../levels/world_config.dart';
+import '../../providers/game_session_provider.dart';
 import '../../providers/providers.dart';
 import '../../storage/adapters/player_progress.dart';
 import '../../storage/adapters/statistics_data.dart';
@@ -103,10 +105,16 @@ class AchievementsScreen extends ConsumerWidget {
                           itemBuilder: (context, i) => _AchievementCard(
                             achievement: items[i],
                             unlocked: unlocked.contains(items[i].id),
-                            onClaim: () => ref
-                                .read(achievementsRepositoryProvider)
-                                .unlock(items[i].id)
-                                .then((_) => ref.invalidate(_unlockedProvider)),
+                            onClaim: () async {
+                              await ref
+                                  .read(achievementsRepositoryProvider)
+                                  .unlock(items[i].id);
+                              await ref
+                                  .read(economyServiceProvider)
+                                  .earn(amount: coinsAchievementClaim);
+                              ref.invalidate(_unlockedProvider);
+                              ref.invalidate(playerProgressProvider);
+                            },
                           ),
                         ),
                       ),

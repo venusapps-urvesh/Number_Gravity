@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/game_constants.dart';
 import '../../app/router/navigation.dart';
 import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
+import '../../game/game_flow_controller.dart';
 import '../../levels/daily_puzzle_generator.dart';
 import '../../models/board_model.dart';
 import '../../models/tile_model.dart';
@@ -14,15 +16,33 @@ import '../../widgets/common/ng_responsive_layout.dart';
 import '../../widgets/common/ng_scaffold.dart';
 import '../../widgets/game/tile_badge.dart';
 
-class DailyPuzzleScreen extends ConsumerWidget {
+class DailyPuzzleScreen extends ConsumerStatefulWidget {
   DailyPuzzleScreen({super.key});
 
+  @override
+  ConsumerState<DailyPuzzleScreen> createState() => _DailyPuzzleScreenState();
+}
+
+class _DailyPuzzleScreenState extends ConsumerState<DailyPuzzleScreen> {
   final _generator = DailyPuzzleGenerator();
 
-  static const _loginRewards = [10, 15, 20, 30, 50, 75, 100];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final reward =
+          await GameFlowController(ref).claimDailyLoginRewardIfNeeded();
+      if (reward > 0 && mounted) {
+        final l10n = AppLocalizations.of(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.coinCount(reward))),
+        );
+      }
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final today = DateTime.now();
     final puzzle = _generator.generateForDate(today);
@@ -69,7 +89,7 @@ class DailyPuzzleScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _StreakStrip(rewards: _loginRewards, streak: streak),
+                  _StreakStrip(rewards: dailyLoginRewards, streak: streak),
                   const SizedBox(height: AppSpacing.lg),
                   _BoardPreview(board: puzzle.board, colorBlind: colorBlind),
                   const SizedBox(height: AppSpacing.lg),

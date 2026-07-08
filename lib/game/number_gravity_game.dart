@@ -21,6 +21,7 @@ import 'components/board_component.dart';
 import 'components/force_line_component.dart';
 import 'components/game_selection_overlay.dart';
 import 'components/ghost_overlay_component.dart';
+import '../../tooling/solver/move_encoder.dart';
 import 'layout/board_layout.dart';
 
 typedef MoveCommitCallback =
@@ -541,9 +542,23 @@ class NumberGravityGame extends FlameGame {
   String? _resolveHintTileId() => _primaryMovableTileId();
 
   Move? _resolveHintMove() {
-    final scriptedDirection = _movesUsed < level.solutionMoves.length
-        ? DirectionX.fromShortCode(level.solutionMoves[_movesUsed])
-        : null;
+    if (_movesUsed < level.solutionMoves.length) {
+      final code = level.solutionMoves[_movesUsed];
+      final defaultTile = switch (level.objective) {
+        PositionObjective(:final tileId) => tileId,
+        _ => _primaryMovableTileId() ?? 't1',
+      };
+      try {
+        final scripted = MoveEncoder.decodeStep(code, defaultTileId: defaultTile);
+        final legal = bridge.legalMoves(_board, scripted.tileId);
+        if (legal.any((m) => m.direction == scripted.direction)) {
+          return scripted;
+        }
+      } on FormatException {
+        // Fall through to heuristic selection.
+      }
+    }
+
     final candidates = <Move>[];
 
     for (final tile in _board.tiles) {
@@ -552,9 +567,6 @@ class NumberGravityGame extends FlameGame {
       }
       final legal = bridge.legalMoves(_board, tile.id);
       for (final move in legal) {
-        if (scriptedDirection != null && move.direction != scriptedDirection) {
-          continue;
-        }
         candidates.add(Move(tileId: tile.id, direction: move.direction));
       }
     }

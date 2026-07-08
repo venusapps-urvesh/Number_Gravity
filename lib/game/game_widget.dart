@@ -209,6 +209,7 @@ class _NumberGravityGameWidgetState
           level: widget.level,
           options: widget.options,
           onUndo: _handleUndo,
+          onRedo: _handleRedo,
           onHint: _handleHint,
         ),
       ],
@@ -274,6 +275,8 @@ class _NumberGravityGameWidgetState
       level: widget.level,
       movesUsed: movesUsed,
       moveRecords: records,
+      hintsUsedThisLevel:
+          ref.read(gameSessionProvider(widget.level)).hintsPurchasedThisLevel,
     );
     if (!mounted) {
       return;
@@ -340,10 +343,60 @@ class _NumberGravityGameWidgetState
     return true;
   }
 
+  Future<bool> _handleRedo() async {
+    final l10n = AppLocalizations.of(context);
+    final flow = GameFlowController(ref);
+
+    if (widget.options.economyEnabled) {
+      final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
+      const redoCost = coinCostRedo;
+      if (balance < redoCost) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.notEnoughCoins)));
+        }
+        return false;
+      }
+
+      final confirmed = await showHelperCostSheet(
+        context,
+        title: l10n.redo,
+        body: l10n.undoCostCoins(redoCost),
+        cost: redoCost,
+        balance: balance,
+      );
+      if (confirmed != true || !mounted) {
+        return false;
+      }
+
+      final spent = await flow.trySpendForHelper(
+        cost: redoCost,
+        sink: CoinSink.redo,
+      );
+      if (!spent) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.notEnoughCoins)));
+        }
+        return false;
+      }
+    }
+
+    _game?.redo();
+    ref.read(gameSessionProvider(widget.level).notifier).onRedo();
+    return true;
+  }
+
   Future<void> _handleHint() async {
     final l10n = AppLocalizations.of(context);
     final flow = GameFlowController(ref);
-    const tier = 3;
+
+    final tier = await showHintTierSheet(context);
+    if (tier == null || !mounted) {
+      return;
+    }
 
     if (widget.options.economyEnabled) {
       final balance = ref.read(playerProgressProvider).value?.coins ?? 0;
@@ -419,6 +472,8 @@ class _NumberGravityGameWidgetState
       level: widget.level,
       movesUsed: movesUsed,
       moveRecords: records.cast(),
+      hintsUsedThisLevel:
+          ref.read(gameSessionProvider(widget.level)).hintsPurchasedThisLevel,
     );
   }
 
@@ -544,12 +599,14 @@ class _GameActionBarSection extends ConsumerWidget {
     required this.level,
     required this.options,
     required this.onUndo,
+    required this.onRedo,
     required this.onHint,
   });
 
   final LevelModel level;
   final GameplayOptions options;
   final Future<bool> Function() onUndo;
+  final Future<bool> Function() onRedo;
   final Future<void> Function() onHint;
 
   @override
@@ -564,13 +621,22 @@ class _GameActionBarSection extends ConsumerWidget {
         ? freeRemaining
         : null;
 
+    final redoSubtitle = options.economyEnabled
+        ? l10n.undoCostCoins(coinCostRedo)
+        : null;
+
     return GameActionBar(
       canUndo: session.canUndo && !session.isAnimating,
+      canRedo: session.canRedo && !session.isAnimating,
       canHint: !session.isAnimating && !session.isWon,
       undoSubtitle: undoSubtitle,
+      redoSubtitle: redoSubtitle,
       undoBadgeCount: undoBadgeCount,
       onUndo: () {
         onUndo();
+      },
+      onRedo: () {
+        onRedo();
       },
       onHint: () => onHint(),
     );

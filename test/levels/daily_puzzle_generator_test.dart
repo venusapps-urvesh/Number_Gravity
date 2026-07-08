@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:number_gravity/levels/daily_puzzle_generator.dart';
-import 'package:number_gravity/models/move.dart';
 import 'package:number_gravity/models/objective/objective_model.dart';
 import 'package:number_gravity/simulation/board_applier.dart';
 import 'package:number_gravity/simulation/default_gravity_engine.dart';
 import 'package:number_gravity/simulation/objective_checker.dart';
+import 'package:number_gravity/tooling/solver/move_encoder.dart';
 
 void main() {
   group('DailyPuzzleGenerator', () {
@@ -13,32 +13,23 @@ void main() {
     final engine = DefaultGravityEngine();
     const checker = ObjectiveChecker();
 
-    test('minimum moves match the Manhattan distance to the goal', () {
+    test('generated puzzle has a solver-verified solution', () {
       final level = generator.generateForDate(DateTime(2026, 7, 7));
-      final tile = level.board.tileById('daily_t1')!;
-      final objective = level.objective;
-      expect(objective, isA<PositionObjective>());
-
-      final goal = objective as PositionObjective;
-      final expectedMoves =
-          (goal.goalRow - tile.row).abs() + (goal.goalCol - tile.col).abs();
-
-      expect(level.minimumMoves, expectedMoves);
-      expect(level.solutionMoves.length, expectedMoves);
+      expect(level.solutionMoves.length, level.minimumMoves);
+      expect(level.solutionMoves.first, contains(':'));
     });
 
     test('generated solution solves the daily puzzle', () {
       final level = generator.generateForDate(DateTime(2026, 7, 7));
       var board = level.board;
+      final defaultTile = switch (level.objective) {
+        PositionObjective(:final tileId) => tileId,
+        _ => 't1',
+      };
 
       for (final code in level.solutionMoves) {
-        final direction = DirectionX.fromShortCode(code);
-        expect(direction, isNotNull, reason: 'invalid solution move: $code');
-
-        final move = Move(tileId: 'daily_t1', direction: direction!);
-        board = engine
-            .simulate(applier.applyPlayerMove(board, move))
-            .finalBoard;
+        final move = MoveEncoder.decodeStep(code, defaultTileId: defaultTile);
+        board = engine.simulate(applier.applyPlayerMove(board, move)).finalBoard;
       }
 
       expect(checker.isSolved(level, board), isTrue);

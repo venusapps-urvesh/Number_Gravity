@@ -1,79 +1,60 @@
-import 'dart:math';
-
 import '../models/board_model.dart';
 import '../models/level/level_model.dart';
 import '../models/level/level_tier.dart';
 import '../models/objective/objective_model.dart';
 import '../models/tile_model.dart';
-import '../models/tile_type.dart';
+import '../tooling/generator/level_generator.dart';
 
 class DailyPuzzleGenerator {
+  DailyPuzzleGenerator({LevelGenerator? generator})
+      : _generator = generator ?? LevelGenerator();
+
+  final LevelGenerator _generator;
+
   LevelModel generateForDate(DateTime date) {
     final seed = date.year * 10000 + date.month * 100 + date.day;
-    final random = Random(seed);
+    final generated = _generator.generate(
+      levelId: seed,
+      worldId: 2,
+      indexInWorld: seed % 25,
+      maxAttempts: 500,
+    ) ?? _generator.generate(
+          levelId: seed + 1,
+          worldId: 1,
+          indexInWorld: 0,
+          maxAttempts: 500,
+        );
 
-    final rows = 6 + random.nextInt(3);
-    final cols = rows;
-    const startRow = 0;
-    const startCol = 0;
-    final goalRow = rows - 1;
-    final goalCol = cols - 1;
-    final solutionMoves = _solutionMovesForCornerPath(
-      startRow: startRow,
-      startCol: startCol,
-      goalRow: goalRow,
-      goalCol: goalCol,
-    );
-    final board = BoardModel(
-      rows: rows,
-      cols: cols,
-      tiles: [
-        TileModel(
-          id: 'daily_t1',
-          type: TileType.number,
-          value: 2 + random.nextInt(4),
-          row: startRow,
-          col: startCol,
-        ),
-        TileModel(
-          id: 'daily_g1',
-          type: TileType.goal,
-          row: goalRow,
-          col: goalCol,
-          isLocked: true,
-        ),
-      ],
-    );
+    if (generated == null) {
+      throw StateError('Failed to generate daily puzzle for $date');
+    }
 
+    return _fromGenerated(seed, generated.levelJson, LevelTier.intermediate);
+  }
+
+  LevelModel _fromGenerated(
+    int seed,
+    Map<String, dynamic> json,
+    LevelTier tier,
+  ) {
     return LevelModel(
       id: seed,
       world: 0,
-      tier: LevelTier.intermediate,
-      board: board,
-      objective: ObjectiveModel.position(
-        tileId: 'daily_t1',
-        goalRow: goalRow,
-        goalCol: goalCol,
+      tier: tier,
+      board: BoardModel(
+        rows: json['rows'] as int,
+        cols: json['cols'] as int,
+        tiles: (json['tiles'] as List<dynamic>)
+            .map((t) => TileModel.fromJson(t as Map<String, dynamic>))
+            .toList(),
       ),
-      minimumMoves: solutionMoves.length,
-      solutionMoves: solutionMoves,
+      objective: ObjectiveModel.fromJson(
+        json['objective'] as Map<String, dynamic>,
+      ),
+      minimumMoves: json['minimumMoves'] as int,
+      solutionMoves: (json['solutionMoves'] as List<dynamic>)
+          .map((m) => m as String)
+          .toList(),
     );
-  }
-
-  List<String> _solutionMovesForCornerPath({
-    required int startRow,
-    required int startCol,
-    required int goalRow,
-    required int goalCol,
-  }) {
-    final horizontalMoves = (goalCol - startCol).abs();
-    final verticalMoves = (goalRow - startRow).abs();
-    final horizontalDirection = goalCol >= startCol ? 'R' : 'L';
-    final verticalDirection = goalRow >= startRow ? 'D' : 'U';
-
-    return [
-      ...List.filled(horizontalMoves, horizontalDirection),
-      ...List.filled(verticalMoves, verticalDirection),
-    ];
   }
 }

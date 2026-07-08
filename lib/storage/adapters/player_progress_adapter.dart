@@ -26,6 +26,8 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
       unlockedWorlds: (fields[2] as List?)?.cast<int>() ?? const [1],
       levelProgress: levelProgress,
       dailyStreak: fields[4] as int? ?? 0,
+      lastDailyLoginDate: fields[5] as String?,
+      lastDailyPuzzleDate: fields[6] as String?,
     );
   }
 
@@ -36,7 +38,7 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
     );
 
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.coins)
       ..writeByte(1)
@@ -46,6 +48,10 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
       ..writeByte(3)
       ..write(serializedProgress)
       ..writeByte(4)
-      ..write(obj.dailyStreak);
+      ..write(obj.dailyStreak)
+      ..writeByte(5)
+      ..write(obj.lastDailyLoginDate)
+      ..writeByte(6)
+      ..write(obj.lastDailyPuzzleDate);
   }
 }

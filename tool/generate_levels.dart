@@ -4,255 +4,74 @@
 import 'dart:convert';
 import 'dart:io';
 
-void main() {
-  final levels = <Map<String, dynamic>>[];
-  var id = 1;
+import 'package:number_gravity/core/constants/game_constants.dart';
+import 'package:number_gravity/tooling/generator/level_generator.dart';
 
-  for (var world = 1; world <= 8; world++) {
-    final size = switch (world) {
-      1 => 4,
-      2 || 3 => 5,
-      4 || 5 => 6,
-      6 || 7 => 7,
-      _ => 8,
-    };
+Future<void> main(List<String> args) async {
+  final worldsArg = _parseWorldsArg(args);
+  final generator = LevelGenerator();
+  final failures = <int>[];
 
-    for (var i = 0; i < 25; i++) {
-      levels.add(_levelFor(world: world, id: id, size: size, index: i));
-      id++;
+  for (final world in worldsArg) {
+    final levels = <Map<String, dynamic>>[];
+    final startId = (world - 1) * levelsPerWorld + 1;
+
+    for (var index = 0; index < levelsPerWorld; index++) {
+      final levelId = startId + index;
+      final generated = generator.generate(
+        levelId: levelId,
+        worldId: world,
+        indexInWorld: index,
+        maxAttempts: 2000,
+      );
+
+      if (generated == null) {
+        failures.add(levelId);
+        print('FAILED to generate level $levelId');
+        continue;
+      }
+
+      levels.add(generated.levelJson);
+
+      final solutionFile = File(
+        'assets/levels/solutions/level_${levelId.toString().padLeft(3, '0')}.json',
+      );
+      solutionFile.parent.createSync(recursive: true);
+      solutionFile.writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert(generated.solutionJson),
+      );
+    }
+
+    if (levels.length == levelsPerWorld) {
+      final worldFile = File(
+        'assets/levels/world_${world.toString().padLeft(2, '0')}.json',
+      );
+      worldFile.parent.createSync(recursive: true);
+      worldFile.writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert({'levels': levels}),
+      );
+      print('Wrote ${worldFile.path} (${levels.length} levels)');
     }
   }
 
-  for (var world = 1; world <= 8; world++) {
-    final worldLevels = levels.where((l) => l['world'] == world).toList();
-    final file =
-        File('assets/levels/world_${world.toString().padLeft(2, '0')}.json');
-    file.parent.createSync(recursive: true);
-    file.writeAsStringSync(
-      const JsonEncoder.withIndent('  ').convert({'levels': worldLevels}),
-    );
-    print('Wrote ${file.path} (${worldLevels.length} levels)');
+  if (failures.isNotEmpty) {
+    print('Generation failures: $failures');
+    exit(1);
   }
 }
 
-Map<String, dynamic> _levelFor({
-  required int world,
-  required int id,
-  required int size,
-  required int index,
-}) {
-  final tier = switch (world) {
-    1 => 'beginner',
-    2 || 3 => 'beginner',
-    4 || 5 => 'intermediate',
-    6 || 7 => 'advanced',
-    _ => 'advanced',
-  };
-
-  final value = world == 2 ? -2 - (index % 3) : 2 + (index % 4);
-  final goalRow = size - 1;
-  final goalCol = size - 1;
-
-  final tiles = <Map<String, dynamic>>[
-    {
-      'id': 't1',
-      'type': 'number',
-      'value': value,
-      'row': 0,
-      'col': 0,
-      'isLocked': false,
-    },
-    {
-      'id': 'g1',
-      'type': 'goal',
-      'value': 0,
-      'row': goalRow,
-      'col': goalCol,
-      'isLocked': true,
-    },
-  ];
-
-  if (world >= 3 && index.isEven) {
-    tiles.add({
-      'id': 'w1',
-      'type': 'wall',
-      'value': 0,
-      'row': size ~/ 2,
-      'col': size ~/ 2,
-      'isLocked': true,
-    });
+List<int> _parseWorldsArg(List<String> args) {
+  if (args.isEmpty) {
+    return List.generate(totalWorlds, (i) => i + 1);
   }
 
-  if (world >= 5) {
-    _addWorld5PlusTiles(tiles, world: world, size: size, index: index);
-  }
-
-  final objective = world == 8 && index >= 20
-      ? {
-          'type': 'chain',
-          'subObjectiveIds': ['t1'],
-        }
-      : {
-          'type': 'position',
-          'tileId': 't1',
-          'goalRow': goalRow,
-          'goalCol': goalCol,
-        };
-
-  return {
-    'id': id,
-    'world': world,
-    'tier': tier,
-    'rows': size,
-    'cols': size,
-    'objective': objective,
-    'tiles': tiles,
-    'minimumMoves': 3 + (index % 5),
-    'solutionMoves': ['R', 'D', 'R'],
-  };
-}
-
-void _addWorld5PlusTiles(
-  List<Map<String, dynamic>> tiles, {
-  required int world,
-  required int size,
-  required int index,
-}) {
-  if (world == 5) {
-    tiles.addAll([
-      {
-        'id': 'p1',
-        'type': 'portal',
-        'value': 0,
-        'row': 1,
-        'col': 1,
-        'isLocked': true,
-        'portalPairId': 'p2',
-      },
-      {
-        'id': 'p2',
-        'type': 'portal',
-        'value': 0,
-        'row': size - 2,
-        'col': size - 2,
-        'isLocked': true,
-        'portalPairId': 'p1',
-      },
-    ]);
-    return;
-  }
-
-  if (world == 6) {
-    if (index % 3 == 0) {
-      tiles.add({
-        'id': 'm1',
-        'type': 'multiplier',
-        'value': 0,
-        'row': size ~/ 2,
-        'col': 1,
-        'isLocked': true,
-        'modifierFactor': 2,
-      });
-    } else if (index % 3 == 1) {
-      tiles.add({
-        'id': 'd1',
-        'type': 'divider',
-        'value': 0,
-        'row': size ~/ 2,
-        'col': 1,
-        'isLocked': true,
-        'modifierFactor': 2,
-      });
-    } else {
-      tiles.add({
-        'id': 'i1',
-        'type': 'inverter',
-        'value': 0,
-        'row': size ~/ 2,
-        'col': 1,
-        'isLocked': true,
-      });
+  final worlds = <int>[];
+  for (final arg in args) {
+    if (arg.startsWith('--world=')) {
+      worlds.add(int.parse(arg.split('=').last));
+    } else if (arg == '--world1') {
+      worlds.add(1);
     }
-    return;
   }
-
-  if (world == 7) {
-    if (index.isEven) {
-      tiles.addAll([
-        {
-          'id': 's1',
-          'type': 'switchTile',
-          'value': 0,
-          'row': 1,
-          'col': size - 2,
-          'isLocked': true,
-          'switchId': 'sw1',
-        },
-        {
-          'id': 'dr1',
-          'type': 'door',
-          'value': 0,
-          'row': size ~/ 2,
-          'col': size ~/ 2,
-          'isLocked': true,
-          'doorId': 'sw1',
-          'isDoorOpen': false,
-        },
-      ]);
-    } else {
-      tiles.add({
-        'id': 'f1',
-        'type': 'freeze',
-        'value': 3,
-        'row': size ~/ 2,
-        'col': 1,
-        'isLocked': true,
-      });
-    }
-    return;
-  }
-
-  // World 8 — mixed mechanics
-  if (index % 4 == 0) {
-    tiles.addAll([
-      {
-        'id': 'p1',
-        'type': 'portal',
-        'value': 0,
-        'row': 1,
-        'col': 1,
-        'isLocked': true,
-        'portalPairId': 'p2',
-      },
-      {
-        'id': 'p2',
-        'type': 'portal',
-        'value': 0,
-        'row': size - 2,
-        'col': 2,
-        'isLocked': true,
-        'portalPairId': 'p1',
-      },
-    ]);
-  } else if (index % 4 == 1) {
-    tiles.add({
-      'id': 'm1',
-      'type': 'multiplier',
-      'value': 0,
-      'row': 2,
-      'col': 2,
-      'isLocked': true,
-      'modifierFactor': 2,
-    });
-  } else if (index % 4 == 2) {
-    tiles.add({
-      'id': 's1',
-      'type': 'switchTile',
-      'value': 0,
-      'row': 1,
-      'col': size - 2,
-      'isLocked': true,
-      'switchId': 'sw1',
-    });
-  }
+  return worlds.isEmpty ? [1] : worlds;
 }

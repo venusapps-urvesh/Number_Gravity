@@ -44,21 +44,35 @@ const int solverDepthCapExpert = 150;
 const int starThresholdOptimal = 1;
 const int starThresholdTwoStars = 4;
 
-/// Coin rewards on first clear (Section 7) — used in Phase 6+.
+/// Coin rewards on first clear (Section 7 / 13.2).
 const int coinsPerStar1 = 5;
 const int coinsPerStar2 = 15;
 const int coinsPerStar3 = 30;
+const int coinsReplayClear = 2;
+const int coinsNoHintBonus = 10;
+const int coinsDailyPuzzleClear = 50;
+const int coinsAchievementClaim = 25;
+
+/// Escalating daily login rewards (Section 13.2).
+const List<int> dailyLoginRewards = [10, 15, 20, 30, 50, 75, 100];
+
+int firstClearBonusForWorld(int worldId) {
+  if (worldId <= 0) {
+    return 0;
+  }
+  return 10 + ((worldId - 1) * 30 ~/ 7);
+}
 
 /// One-time starting balance granted on first install.
 const int startingCoins = 200;
 
 /// Coin sinks for in-level helpers (Section 13.3).
-const int coinCostUndoAfterFree = 5;
+const int coinCostUndoAfterFree = 10;
 const int coinCostRedo = 5;
 const int coinCostHintTier1 = 20;
 const int coinCostHintTier2 = 40;
 const int coinCostHintTier3 = 80;
-const int freeUndosPerLevel = 3;
+const int freeUndosPerLevel = 1;
 
 /// Animation timings in milliseconds (Section 11).
 const int animationCycleStepMs = 200;
