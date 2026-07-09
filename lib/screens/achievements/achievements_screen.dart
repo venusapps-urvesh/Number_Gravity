@@ -6,6 +6,7 @@ import '../../app/theme/app_colors.dart';
 import '../../l10n/app_localizations.dart';
 import '../../levels/world_config.dart';
 import '../../providers/game_session_provider.dart';
+import '../../providers/game_session_provider.dart';
 import '../../providers/providers.dart';
 import '../../storage/adapters/player_progress.dart';
 import '../../storage/adapters/statistics_data.dart';
@@ -111,7 +112,10 @@ class AchievementsScreen extends ConsumerWidget {
                                   .unlock(items[i].id);
                               await ref
                                   .read(economyServiceProvider)
-                                  .earn(amount: coinsAchievementClaim);
+                                  .earn(
+                                    amount: achievementRewardForId(items[i].id),
+                                    countsTowardLeaderboard: true,
+                                  );
                               ref.invalidate(_unlockedProvider);
                               ref.invalidate(playerProgressProvider);
                             },

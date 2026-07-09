@@ -182,7 +182,15 @@ class _NumberGravityGameWidgetState
       return;
     }
     final world = worldForLevel(widget.level.id);
-    if (world == null || widget.level.id != world.startLevel) {
+    final levelId = widget.level.id;
+
+    if (levelId <= 3) {
+      _introShown = true;
+      showLevelTipSheet(context, levelId: levelId);
+      return;
+    }
+
+    if (world == null || levelId != world.startLevel) {
       return;
     }
     _introShown = true;
@@ -512,6 +520,30 @@ class _NumberGravityGameWidgetState
         _handlingStuck = false;
         flow.exitGameplay(context, widget.level);
       },
+      skipLabel: widget.options.economyEnabled
+          ? l10n.skipLevelCost(coinCostSkipLevel)
+          : null,
+      onSkip: widget.options.economyEnabled
+          ? () async {
+              final skipped = await ref
+                  .read(engagementServiceProvider)
+                  .skipLevel(levelId: widget.level.id);
+              if (!mounted) {
+                return;
+              }
+              if (skipped) {
+                _game?.clearStuck();
+                _handlingStuck = false;
+                ref.invalidate(playerProgressProvider);
+                flow.exitGameplay(context, widget.level);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(l10n.notEnoughCoins)),
+                );
+                setState(() => _handlingStuck = false);
+              }
+            }
+          : null,
     );
   }
 }

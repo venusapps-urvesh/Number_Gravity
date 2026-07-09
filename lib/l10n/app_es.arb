@@ -222,5 +222,55 @@
   "hintTier3Cost": "80 monedas",
   "hintUnavailable": "No hay pista disponible",
   "notEnoughCoins": "Monedas insuficientes",
-  "movesOverPar": "Por encima del par"
+  "movesOverPar": "Por encima del par",
+  "levelTip1": "Toca una ficha azul + y desliza para moverla. Los números positivos atraen fichas cercanas.",
+  "levelTip2": "Toca una flecha una vez para previsualizar la gravedad y otra vez para confirmar.",
+  "levelTip3": "Planifica varios movimientos — observa cómo se deslizan las fichas tras cada turno.",
+  "dailyQuestsTitle": "Misiones diarias",
+  "questClearLevel": "Completa cualquier nivel",
+  "questNoHint": "Completa un nivel sin pistas",
+  "questDailyPuzzle": "Juega el puzzle diario de hoy",
+  "questClaimed": "Reclamado",
+  "questReward": "+{amount} monedas",
+  "@questReward": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "timeChestTitle": "Cofre temporal",
+  "timeChestReady": "Abrir por +{amount} monedas",
+  "@timeChestReady": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "timeChestCooldown": "Próximo cofre en {hours}h",
+  "@timeChestCooldown": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "shareResultReward": "Compartir resultado (+{amount} monedas)",
+  "@shareResultReward": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "skipLevel": "Saltar nivel",
+  "skipLevelCost": "Saltar por {cost} monedas",
+  "@skipLevelCost": {
+    "placeholders": {
+      "cost": {"type": "int"}
+    }
+  },
+  "streakFreeze": "Congelar racha",
+  "streakFreezeDesc": "Protege tu racha de inicio de sesión un día",
+  "purchaseSuccess": "Compra completada",
+  "adRewardGranted": "+{amount} monedas ganadas",
+  "@adRewardGranted": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "adLimitReached": "Límite diario de anuncios alcanzado"
 }

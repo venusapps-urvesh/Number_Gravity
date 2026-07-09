@@ -12,6 +12,16 @@ class PlayerProgress extends HiveObject {
     this.dailyStreak = 0,
     this.lastDailyLoginDate,
     this.lastDailyPuzzleDate,
+    this.questsDate,
+    this.completedQuestIds = const [],
+    this.rewardedAdsToday = 0,
+    this.rewardedAdsDate,
+    this.lastChestClaimDate,
+    this.sharesToday = 0,
+    this.shareDate,
+    this.streakFreezes = 0,
+    this.streakFreezeActive = false,
+    this.dailyPuzzleBestMoves,
   });
 
   int coins;
@@ -21,4 +31,14 @@ class PlayerProgress extends HiveObject {
   int dailyStreak;
   String? lastDailyLoginDate;
   String? lastDailyPuzzleDate;
+  String? questsDate;
+  List<String> completedQuestIds;
+  int rewardedAdsToday;
+  String? rewardedAdsDate;
+  DateTime? lastChestClaimDate;
+  int sharesToday;
+  String? shareDate;
+  int streakFreezes;
+  bool streakFreezeActive;
+  int? dailyPuzzleBestMoves;
 }

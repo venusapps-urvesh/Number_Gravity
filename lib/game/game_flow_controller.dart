@@ -11,6 +11,7 @@ import '../models/replay/move_record.dart';
 import '../providers/game_session_provider.dart';
 import '../providers/providers.dart';
 import '../services/economy/coin_service.dart';
+import '../services/economy/daily_quest_service.dart';
 
 class GameFlowController {
   GameFlowController(this.ref);
@@ -79,10 +80,19 @@ class GameFlowController {
     }
     if (level.world == 0 && isFirstClear) {
       progress.lastDailyPuzzleDate = _todayKey(DateTime.now());
+      if (progress.dailyPuzzleBestMoves == null ||
+          movesUsed < progress.dailyPuzzleBestMoves!) {
+        progress.dailyPuzzleBestMoves = movesUsed;
+      }
     }
     if (coinsEarned > 0 || (level.world == 0 && isFirstClear)) {
       await ref.read(progressRepositoryProvider).saveProgress(progress);
     }
+
+    await _completeQuestsForWin(
+      level: level,
+      hintsUsedThisLevel: hintsUsedThisLevel,
+    );
     ref.invalidate(playerProgressProvider);
 
     final solutionCode =
@@ -166,6 +176,24 @@ class GameFlowController {
       return 0;
     }
 
+    final lastDate = progress.lastDailyLoginDate;
+    if (lastDate != null) {
+      final last = DateTime.parse(lastDate);
+      final todayDate = DateTime.now();
+      final gap = DateTime(todayDate.year, todayDate.month, todayDate.day)
+          .difference(DateTime(last.year, last.month, last.day))
+          .inDays;
+      if (gap > 1) {
+        if (progress.streakFreezeActive) {
+          progress.streakFreezeActive = false;
+        } else {
+          progress.dailyStreak = 0;
+        }
+      } else if (gap == 1) {
+        // consecutive day — streak continues below
+      }
+    }
+
     final dayIndex = progress.dailyStreak.clamp(0, dailyLoginRewards.length - 1);
     final reward = dailyLoginRewards[dayIndex];
     progress.coins += reward;
@@ -182,6 +210,23 @@ class GameFlowController {
   static String _todayKey(DateTime date) {
     String two(int n) => n.toString().padLeft(2, '0');
     return '${date.year}-${two(date.month)}-${two(date.day)}';
+  }
+
+  Future<void> _completeQuestsForWin({
+    required LevelModel level,
+    required int hintsUsedThisLevel,
+  }) async {
+    final questService = DailyQuestService(ref.read(progressRepositoryProvider));
+    if (level.world > 0) {
+      await questService.completeQuest('clear_level');
+      if (hintsUsedThisLevel == 0) {
+        await questService.completeQuest('no_hint');
+      }
+    }
+    if (level.world == 0) {
+      await questService.completeQuest('daily_puzzle');
+    }
+    ref.invalidate(playerProgressProvider);
   }
 }
 

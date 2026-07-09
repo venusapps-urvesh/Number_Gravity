@@ -42,7 +42,7 @@ const int solverDepthCapExpert = 150;
 /// Star thresholds (Section 7).
 /// Keep a small grace window because some level minimums are aspirational.
 const int starThresholdOptimal = 1;
-const int starThresholdTwoStars = 4;
+const int starThresholdTwoStars = 2;
 
 /// Coin rewards on first clear (Section 7 / 13.2).
 const int coinsPerStar1 = 5;
@@ -52,6 +52,30 @@ const int coinsReplayClear = 2;
 const int coinsNoHintBonus = 10;
 const int coinsDailyPuzzleClear = 50;
 const int coinsAchievementClaim = 25;
+
+/// Engagement economy (Section 13.2 / 13.3).
+const int coinsQuestReward = 20;
+const int coinsRewardedAd = 25;
+const int maxRewardedAdsPerDay = 5;
+const int coinsTimeChest = 15;
+const int chestCooldownHours = 4;
+const int coinsShareResult = 10;
+const int maxSharesPerDay = 1;
+const int coinCostSkipLevel = 150;
+const int coinCostStreakFreeze = 100;
+const int dailyQuestCount = 3;
+
+int achievementRewardForId(String id) {
+  return switch (id) {
+    'first_world' => 50,
+    'perfectionist' => 100,
+    'streak_week' => 150,
+    'speed_solver' => 200,
+    'no_hint' => 175,
+    'daily_devotee' => 250,
+    _ => coinsAchievementClaim,
+  };
+}
 
 /// Escalating daily login rewards (Section 13.2).
 const List<int> dailyLoginRewards = [10, 15, 20, 30, 50, 75, 100];

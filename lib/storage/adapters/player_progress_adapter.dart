@@ -28,6 +28,16 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
       dailyStreak: fields[4] as int? ?? 0,
       lastDailyLoginDate: fields[5] as String?,
       lastDailyPuzzleDate: fields[6] as String?,
+      questsDate: fields[7] as String?,
+      completedQuestIds: (fields[8] as List?)?.cast<String>() ?? const [],
+      rewardedAdsToday: fields[9] as int? ?? 0,
+      rewardedAdsDate: fields[10] as String?,
+      lastChestClaimDate: fields[11] as DateTime?,
+      sharesToday: fields[12] as int? ?? 0,
+      shareDate: fields[13] as String?,
+      streakFreezes: fields[14] as int? ?? 0,
+      streakFreezeActive: fields[15] as bool? ?? false,
+      dailyPuzzleBestMoves: fields[16] as int?,
     );
   }
 
@@ -38,7 +48,7 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
     );
 
     writer
-      ..writeByte(7)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.coins)
       ..writeByte(1)
@@ -52,6 +62,26 @@ class PlayerProgressAdapter extends TypeAdapter<PlayerProgress> {
       ..writeByte(5)
       ..write(obj.lastDailyLoginDate)
       ..writeByte(6)
-      ..write(obj.lastDailyPuzzleDate);
+      ..write(obj.lastDailyPuzzleDate)
+      ..writeByte(7)
+      ..write(obj.questsDate)
+      ..writeByte(8)
+      ..write(obj.completedQuestIds)
+      ..writeByte(9)
+      ..write(obj.rewardedAdsToday)
+      ..writeByte(10)
+      ..write(obj.rewardedAdsDate)
+      ..writeByte(11)
+      ..write(obj.lastChestClaimDate)
+      ..writeByte(12)
+      ..write(obj.sharesToday)
+      ..writeByte(13)
+      ..write(obj.shareDate)
+      ..writeByte(14)
+      ..write(obj.streakFreezes)
+      ..writeByte(15)
+      ..write(obj.streakFreezeActive)
+      ..writeByte(16)
+      ..write(obj.dailyPuzzleBestMoves);
   }
 }

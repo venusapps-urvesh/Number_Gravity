@@ -16,6 +16,7 @@ import '../../widgets/common/ng_icon_button.dart';
 import '../../widgets/common/ng_responsive_layout.dart';
 import '../../widgets/common/ng_scaffold.dart';
 import '../../widgets/game/tile_badge.dart';
+import '../../widgets/home/daily_quests_panel.dart';
 import '../../models/tile_type.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -103,6 +104,8 @@ class HomeScreen extends ConsumerWidget {
                     ],
                   ),
                   const Spacer(),
+                  const DailyQuestsPanel(),
+                  const SizedBox(height: AppSpacing.md),
                   NGButton(
                     label: l10n.playCampaign,
                     icon: Icons.play_arrow_rounded,

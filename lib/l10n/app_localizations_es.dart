@@ -532,4 +532,79 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get movesOverPar => 'Por encima del par';
+
+  @override
+  String get levelTip1 =>
+      'Toca una ficha azul + y desliza para moverla. Los números positivos atraen fichas cercanas.';
+
+  @override
+  String get levelTip2 =>
+      'Toca una flecha una vez para previsualizar la gravedad y otra vez para confirmar.';
+
+  @override
+  String get levelTip3 =>
+      'Planifica varios movimientos — observa cómo se deslizan las fichas tras cada turno.';
+
+  @override
+  String get dailyQuestsTitle => 'Misiones diarias';
+
+  @override
+  String get questClearLevel => 'Completa cualquier nivel';
+
+  @override
+  String get questNoHint => 'Completa un nivel sin pistas';
+
+  @override
+  String get questDailyPuzzle => 'Juega el puzzle diario de hoy';
+
+  @override
+  String get questClaimed => 'Reclamado';
+
+  @override
+  String questReward(int amount) {
+    return '+$amount monedas';
+  }
+
+  @override
+  String get timeChestTitle => 'Cofre temporal';
+
+  @override
+  String timeChestReady(int amount) {
+    return 'Abrir por +$amount monedas';
+  }
+
+  @override
+  String timeChestCooldown(int hours) {
+    return 'Próximo cofre en ${hours}h';
+  }
+
+  @override
+  String shareResultReward(int amount) {
+    return 'Compartir resultado (+$amount monedas)';
+  }
+
+  @override
+  String get skipLevel => 'Saltar nivel';
+
+  @override
+  String skipLevelCost(int cost) {
+    return 'Saltar por $cost monedas';
+  }
+
+  @override
+  String get streakFreeze => 'Congelar racha';
+
+  @override
+  String get streakFreezeDesc => 'Protege tu racha de inicio de sesión un día';
+
+  @override
+  String get purchaseSuccess => 'Compra completada';
+
+  @override
+  String adRewardGranted(int amount) {
+    return '+$amount monedas ganadas';
+  }
+
+  @override
+  String get adLimitReached => 'Límite diario de anuncios alcanzado';
 }

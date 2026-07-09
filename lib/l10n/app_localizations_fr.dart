@@ -534,4 +534,80 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get movesOverPar => 'Au-dessus du par';
+
+  @override
+  String get levelTip1 =>
+      'Touchez une tuile bleue + puis glissez. Les nombres positifs attirent les tuiles proches.';
+
+  @override
+  String get levelTip2 =>
+      'Touchez une flèche une fois pour prévisualiser, puis encore pour valider.';
+
+  @override
+  String get levelTip3 =>
+      'Planifiez plusieurs coups — observez comment les tuiles glissent après chaque tour.';
+
+  @override
+  String get dailyQuestsTitle => 'Quêtes du jour';
+
+  @override
+  String get questClearLevel => 'Terminer un niveau';
+
+  @override
+  String get questNoHint => 'Terminer un niveau sans indice';
+
+  @override
+  String get questDailyPuzzle => 'Jouer le puzzle du jour';
+
+  @override
+  String get questClaimed => 'Réclamé';
+
+  @override
+  String questReward(int amount) {
+    return '+$amount pièces';
+  }
+
+  @override
+  String get timeChestTitle => 'Coffre horaire';
+
+  @override
+  String timeChestReady(int amount) {
+    return 'Ouvrir pour +$amount pièces';
+  }
+
+  @override
+  String timeChestCooldown(int hours) {
+    return 'Prochain coffre dans ${hours}h';
+  }
+
+  @override
+  String shareResultReward(int amount) {
+    return 'Partager le résultat (+$amount pièces)';
+  }
+
+  @override
+  String get skipLevel => 'Passer le niveau';
+
+  @override
+  String skipLevelCost(int cost) {
+    return 'Passer pour $cost pièces';
+  }
+
+  @override
+  String get streakFreeze => 'Gel de série';
+
+  @override
+  String get streakFreezeDesc =>
+      'Protège votre série de connexion pendant un jour';
+
+  @override
+  String get purchaseSuccess => 'Achat réussi';
+
+  @override
+  String adRewardGranted(int amount) {
+    return '+$amount pièces gagnées';
+  }
+
+  @override
+  String get adLimitReached => 'Limite quotidienne d\'annonces atteinte';
 }

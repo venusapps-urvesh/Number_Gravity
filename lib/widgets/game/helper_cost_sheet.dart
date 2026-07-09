@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/router/routes.dart';
 import '../../app/theme/app_colors.dart';
+import '../../core/constants/game_constants.dart';
 import '../../l10n/app_localizations.dart';
+import '../../services/economy/helper_pricing.dart';
 import '../common/ng_button.dart';
 
 Future<bool?> showHelperCostSheet(
@@ -116,19 +118,19 @@ Future<int?> showHintTierSheet(BuildContext context) {
               ListTile(
                 leading: const Icon(Icons.touch_app_outlined),
                 title: Text(l10n.hintTier1Title),
-                subtitle: Text(l10n.hintTier1Cost),
+                subtitle: Text(l10n.undoCostCoins(hintCostForTier(1))),
                 onTap: () => Navigator.pop(sheetContext, 1),
               ),
               ListTile(
                 leading: const Icon(Icons.navigation_outlined),
                 title: Text(l10n.hintTier2Title),
-                subtitle: Text(l10n.hintTier2Cost),
+                subtitle: Text(l10n.undoCostCoins(hintCostForTier(2))),
                 onTap: () => Navigator.pop(sheetContext, 2),
               ),
               ListTile(
                 leading: const Icon(Icons.lightbulb_rounded),
                 title: Text(l10n.hintTier3Title),
-                subtitle: Text(l10n.hintTier3Cost),
+                subtitle: Text(l10n.undoCostCoins(hintCostForTier(3))),
                 onTap: () => Navigator.pop(sheetContext, 3),
               ),
             ],

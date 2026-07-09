@@ -4,7 +4,12 @@ import '../models/board_model.dart';
 import '../models/level/level_model.dart';
 import '../models/move.dart';
 import '../models/simulation/force_vector.dart';
+import '../services/economy/chest_service.dart';
+import '../services/economy/daily_quest_service.dart';
+import '../services/economy/engagement_service.dart';
 import '../services/economy/economy_service.dart';
+import '../services/ads/rewarded_ad_service.dart';
+import '../services/iap/purchase_service.dart';
 import 'providers.dart';
 
 class GameSessionState {
@@ -181,4 +186,24 @@ final gameSessionProvider =
 
 final economyServiceProvider = Provider<EconomyService>((ref) {
   return EconomyService(ref.watch(progressRepositoryProvider));
+});
+
+final dailyQuestServiceProvider = Provider<DailyQuestService>((ref) {
+  return DailyQuestService(ref.watch(progressRepositoryProvider));
+});
+
+final chestServiceProvider = Provider<ChestService>((ref) {
+  return ChestService(ref.watch(progressRepositoryProvider));
+});
+
+final engagementServiceProvider = Provider<EngagementService>((ref) {
+  return EngagementService(ref.watch(progressRepositoryProvider));
+});
+
+final rewardedAdServiceProvider = Provider<RewardedAdService>((ref) {
+  return RewardedAdServiceStub();
+});
+
+final purchaseServiceProvider = Provider<PurchaseService>((ref) {
+  return PurchaseServiceStub();
 });

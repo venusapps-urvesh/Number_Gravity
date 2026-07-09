@@ -222,5 +222,55 @@
   "hintTier3Cost": "80 pièces",
   "hintUnavailable": "Aucun indice disponible",
   "notEnoughCoins": "Pièces insuffisantes",
-  "movesOverPar": "Au-dessus du par"
+  "movesOverPar": "Au-dessus du par",
+  "levelTip1": "Touchez une tuile bleue + puis glissez. Les nombres positifs attirent les tuiles proches.",
+  "levelTip2": "Touchez une flèche une fois pour prévisualiser, puis encore pour valider.",
+  "levelTip3": "Planifiez plusieurs coups — observez comment les tuiles glissent après chaque tour.",
+  "dailyQuestsTitle": "Quêtes du jour",
+  "questClearLevel": "Terminer un niveau",
+  "questNoHint": "Terminer un niveau sans indice",
+  "questDailyPuzzle": "Jouer le puzzle du jour",
+  "questClaimed": "Réclamé",
+  "questReward": "+{amount} pièces",
+  "@questReward": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "timeChestTitle": "Coffre horaire",
+  "timeChestReady": "Ouvrir pour +{amount} pièces",
+  "@timeChestReady": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "timeChestCooldown": "Prochain coffre dans {hours}h",
+  "@timeChestCooldown": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "shareResultReward": "Partager le résultat (+{amount} pièces)",
+  "@shareResultReward": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "skipLevel": "Passer le niveau",
+  "skipLevelCost": "Passer pour {cost} pièces",
+  "@skipLevelCost": {
+    "placeholders": {
+      "cost": {"type": "int"}
+    }
+  },
+  "streakFreeze": "Gel de série",
+  "streakFreezeDesc": "Protège votre série de connexion pendant un jour",
+  "purchaseSuccess": "Achat réussi",
+  "adRewardGranted": "+{amount} pièces gagnées",
+  "@adRewardGranted": {
+    "placeholders": {
+      "amount": {"type": "int"}
+    }
+  },
+  "adLimitReached": "Limite quotidienne d'annonces atteinte"
 }

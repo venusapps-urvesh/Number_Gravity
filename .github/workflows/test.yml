@@ -15,4 +15,5 @@ jobs:
           channel: stable
       - run: flutter pub get
       - run: dart run tool/validate_levels.dart
+      - run: dart run tool/analyze_levels.dart
       - run: flutter test

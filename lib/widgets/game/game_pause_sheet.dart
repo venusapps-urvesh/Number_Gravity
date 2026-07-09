@@ -134,6 +134,8 @@ Future<void> showGameStuckSheet(
   required VoidCallback onRestart,
   required VoidCallback onExit,
   VoidCallback? onHint,
+  VoidCallback? onSkip,
+  String? skipLabel,
 }) {
   final l10n = AppLocalizations.of(context);
 
@@ -220,6 +222,18 @@ Future<void> showGameStuckSheet(
                     onRestart();
                   },
                 ),
+                if (onSkip != null && skipLabel != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  NGButton(
+                    label: skipLabel,
+                    icon: Icons.skip_next_rounded,
+                    variant: NGButtonVariant.secondary,
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop();
+                      onSkip();
+                    },
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.sm),
                 NGButton(
                   label: l10n.levels,

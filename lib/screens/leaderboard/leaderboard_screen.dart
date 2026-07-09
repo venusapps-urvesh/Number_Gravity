@@ -31,7 +31,9 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final progress = ref.watch(playerProgressProvider).value;
-    final youScore = progress?.gameplayEarnedCoins ?? 0;
+    final youScore = _tab == _LadderTab.skill
+        ? (progress?.dailyPuzzleBestMoves ?? 0)
+        : (progress?.gameplayEarnedCoins ?? 0);
 
     return NGScaffold(
       body: Column(
@@ -47,15 +49,17 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
                   _scopeRow(context, l10n),
                   const SizedBox(height: AppSpacing.md),
                   Expanded(
-                    child: FutureBuilder<List<LeaderboardEntry>>(
-                      future: _scope == _Scope.weekly
-                          ? widget.service.fetchWeekly()
-                          : widget.service.fetchGlobal(),
-                      builder: (context, snapshot) {
-                        final entries = snapshot.data ?? const [];
-                        return _list(context, l10n, entries, youScore);
-                      },
-                    ),
+                    child: _tab == _LadderTab.skill
+                        ? _skillPanel(context, l10n, youScore)
+                        : FutureBuilder<List<LeaderboardEntry>>(
+                            future: _scope == _Scope.weekly
+                                ? widget.service.fetchWeekly()
+                                : widget.service.fetchGlobal(),
+                            builder: (context, snapshot) {
+                              final entries = snapshot.data ?? const [];
+                              return _list(context, l10n, entries, youScore);
+                            },
+                          ),
                   ),
                   _fairnessNote(context, l10n),
                 ],
@@ -155,6 +159,31 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
         chip(_Scope.global, l10n.scopeGlobal),
         chip(_Scope.weekly, l10n.scopeWeekly),
         chip(_Scope.friends, l10n.scopeFriends),
+      ],
+    );
+  }
+
+  Widget _skillPanel(
+    BuildContext context,
+    AppLocalizations l10n,
+    int bestMoves,
+  ) {
+    final muted = AppColors.onSurfaceMuted(Theme.of(context).brightness);
+    return Column(
+      children: [
+        _youRow(context, l10n, rank: null, score: bestMoves),
+        const SizedBox(height: AppSpacing.lg),
+        Expanded(
+          child: Center(
+            child: Text(
+              bestMoves > 0
+                  ? l10n.skillLadderNote
+                  : l10n.leaderboardEmpty,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: muted),
+            ),
+          ),
+        ),
       ],
     );
   }

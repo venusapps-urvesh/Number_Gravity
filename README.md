@@ -227,7 +227,9 @@ assets/
 
 test/                     # Unit tests (simulation, models, storage)
 tool/
-└── generate_levels.dart  # Script to regenerate level JSON files
+├── generate_levels.dart  # Procedural level generation (solver-verified)
+├── validate_levels.dart  # Schema + solvability validation
+└── analyze_levels.dart   # Difficulty tier analysis
 ```
 
 ---
@@ -268,6 +270,15 @@ flutter analyze
 
 # Regenerate all 200 level JSON files
 dart run tool/generate_levels.dart
+
+# Regenerate a single world (faster iteration)
+dart run tool/generate_levels.dart --world=1
+
+# Validate level schema and solvability
+dart run tool/validate_levels.dart
+
+# Analyze difficulty tiers across all levels
+dart run tool/analyze_levels.dart
 
 # Regenerate model code after editing @freezed classes
 dart run build_runner build --delete-conflicting-outputs
@@ -328,7 +339,7 @@ Loaded by `AssetLevelRepository` in `lib/levels/asset_level_repository.dart`.
 
 ## Localization
 
-Supported languages: **English**, **Spanish**, **French**.
+Supported languages: **English**, **Spanish**, **French**, plus scaffolding ARB files for Portuguese, German, Russian, Turkish, Hindi, Indonesian, Japanese, Korean, and Simplified Chinese (English placeholders).
 
 - Source strings: `lib/l10n/app_en.arb` (template), `app_es.arb`, `app_fr.arb`
 - Config: `l10n.yaml`

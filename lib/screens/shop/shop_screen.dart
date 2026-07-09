@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/theme/app_colors.dart';
+import '../../core/constants/game_constants.dart';
 import '../../l10n/app_localizations.dart';
+import '../../providers/game_session_provider.dart';
 import '../../providers/providers.dart';
+import '../../services/economy/coin_service.dart';
 import '../../widgets/common/ng_card.dart';
 import '../../widgets/common/ng_page_header.dart';
 import '../../widgets/common/ng_responsive_layout.dart';
@@ -85,11 +88,11 @@ class ShopScreen extends ConsumerWidget {
                     childAspectRatio: 0.86,
                     children: [
                       for (final pack in packs)
-                        _PackCard(pack: pack, l10n: l10n),
+                        _PackCard(pack: pack),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  _RewardedAdCard(l10n: l10n),
+                  _RewardedAdCard(),
                   const SizedBox(height: AppSpacing.sm),
                   Center(
                     child: Text(
@@ -183,18 +186,17 @@ class _StarterPack extends StatelessWidget {
   }
 }
 
-class _PackCard extends StatelessWidget {
-  const _PackCard({required this.pack, required this.l10n});
+class _PackCard extends ConsumerWidget {
+  const _PackCard({required this.pack});
 
   final _Pack pack;
-  final AppLocalizations l10n;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     final muted = AppColors.onSurfaceMuted(Theme.of(context).brightness);
 
     return NGCard(
-      onTap: () => _notImplemented(context, pack.name),
       padding: const EdgeInsets.all(AppSpacing.md),
       borderColor: pack.bestValue ? AppColors.goal : null,
       borderWidth: pack.bestValue ? 2 : 0,
@@ -253,7 +255,30 @@ class _PackCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => _notImplemented(context, pack.name),
+              onPressed: () async {
+                final productId = switch (pack.coins) {
+                  500 => 'pack_pouch',
+                  1650 => 'pack_bag',
+                  6000 => 'pack_chest',
+                  _ => 'pack_vault',
+                };
+                final ok = await ref
+                    .read(purchaseServiceProvider)
+                    .purchaseCoinPack(productId);
+                if (!context.mounted) {
+                  return;
+                }
+                if (ok) {
+                  await ref.read(engagementServiceProvider).purchaseCoins(
+                        amount: pack.coins,
+                        source: CoinSource.iap,
+                      );
+                  ref.invalidate(playerProgressProvider);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.purchaseSuccess)),
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.positive,
                 foregroundColor: Colors.white,
@@ -268,15 +293,42 @@ class _PackCard extends StatelessWidget {
   }
 }
 
-class _RewardedAdCard extends StatelessWidget {
-  const _RewardedAdCard({required this.l10n});
-
-  final AppLocalizations l10n;
+class _RewardedAdCard extends ConsumerWidget {
+  const _RewardedAdCard();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+
     return NGCard(
-      onTap: () => _notImplemented(context, l10n.watchAnAd),
+      onTap: () async {
+        final ad = ref.read(rewardedAdServiceProvider);
+        if (!ad.canShowToday) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.adLimitReached)),
+          );
+          return;
+        }
+        final shown = await ad.showRewardedAd();
+        if (!shown || !context.mounted) {
+          return;
+        }
+        final reward =
+            await ref.read(engagementServiceProvider).grantRewardedAdCoins();
+        if (!context.mounted) {
+          return;
+        }
+        if (reward != null) {
+          ref.invalidate(playerProgressProvider);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.adRewardGranted(reward))),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.adLimitReached)),
+          );
+        }
+      },
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         children: [

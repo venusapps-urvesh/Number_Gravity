@@ -5,9 +5,20 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_he.dart';
+import 'app_localizations_hi.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_ja.dart';
+import 'app_localizations_ko.dart';
+import 'app_localizations_pt.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_zh.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,9 +106,20 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('de'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
+    Locale('he'),
+    Locale('hi'),
+    Locale('id'),
+    Locale('ja'),
+    Locale('ko'),
+    Locale('pt'),
+    Locale('ru'),
+    Locale('tr'),
+    Locale('zh'),
   ];
 
   /// No description provided for @appName.
@@ -1041,6 +1063,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Over par — fewer moves earn more stars'**
   String get movesOverPar;
+
+  /// No description provided for @levelTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a blue + tile, then swipe to move it. Positive numbers pull nearby tiles.'**
+  String get levelTip1;
+
+  /// No description provided for @levelTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an arrow once to preview gravity, then tap again to commit the move.'**
+  String get levelTip2;
+
+  /// No description provided for @levelTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a few moves ahead — watch how tiles slide after each turn.'**
+  String get levelTip3;
+
+  /// No description provided for @dailyQuestsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily quests'**
+  String get dailyQuestsTitle;
+
+  /// No description provided for @questClearLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear any level'**
+  String get questClearLevel;
+
+  /// No description provided for @questNoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear a level with no hints'**
+  String get questNoHint;
+
+  /// No description provided for @questDailyPuzzle.
+  ///
+  /// In en, this message translates to:
+  /// **'Play today\'s daily puzzle'**
+  String get questDailyPuzzle;
+
+  /// No description provided for @questClaimed.
+  ///
+  /// In en, this message translates to:
+  /// **'Claimed'**
+  String get questClaimed;
+
+  /// No description provided for @questReward.
+  ///
+  /// In en, this message translates to:
+  /// **'+{amount} coins'**
+  String questReward(int amount);
+
+  /// No description provided for @timeChestTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time chest'**
+  String get timeChestTitle;
+
+  /// No description provided for @timeChestReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Open for +{amount} coins'**
+  String timeChestReady(int amount);
+
+  /// No description provided for @timeChestCooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Next chest in {hours}h'**
+  String timeChestCooldown(int hours);
+
+  /// No description provided for @shareResultReward.
+  ///
+  /// In en, this message translates to:
+  /// **'Share result (+{amount} coins)'**
+  String shareResultReward(int amount);
+
+  /// No description provided for @skipLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip level'**
+  String get skipLevel;
+
+  /// No description provided for @skipLevelCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for {cost} coins'**
+  String skipLevelCost(int cost);
+
+  /// No description provided for @streakFreeze.
+  ///
+  /// In en, this message translates to:
+  /// **'Streak freeze'**
+  String get streakFreeze;
+
+  /// No description provided for @streakFreezeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect your login streak for one missed day'**
+  String get streakFreezeDesc;
+
+  /// No description provided for @purchaseSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase complete'**
+  String get purchaseSuccess;
+
+  /// No description provided for @adRewardGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'+{amount} coins earned'**
+  String adRewardGranted(int amount);
+
+  /// No description provided for @adLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily ad limit reached'**
+  String get adLimitReached;
 }
 
 class _AppLocalizationsDelegate
@@ -1053,8 +1195,22 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'es', 'fr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'en',
+    'es',
+    'fr',
+    'he',
+    'hi',
+    'id',
+    'ja',
+    'ko',
+    'pt',
+    'ru',
+    'tr',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1063,12 +1219,34 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
       return AppLocalizationsEs();
     case 'fr':
       return AppLocalizationsFr();
+    case 'he':
+      return AppLocalizationsHe();
+    case 'hi':
+      return AppLocalizationsHi();
+    case 'id':
+      return AppLocalizationsId();
+    case 'ja':
+      return AppLocalizationsJa();
+    case 'ko':
+      return AppLocalizationsKo();
+    case 'pt':
+      return AppLocalizationsPt();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'zh':
+      return AppLocalizationsZh();
   }
 
   throw FlutterError(

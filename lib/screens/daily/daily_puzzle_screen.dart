@@ -9,6 +9,7 @@ import '../../game/game_flow_controller.dart';
 import '../../levels/daily_puzzle_generator.dart';
 import '../../models/board_model.dart';
 import '../../models/tile_model.dart';
+import '../../providers/game_session_provider.dart';
 import '../../providers/providers.dart';
 import '../../widgets/common/ng_button.dart';
 import '../../widgets/common/ng_page_header.dart';
@@ -90,6 +91,10 @@ class _DailyPuzzleScreenState extends ConsumerState<DailyPuzzleScreen> {
                   ),
                   const SizedBox(height: AppSpacing.md),
                   _StreakStrip(rewards: dailyLoginRewards, streak: streak),
+                  const SizedBox(height: AppSpacing.md),
+                  _ChestCard(),
+                  const SizedBox(height: AppSpacing.sm),
+                  _StreakFreezeCard(),
                   const SizedBox(height: AppSpacing.lg),
                   _BoardPreview(board: puzzle.board, colorBlind: colorBlind),
                   const SizedBox(height: AppSpacing.lg),
@@ -122,6 +127,82 @@ class _DailyPuzzleScreenState extends ConsumerState<DailyPuzzleScreen> {
     return '${date.year}-${two(date.month)}-${two(date.day)}';
   }
 }
+
+class _ChestCard extends ConsumerWidget {
+  const _ChestCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final chestAsync = ref.watch(_chestProvider);
+
+    return chestAsync.when(
+      loading: () => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
+      data: (canClaim) {
+        return NGButton(
+          label: canClaim
+              ? l10n.timeChestReady(coinsTimeChest)
+              : l10n.timeChestCooldown(chestCooldownHours),
+          icon: Icons.card_giftcard_rounded,
+          variant: NGButtonVariant.secondary,
+          onPressed: canClaim
+              ? () async {
+                  final reward =
+                      await ref.read(chestServiceProvider).claim();
+                  if (!context.mounted || reward == null) {
+                    return;
+                  }
+                  ref.invalidate(_chestProvider);
+                  ref.invalidate(playerProgressProvider);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(l10n.questReward(reward))),
+                  );
+                }
+              : null,
+        );
+      },
+    );
+  }
+}
+
+class _StreakFreezeCard extends ConsumerWidget {
+  const _StreakFreezeCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final progress = ref.watch(playerProgressProvider).value;
+    final owned = progress?.streakFreezes ?? 0;
+
+    return NGButton(
+      label: owned > 0
+          ? '${l10n.streakFreeze} ($owned)'
+          : '${l10n.streakFreeze} · ${l10n.undoCostCoins(coinCostStreakFreeze)}',
+      icon: Icons.ac_unit_rounded,
+      variant: NGButtonVariant.secondary,
+      onPressed: () async {
+        if (owned > 0) {
+          await ref.read(engagementServiceProvider).useStreakFreeze();
+        } else {
+          final bought =
+              await ref.read(engagementServiceProvider).buyStreakFreeze();
+          if (!bought && context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(l10n.notEnoughCoins)),
+            );
+            return;
+          }
+        }
+        ref.invalidate(playerProgressProvider);
+      },
+    );
+  }
+}
+
+final _chestProvider = FutureProvider<bool>((ref) async {
+  return ref.watch(chestServiceProvider).canClaim();
+});
 
 class _StreakStrip extends StatelessWidget {
   const _StreakStrip({required this.rewards, required this.streak});
