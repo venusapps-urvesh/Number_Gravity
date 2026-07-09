@@ -25,16 +25,14 @@ class SimulationBridge {
   }
 
   SimulationResult previewMove(BoardModel board, Move move) {
-    final afterPlayer = _applier.applyPlayerMove(board, move);
-    return _engine.simulate(afterPlayer);
+    return _simulateFromPlayerMove(board, move);
   }
 
   (SimulationResult result, BoardModel board) commitMove(
     BoardModel board,
     Move move,
   ) {
-    final afterPlayer = _applier.applyPlayerMove(board, move);
-    final result = _engine.simulate(afterPlayer);
+    final result = _simulateFromPlayerMove(board, move);
     return (result, result.finalBoard);
   }
 
@@ -45,4 +43,9 @@ class SimulationBridge {
   }
 
   List<CycleStep> stepsFromResult(SimulationResult result) => result.steps;
+
+  SimulationResult _simulateFromPlayerMove(BoardModel board, Move move) {
+    final afterPlayer = _applier.applyPlayerMove(board, move);
+    return _engine.simulate(afterPlayer);
+  }
 }

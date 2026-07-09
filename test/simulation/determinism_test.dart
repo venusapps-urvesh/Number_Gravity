@@ -69,5 +69,44 @@ void main() {
 
       expect(runOnce().toFlatHash(), runOnce().toFlatHash());
     });
+
+    test('engine simulation is stable across repeated runs', () {
+      final board = BoardModel(
+        rows: 4,
+        cols: 4,
+        tiles: [
+          const TileModel(
+            id: 't1',
+            type: TileType.number,
+            value: 4,
+            row: 0,
+            col: 1,
+          ),
+          const TileModel(
+            id: 't2',
+            type: TileType.number,
+            value: -2,
+            row: 2,
+            col: 1,
+          ),
+          const TileModel(
+            id: 't3',
+            type: TileType.number,
+            value: 3,
+            row: 3,
+            col: 3,
+          ),
+        ],
+      );
+
+      final first = engine.simulate(board);
+      final second = engine.simulate(board);
+      final third = engine.simulate(board);
+
+      expect(first.finalBoard.toFlatHash(), second.finalBoard.toFlatHash());
+      expect(second.finalBoard.toFlatHash(), third.finalBoard.toFlatHash());
+      expect(first.steps.length, second.steps.length);
+      expect(second.steps.length, third.steps.length);
+    });
   });
 }

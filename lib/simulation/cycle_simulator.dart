@@ -53,7 +53,7 @@ class CycleSimulator {
       );
     }
 
-  final processed = <String>{};
+    final processed = <String>{};
     for (final tile in BoardUtils.sortedMovableTiles(working)) {
       if (processed.contains(tile.id)) {
         continue;
@@ -175,7 +175,7 @@ class CycleSimulator {
       actions.add(switchResult.action!);
     }
 
-    final portalResult = _portalProcessor.process(
+      final portalResult = _portalProcessor.process(
       board: working,
       tile: current,
       row: row,
@@ -187,29 +187,32 @@ class CycleSimulator {
       working = working.withTile(current);
     }
 
-    final modifierCell = working.backgroundTileAt(row, col);
-    if (modifierCell != null && _isModifier(modifierCell.type)) {
-      final modifierResult = _modifierProcessor.apply(
-        board: working,
-        tile: current,
-        row: row,
-        col: col,
-      );
-      current = modifierResult.tile;
-      working = working.withoutTile(modifierCell.id).withTile(current);
-      if (modifierResult.action != null) {
-        actions.add(modifierResult.action!);
+      // Modifiers must apply at the tile's post-portal location.
+      final modifierRow = current.row;
+      final modifierCol = current.col;
+      final modifierCell = working.backgroundTileAt(modifierRow, modifierCol);
+      if (modifierCell != null && _isModifier(modifierCell.type)) {
+        final modifierResult = _modifierProcessor.apply(
+          board: working,
+          tile: current,
+          row: modifierRow,
+          col: modifierCol,
+        );
+        current = modifierResult.tile;
+        working = working.withoutTile(modifierCell.id).withTile(current);
+        if (modifierResult.action != null) {
+          actions.add(modifierResult.action!);
+        }
       }
-    }
 
-    if (current.allowsSplit && current.value.abs() >= 2) {
-      final splitResult = _trySplit(working, current, actions);
-      if (splitResult != null) {
-        working = splitResult;
+      if (current.allowsSplit && current.value.abs() >= 2) {
+        final splitResult = _trySplit(working, current, actions);
+        if (splitResult != null) {
+          working = splitResult;
+        }
       }
-    }
 
-    return PostMoveEffectsResult(board: working);
+      return PostMoveEffectsResult(board: working);
   }
 
   bool _isModifier(TileType type) {

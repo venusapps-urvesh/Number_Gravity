@@ -13,7 +13,7 @@ class ObjectiveChecker {
         return tile != null && tile.row == goalRow && tile.col == goalCol;
       }(),
       SequenceObjective(:final tileIds, :final targetValues) => () {
-        if (tileIds.length != targetValues.length) {
+        if (tileIds.isEmpty || tileIds.length != targetValues.length) {
           return false;
         }
         for (var i = 0; i < tileIds.length; i++) {
@@ -25,6 +25,9 @@ class ObjectiveChecker {
         return true;
       }(),
       SumObjective(:final tileIds, :final targetSum) => () {
+        if (tileIds.isEmpty) {
+          return false;
+        }
         var total = 0;
         for (final id in tileIds) {
           final tile = board.tileById(id);
@@ -36,6 +39,9 @@ class ObjectiveChecker {
         return total == targetSum;
       }(),
       BalanceObjective(:final regionTileIds, :final targetValue) => () {
+        if (regionTileIds.isEmpty) {
+          return false;
+        }
         for (final id in regionTileIds) {
           final tile = board.tileById(id);
           if (tile == null || tile.value != targetValue) {
@@ -45,6 +51,9 @@ class ObjectiveChecker {
         return true;
       }(),
       CollectionObjective(:final tileGoals) => () {
+        if (tileGoals.isEmpty) {
+          return false;
+        }
         for (final entry in tileGoals.entries) {
           final tile = board.tileById(entry.key);
           if (tile == null) {

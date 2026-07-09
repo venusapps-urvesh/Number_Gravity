@@ -95,6 +95,60 @@ void main() {
       expect(result.tile.row, 2);
       expect(result.tile.col, 2);
     });
+
+    test('does not teleport into occupied exit cell', () {
+      const processor = PortalProcessor();
+      final board = BoardModel(
+        rows: 3,
+        cols: 3,
+        tiles: [
+          const TileModel(
+            id: 't1',
+            type: TileType.number,
+            value: 2,
+            row: 1,
+            col: 1,
+          ),
+          const TileModel(
+            id: 'blocker',
+            type: TileType.number,
+            value: 4,
+            row: 2,
+            col: 2,
+          ),
+          const TileModel(
+            id: 'p1',
+            type: TileType.portal,
+            value: 0,
+            row: 1,
+            col: 1,
+            isLocked: true,
+            portalPairId: 'p2',
+          ),
+          const TileModel(
+            id: 'p2',
+            type: TileType.portal,
+            value: 0,
+            row: 2,
+            col: 2,
+            isLocked: true,
+            portalPairId: 'p1',
+          ),
+        ],
+      );
+
+      final tile = board.tileById('t1')!;
+      final result = processor.process(
+        board: board,
+        tile: tile,
+        row: 1,
+        col: 1,
+      );
+
+      expect(result.action, isNull);
+      expect(result.tile.row, 1);
+      expect(result.tile.col, 1);
+    });
   });
 
   group('GhostSimulator', () {

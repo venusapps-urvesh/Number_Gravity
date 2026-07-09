@@ -28,6 +28,13 @@ class PortalProcessor {
       return PortalResult.unchanged(tile, row, col);
     }
 
+    final hasMovableBlocker = board.tilesAt(exit.row, exit.col).any(
+      (existing) => existing.isMovable && existing.id != tile.id,
+    );
+    if (hasMovableBlocker) {
+      return PortalResult.unchanged(tile, row, col);
+    }
+
     final teleported = tile.movedTo(row: exit.row, col: exit.col);
     return PortalResult.teleported(
       tile: teleported,

@@ -8,6 +8,36 @@ import 'package:number_gravity/models/tile_type.dart';
 import 'package:number_gravity/simulation/objective_checker.dart';
 
 void main() {
+  group('ObjectiveChecker validation', () {
+    test('sum objective with empty tileIds is never solved', () {
+      final board = BoardModel(rows: 2, cols: 2, tiles: const []);
+      final level = LevelModel(
+        id: 9,
+        world: 1,
+        tier: LevelTier.beginner,
+        board: board,
+        objective: const ObjectiveModel.sum(tileIds: [], targetSum: 0),
+        minimumMoves: 1,
+      );
+
+      expect(const ObjectiveChecker().isSolved(level, board), isFalse);
+    });
+
+    test('collection objective with empty goals is never solved', () {
+      final board = BoardModel(rows: 2, cols: 2, tiles: const []);
+      final level = LevelModel(
+        id: 10,
+        world: 1,
+        tier: LevelTier.beginner,
+        board: board,
+        objective: const ObjectiveModel.collection(tileGoals: {}),
+        minimumMoves: 1,
+      );
+
+      expect(const ObjectiveChecker().isSolved(level, board), isFalse);
+    });
+  });
+
   group('ObjectiveChecker chain', () {
     test('solved when all chain tiles are on goal cells', () {
       final board = BoardModel(
