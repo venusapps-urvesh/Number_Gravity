@@ -4,10 +4,7 @@ class HowToPlayAssets {
   static const _base = 'assets/images/how-to-play';
 
   static const goal = '$_base/how_to_goal.png';
-  static const pull = '$_base/how_to_pull.png';
-  static const push = '$_base/how_to_push.png';
-  static const swipe = '$_base/how_to_swipe.png';
-  static const gravity = '$_base/how_to_gravity.png';
-  static const stars = '$_base/how_to_stars.png';
-  static const controls = '$_base/how_to_controls.png';
+  static const selectForces = '$_base/how_to_select_forces.png';
+  static const previewCommit = '$_base/how_to_preview_commit.png';
+  static const helpers = '$_base/how_to_helpers.png';
 }

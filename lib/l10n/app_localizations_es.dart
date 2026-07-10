@@ -394,56 +394,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get howToPlayIntro =>
-      'Number Gravity es un puzzle donde las fichas numeradas se atraen y repelen. Planifica tus movimientos, deja que la gravedad se asiente y alcanza la meta con el menor número de movimientos.';
+      'Number Gravity is a turn-based puzzle where numbered tiles attract and repel each other. Preview your move, let gravity settle, and reach the goal in as few moves as possible.';
 
   @override
-  String get howToPlayGoalTitle => 'Alcanza la meta';
+  String get howToPlayGoalTitle => 'Reach the goal';
 
   @override
   String get howToPlayGoalBody =>
-      'Cada nivel tiene un objetivo — normalmente colocar una ficha en la estrella dorada. Lee la meta del nivel y planifica tu camino por el tablero.';
+      'Every level has an objective — usually moving a tile to the gold star. Read the level goal, then plan a path through the grid.';
 
   @override
-  String get howToPlayPullTitle => 'Las fichas azules atraen';
+  String get howToPlaySelectTitle => 'Select and read forces';
 
   @override
-  String get howToPlayPullBody =>
-      'Los números positivos atraen las fichas cercanas. Una ficha +3 tira de las demás hacia ella. Usa la atracción para guiar las fichas.';
+  String get howToPlaySelectBody =>
+      'Tap a movable tile to select it. Gold arrows show legal moves, and force lines show pull from blue + tiles and push from red − tiles.';
 
   @override
-  String get howToPlayPushTitle => 'Las fichas rojas empujan';
+  String get howToPlayPreviewTitle => 'Preview then commit';
 
   @override
-  String get howToPlayPushBody =>
-      'Los números negativos repelen las fichas cercanas. Una ficha −2 las aleja. Combina empuje y atracción para resolver diseños difíciles.';
+  String get howToPlayPreviewBody =>
+      'Tap an arrow once to preview ghost tiles. Tap the same arrow again to commit. You can also swipe a selected tile to commit directly. After each move, gravity resolves cycle by cycle until the board settles.';
 
   @override
-  String get howToPlaySwipeTitle => 'Desliza para mover';
+  String get howToPlayHelpersTitle => 'Use helpers';
 
   @override
-  String get howToPlaySwipeBody =>
-      'Toca una ficha para seleccionarla, luego desliza arriba, abajo, izquierda o derecha para moverla una celda. También puedes deslizar sin seleccionar.';
-
-  @override
-  String get howToPlayGravityTitle => 'La gravedad se asienta sola';
-
-  @override
-  String get howToPlayGravityBody =>
-      'Tras cada movimiento, la gravedad actúa hasta que el tablero se estabiliza. Las fichas siguen deslizándose según las fuerzas hasta que nada se mueve.';
-
-  @override
-  String get howToPlayStarsTitle => 'Gana estrellas';
-
-  @override
-  String get howToPlayStarsBody =>
-      'Termina con el mínimo de movimientos para 3 estrellas. Hasta dos movimientos extra aún dan 2 estrellas. Menos movimientos significan más monedas.';
-
-  @override
-  String get howToPlayControlsTitle => 'Deshacer y pista';
-
-  @override
-  String get howToPlayControlsBody =>
-      '¿Te equivocaste? Toca Deshacer para retroceder un movimiento. ¿Atascado? Usa Pista para ver una dirección sugerida. Las pistas son limitadas.';
+  String get howToPlayHelpersBody =>
+      'Undo gives you 1 free rewind per level, then costs coins. Redo and Hint cost coins by tier. Use them when you\'re stuck or want to try a different approach.';
 
   @override
   String get howToPlayStart => 'Empezar Nivel 1';

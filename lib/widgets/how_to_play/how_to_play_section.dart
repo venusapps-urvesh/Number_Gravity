@@ -27,10 +27,10 @@ class HowToPlaySection extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: AspectRatio(
-              aspectRatio: 16 / 10,
+              aspectRatio: 16 / 9,
               child: Image.asset(
                 imageAsset,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 errorBuilder: (_, _, _) => ColoredBox(
                   color: AppColors.surfaceBorder(Theme.of(context).brightness),
                   child: const Icon(Icons.image_not_supported_outlined),

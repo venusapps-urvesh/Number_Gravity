@@ -392,56 +392,35 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get howToPlayIntro =>
-      'Number Gravity is a puzzle where numbered tiles attract and repel each other. Plan your moves, let gravity settle, and reach the goal in as few moves as possible.';
+      'Number Gravity is a turn-based puzzle where numbered tiles attract and repel each other. Preview your move, let gravity settle, and reach the goal in as few moves as possible.';
 
   @override
   String get howToPlayGoalTitle => 'Reach the goal';
 
   @override
   String get howToPlayGoalBody =>
-      'Every level has an objective — usually landing a tile on the golden star. Read the level goal, then plan a path through the grid.';
+      'Every level has an objective — usually moving a tile to the gold star. Read the level goal, then plan a path through the grid.';
 
   @override
-  String get howToPlayPullTitle => 'Blue tiles pull';
+  String get howToPlaySelectTitle => 'Select and read forces';
 
   @override
-  String get howToPlayPullBody =>
-      'Positive numbers attract nearby tiles. A +3 tile pulls others toward it. Use attraction to steer tiles where you need them.';
+  String get howToPlaySelectBody =>
+      'Tap a movable tile to select it. Gold arrows show legal moves, and force lines show pull from blue + tiles and push from red − tiles.';
 
   @override
-  String get howToPlayPushTitle => 'Red tiles push';
+  String get howToPlayPreviewTitle => 'Preview then commit';
 
   @override
-  String get howToPlayPushBody =>
-      'Negative numbers repel nearby tiles. A −2 tile pushes others away. Combine push and pull to solve tricky layouts.';
+  String get howToPlayPreviewBody =>
+      'Tap an arrow once to preview ghost tiles. Tap the same arrow again to commit. You can also swipe a selected tile to commit directly. After each move, gravity resolves cycle by cycle until the board settles.';
 
   @override
-  String get howToPlaySwipeTitle => 'Swipe to move';
+  String get howToPlayHelpersTitle => 'Use helpers';
 
   @override
-  String get howToPlaySwipeBody =>
-      'Tap a tile to select it, then swipe up, down, left, or right to move it one cell. You can also swipe without selecting — the main tile moves.';
-
-  @override
-  String get howToPlayGravityTitle => 'Gravity settles automatically';
-
-  @override
-  String get howToPlayGravityBody =>
-      'After each move, gravity runs until the board is stable. Tiles keep sliding based on forces until nothing moves. Watch the chain reaction before your next turn.';
-
-  @override
-  String get howToPlayStarsTitle => 'Earn stars';
-
-  @override
-  String get howToPlayStarsBody =>
-      'Finish in the minimum moves for 3 stars. Up to two extra moves still earns 2 stars. Fewer moves mean more coins and better rankings.';
-
-  @override
-  String get howToPlayControlsTitle => 'Undo & Hint';
-
-  @override
-  String get howToPlayControlsBody =>
-      'Made a mistake? Tap Undo to rewind one move. Stuck? Use Hint to see a suggested direction. Hints are limited — use them wisely.';
+  String get howToPlayHelpersBody =>
+      'Undo gives you 1 free rewind per level, then costs coins. Redo and Hint cost coins by tier. Use them when you\'re stuck or want to try a different approach.';
 
   @override
   String get howToPlayStart => 'Start Level 1';

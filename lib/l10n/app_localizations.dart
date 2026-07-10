@@ -833,7 +833,7 @@ abstract class AppLocalizations {
   /// No description provided for @howToPlayIntro.
   ///
   /// In en, this message translates to:
-  /// **'Number Gravity is a puzzle where numbered tiles attract and repel each other. Plan your moves, let gravity settle, and reach the goal in as few moves as possible.'**
+  /// **'Number Gravity is a turn-based puzzle where numbered tiles attract and repel each other. Preview your move, let gravity settle, and reach the goal in as few moves as possible.'**
   String get howToPlayIntro;
 
   /// No description provided for @howToPlayGoalTitle.
@@ -845,80 +845,44 @@ abstract class AppLocalizations {
   /// No description provided for @howToPlayGoalBody.
   ///
   /// In en, this message translates to:
-  /// **'Every level has an objective — usually landing a tile on the golden star. Read the level goal, then plan a path through the grid.'**
+  /// **'Every level has an objective — usually moving a tile to the gold star. Read the level goal, then plan a path through the grid.'**
   String get howToPlayGoalBody;
 
-  /// No description provided for @howToPlayPullTitle.
+  /// No description provided for @howToPlaySelectTitle.
   ///
   /// In en, this message translates to:
-  /// **'Blue tiles pull'**
-  String get howToPlayPullTitle;
+  /// **'Select and read forces'**
+  String get howToPlaySelectTitle;
 
-  /// No description provided for @howToPlayPullBody.
+  /// No description provided for @howToPlaySelectBody.
   ///
   /// In en, this message translates to:
-  /// **'Positive numbers attract nearby tiles. A +3 tile pulls others toward it. Use attraction to steer tiles where you need them.'**
-  String get howToPlayPullBody;
+  /// **'Tap a movable tile to select it. Gold arrows show legal moves, and force lines show pull from blue + tiles and push from red − tiles.'**
+  String get howToPlaySelectBody;
 
-  /// No description provided for @howToPlayPushTitle.
+  /// No description provided for @howToPlayPreviewTitle.
   ///
   /// In en, this message translates to:
-  /// **'Red tiles push'**
-  String get howToPlayPushTitle;
+  /// **'Preview then commit'**
+  String get howToPlayPreviewTitle;
 
-  /// No description provided for @howToPlayPushBody.
+  /// No description provided for @howToPlayPreviewBody.
   ///
   /// In en, this message translates to:
-  /// **'Negative numbers repel nearby tiles. A −2 tile pushes others away. Combine push and pull to solve tricky layouts.'**
-  String get howToPlayPushBody;
+  /// **'Tap an arrow once to preview ghost tiles. Tap the same arrow again to commit. You can also swipe a selected tile to commit directly. After each move, gravity resolves cycle by cycle until the board settles.'**
+  String get howToPlayPreviewBody;
 
-  /// No description provided for @howToPlaySwipeTitle.
+  /// No description provided for @howToPlayHelpersTitle.
   ///
   /// In en, this message translates to:
-  /// **'Swipe to move'**
-  String get howToPlaySwipeTitle;
+  /// **'Use helpers'**
+  String get howToPlayHelpersTitle;
 
-  /// No description provided for @howToPlaySwipeBody.
+  /// No description provided for @howToPlayHelpersBody.
   ///
   /// In en, this message translates to:
-  /// **'Tap a tile to select it, then swipe up, down, left, or right to move it one cell. You can also swipe without selecting — the main tile moves.'**
-  String get howToPlaySwipeBody;
-
-  /// No description provided for @howToPlayGravityTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Gravity settles automatically'**
-  String get howToPlayGravityTitle;
-
-  /// No description provided for @howToPlayGravityBody.
-  ///
-  /// In en, this message translates to:
-  /// **'After each move, gravity runs until the board is stable. Tiles keep sliding based on forces until nothing moves. Watch the chain reaction before your next turn.'**
-  String get howToPlayGravityBody;
-
-  /// No description provided for @howToPlayStarsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Earn stars'**
-  String get howToPlayStarsTitle;
-
-  /// No description provided for @howToPlayStarsBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish in the minimum moves for 3 stars. Up to two extra moves still earns 2 stars. Fewer moves mean more coins and better rankings.'**
-  String get howToPlayStarsBody;
-
-  /// No description provided for @howToPlayControlsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Undo & Hint'**
-  String get howToPlayControlsTitle;
-
-  /// No description provided for @howToPlayControlsBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Made a mistake? Tap Undo to rewind one move. Stuck? Use Hint to see a suggested direction. Hints are limited — use them wisely.'**
-  String get howToPlayControlsBody;
+  /// **'Undo gives you 1 free rewind per level, then costs coins. Redo and Hint cost coins by tier. Use them when you\'re stuck or want to try a different approach.'**
+  String get howToPlayHelpersBody;
 
   /// No description provided for @howToPlayStart.
   ///

@@ -20,27 +20,20 @@ class HowToPlayScreen extends StatelessWidget {
 
     final sections = [
       (HowToPlayAssets.goal, l10n.howToPlayGoalTitle, l10n.howToPlayGoalBody),
-      (HowToPlayAssets.pull, l10n.howToPlayPullTitle, l10n.howToPlayPullBody),
-      (HowToPlayAssets.push, l10n.howToPlayPushTitle, l10n.howToPlayPushBody),
       (
-        HowToPlayAssets.swipe,
-        l10n.howToPlaySwipeTitle,
-        l10n.howToPlaySwipeBody,
+        HowToPlayAssets.selectForces,
+        l10n.howToPlaySelectTitle,
+        l10n.howToPlaySelectBody,
       ),
       (
-        HowToPlayAssets.gravity,
-        l10n.howToPlayGravityTitle,
-        l10n.howToPlayGravityBody,
+        HowToPlayAssets.previewCommit,
+        l10n.howToPlayPreviewTitle,
+        l10n.howToPlayPreviewBody,
       ),
       (
-        HowToPlayAssets.stars,
-        l10n.howToPlayStarsTitle,
-        l10n.howToPlayStarsBody,
-      ),
-      (
-        HowToPlayAssets.controls,
-        l10n.howToPlayControlsTitle,
-        l10n.howToPlayControlsBody,
+        HowToPlayAssets.helpers,
+        l10n.howToPlayHelpersTitle,
+        l10n.howToPlayHelpersBody,
       ),
     ];
 

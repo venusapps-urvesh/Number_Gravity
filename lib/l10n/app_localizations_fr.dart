@@ -395,56 +395,35 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get howToPlayIntro =>
-      'Number Gravity est un puzzle où les tuiles numérotées s\'attirent et se repoussent. Planifiez vos coups, laissez la gravité se stabiliser et atteignez l\'objectif en un minimum de coups.';
+      'Number Gravity is a turn-based puzzle where numbered tiles attract and repel each other. Preview your move, let gravity settle, and reach the goal in as few moves as possible.';
 
   @override
-  String get howToPlayGoalTitle => 'Atteindre l\'objectif';
+  String get howToPlayGoalTitle => 'Reach the goal';
 
   @override
   String get howToPlayGoalBody =>
-      'Chaque niveau a un objectif — souvent placer une tuile sur l\'étoile dorée. Lisez le but du niveau, puis planifiez votre chemin sur la grille.';
+      'Every level has an objective — usually moving a tile to the gold star. Read the level goal, then plan a path through the grid.';
 
   @override
-  String get howToPlayPullTitle => 'Les tuiles bleues attirent';
+  String get howToPlaySelectTitle => 'Select and read forces';
 
   @override
-  String get howToPlayPullBody =>
-      'Les nombres positifs attirent les tuiles proches. Une tuile +3 tire les autres vers elle. Utilisez l\'attraction pour guider les tuiles.';
+  String get howToPlaySelectBody =>
+      'Tap a movable tile to select it. Gold arrows show legal moves, and force lines show pull from blue + tiles and push from red − tiles.';
 
   @override
-  String get howToPlayPushTitle => 'Les tuiles rouges repoussent';
+  String get howToPlayPreviewTitle => 'Preview then commit';
 
   @override
-  String get howToPlayPushBody =>
-      'Les nombres négatifs repoussent les tuiles proches. Une tuile −2 les éloigne. Combinez poussée et attraction pour résoudre les cas difficiles.';
+  String get howToPlayPreviewBody =>
+      'Tap an arrow once to preview ghost tiles. Tap the same arrow again to commit. You can also swipe a selected tile to commit directly. After each move, gravity resolves cycle by cycle until the board settles.';
 
   @override
-  String get howToPlaySwipeTitle => 'Glissez pour déplacer';
+  String get howToPlayHelpersTitle => 'Use helpers';
 
   @override
-  String get howToPlaySwipeBody =>
-      'Touchez une tuile pour la sélectionner, puis glissez vers le haut, le bas, la gauche ou la droite pour la déplacer d\'une case. Vous pouvez aussi glisser sans sélectionner.';
-
-  @override
-  String get howToPlayGravityTitle => 'La gravité se stabilise seule';
-
-  @override
-  String get howToPlayGravityBody =>
-      'Après chaque coup, la gravité agit jusqu\'à ce que le plateau soit stable. Les tuiles continuent de glisser selon les forces jusqu\'à l\'arrêt total.';
-
-  @override
-  String get howToPlayStarsTitle => 'Gagnez des étoiles';
-
-  @override
-  String get howToPlayStarsBody =>
-      'Terminez avec le minimum de coups pour 3 étoiles. Jusqu\'à deux coups de plus donnent encore 2 étoiles. Moins de coups signifie plus de pièces.';
-
-  @override
-  String get howToPlayControlsTitle => 'Annuler et indice';
-
-  @override
-  String get howToPlayControlsBody =>
-      'Une erreur ? Touchez Annuler pour revenir en arrière d\'un coup. Bloqué ? Utilisez Indice pour voir une direction suggérée. Les indices sont limités.';
+  String get howToPlayHelpersBody =>
+      'Undo gives you 1 free rewind per level, then costs coins. Redo and Hint cost coins by tier. Use them when you\'re stuck or want to try a different approach.';
 
   @override
   String get howToPlayStart => 'Commencer le Niveau 1';
